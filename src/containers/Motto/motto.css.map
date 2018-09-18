@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,8BAAkB;EAChB,aAAa,EAAE,IAAI;AAErB,8BAAkB;EAChB,UAAU,EAAE,IAAI",
+"sources": ["motto.scss"],
+"names": [],
+"file": "motto.css"
+}

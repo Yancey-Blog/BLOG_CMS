@@ -1,0 +1,5 @@
+.ant-upload img{
+    width: 102px;
+    height: 102px;
+    object-fit: cover;
+}

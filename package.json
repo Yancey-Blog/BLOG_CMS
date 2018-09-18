@@ -1,0 +1,34 @@
+{
+  "name": "BLOG_CMS",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.9.2",
+    "axios": "^0.18.0",
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^8.0.2",
+    "babel-plugin-import": "^1.8.0",
+    "eslint-loader": "^2.1.0",
+    "mobx": "^5.1.1",
+    "mobx-react": "^5.2.8",
+    "react": "^16.5.0",
+    "react-app-rewire-mobx": "^1.0.9",
+    "react-dom": "^16.5.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5"
+  },
+  "scripts": {
+    "start": "PORT=3002 react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "react-app-rewired": "^1.6.2"
+  }
+}

@@ -1,0 +1,36 @@
+.ant-layout-sider {
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35); }
+  .ant-layout-sider .logo {
+    background: #002140;
+    height: 64px;
+    line-height: 64px;
+    overflow: hidden;
+    padding-left: 24px;
+    position: relative;
+    transition: all .3s; }
+    .ant-layout-sider .logo img {
+      width: 32px;
+      height: 32px; }
+    .ant-layout-sider .logo h1 {
+      color: #fff;
+      display: inline-block;
+      font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 0 12px;
+      vertical-align: middle; }
+
+.ant-layout-header {
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); }
+
+.trigger {
+  cursor: pointer;
+  font-size: 20px;
+  height: 64px;
+  line-height: 64px;
+  padding: 22px 24px;
+  transition: all .3s, padding 0s; }
+  .trigger:hover {
+    background: rgba(0, 0, 0, 0.025); }
+
+/*# sourceMappingURL=layout.css.map */

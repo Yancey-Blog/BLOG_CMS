@@ -1,0 +1,51 @@
+.ant-layout-sider {
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+  .logo {
+    background: #002140;
+    height: 64px;
+    line-height: 64px;
+    overflow: hidden;
+    padding-left: 24px;
+    position: relative;
+    transition: all .3s;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+    h1 {
+      color: #fff;
+      display: inline-block;
+      font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 0 12px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.ant-layout-header {
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+
+//.breadcrumb_wrapper{
+//  margin: -24px -24px 0px;
+//  .ant-breadcrumb{
+//    background: #fff;
+//    border-bottom: 1px solid #e8e8e8;
+//    padding: 16px 32px 0;
+//  }
+//}
+
+.trigger {
+  cursor: pointer;
+  font-size: 20px;
+  height: 64px;
+  line-height: 64px;
+  padding: 22px 24px;
+  transition: all .3s, padding 0s;
+  &:hover {
+    background: rgba(0, 0, 0, .025);
+  }
+}
+
