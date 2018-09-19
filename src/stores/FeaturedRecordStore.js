@@ -2,13 +2,13 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import projectApi from '../http/ProjectApi';
+import featuredRecordApi from '../http/FeaturedRecordApi';
 
 configure({
   strict: 'always',
 });
 
-class ProjectStore {
+class FeaturedRecordStore {
   @observable dataSource;
 
   @observable selectedRowKeys;
@@ -21,8 +21,6 @@ class ProjectStore {
 
   @observable title;
 
-  @observable introduction;
-
   @observable poster;
 
   @observable url;
@@ -30,14 +28,13 @@ class ProjectStore {
   @observable uploadStatus;
 
   constructor() {
-    this.projectApi = projectApi;
+    this.featuredRecordApi = featuredRecordApi;
     this.dataSource = [];
     this.selectedRowKeys = [];
     this.showModal = false;
     this.curId = '';
     this.modalType = '';
     this.title = '';
-    this.introduction = '';
     this.poster = '';
     this.url = '';
     this.uploadStatus = false;
@@ -46,7 +43,7 @@ class ProjectStore {
 
   getData = async () => {
     try {
-      const response = await this.projectApi.getData();
+      const response = await this.featuredRecordApi.getData();
       runInAction(() => {
         this.dataSource = response.data;
       });
@@ -58,12 +55,11 @@ class ProjectStore {
   insertData = async () => {
     const params = {
       title: this.title,
-      introduction: this.introduction,
       poster: this.poster,
       url: this.url,
     };
     try {
-      const response = await this.projectApi.insertData(params);
+      const response = await this.featuredRecordApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -76,12 +72,11 @@ class ProjectStore {
   modifyData = async () => {
     const params = {
       title: this.title,
-      introduction: this.introduction,
       poster: this.poster,
       url: this.url,
     };
     try {
-      const response = await this.projectApi.modifyData(this.curId, params);
+      const response = await this.featuredRecordApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -93,7 +88,7 @@ class ProjectStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.projectApi.deleteData(id);
+      const response = await this.featuredRecordApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.getData();
@@ -107,7 +102,7 @@ class ProjectStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.projectApi.batchDeleteData(params);
+      const response = await this.featuredRecordApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
@@ -118,18 +113,17 @@ class ProjectStore {
   };
 
   @computed get isFilled() {
-    return this.title !== '' && this.introduction !== '' && this.poster !== '' && this.url !== '';
+    return this.title !== '' && this.poster !== '' && this.url !== '';
   }
 
   @action onSelectChange = (selectedRowKeys) => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', title = '', introduction = '', poster = '', url = '') => {
+  @action openModal = (type, id = '', title = '', poster = '', url = '') => {
     this.modalType = type;
     this.curId = id;
     this.title = title;
-    this.introduction = introduction;
     this.poster = poster;
     this.url = url;
     this.showModal = true;
@@ -138,17 +132,12 @@ class ProjectStore {
   @action closeModal = () => {
     this.showModal = false;
     this.title = '';
-    this.introduction = '';
     this.poster = '';
     this.url = '';
   };
 
   @action onTitleChange = (e) => {
     this.title = e.target.value;
-  };
-
-  @action onIntroductionChange = (e) => {
-    this.introduction = e.target.value;
   };
 
   @action onUrlChange = (e) => {
@@ -167,6 +156,6 @@ class ProjectStore {
   }
 }
 
-const projectStore = new ProjectStore(projectApi);
+const featuredRecordStore = new FeaturedRecordStore(featuredRecordApi);
 
-export default projectStore;
+export default featuredRecordStore;

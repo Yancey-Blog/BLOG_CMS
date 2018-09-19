@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm,
 } from 'antd';
 
-import { formatJSONDate } from '../../util/tools';
+import { formatJSONDate } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 

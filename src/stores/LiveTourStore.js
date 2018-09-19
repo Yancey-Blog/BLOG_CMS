@@ -2,13 +2,13 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import projectApi from '../http/ProjectApi';
+import liveTourApi from '../http/LiveTourApi';
 
 configure({
   strict: 'always',
 });
 
-class ProjectStore {
+class LiveToursStore {
   @observable dataSource;
 
   @observable selectedRowKeys;
@@ -21,32 +21,26 @@ class ProjectStore {
 
   @observable title;
 
-  @observable introduction;
-
   @observable poster;
-
-  @observable url;
 
   @observable uploadStatus;
 
   constructor() {
-    this.projectApi = projectApi;
+    this.liveTourApi = liveTourApi;
     this.dataSource = [];
     this.selectedRowKeys = [];
     this.showModal = false;
     this.curId = '';
     this.modalType = '';
     this.title = '';
-    this.introduction = '';
     this.poster = '';
-    this.url = '';
     this.uploadStatus = false;
     this.getData();
   }
 
   getData = async () => {
     try {
-      const response = await this.projectApi.getData();
+      const response = await this.liveTourApi.getData();
       runInAction(() => {
         this.dataSource = response.data;
       });
@@ -58,12 +52,10 @@ class ProjectStore {
   insertData = async () => {
     const params = {
       title: this.title,
-      introduction: this.introduction,
       poster: this.poster,
-      url: this.url,
     };
     try {
-      const response = await this.projectApi.insertData(params);
+      const response = await this.liveTourApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -76,12 +68,10 @@ class ProjectStore {
   modifyData = async () => {
     const params = {
       title: this.title,
-      introduction: this.introduction,
       poster: this.poster,
-      url: this.url,
     };
     try {
-      const response = await this.projectApi.modifyData(this.curId, params);
+      const response = await this.liveTourApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -93,7 +83,7 @@ class ProjectStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.projectApi.deleteData(id);
+      const response = await this.liveTourApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.getData();
@@ -107,10 +97,10 @@ class ProjectStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.projectApi.batchDeleteData(params);
+      const response = await this.liveTourApi.batchDeleteData(params);
       message.success('delete success');
-      this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
+      this.dataSource.splice(0, this.dataSource.length);
       this.getData();
     } catch (e) {
       message.error('unknown error!');
@@ -118,29 +108,25 @@ class ProjectStore {
   };
 
   @computed get isFilled() {
-    return this.title !== '' && this.introduction !== '' && this.poster !== '' && this.url !== '';
+    return this.title !== '' && this.poster !== '';
   }
 
   @action onSelectChange = (selectedRowKeys) => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', title = '', introduction = '', poster = '', url = '') => {
+  @action openModal = (type, id = '', title = '', poster = '') => {
     this.modalType = type;
     this.curId = id;
     this.title = title;
-    this.introduction = introduction;
     this.poster = poster;
-    this.url = url;
     this.showModal = true;
   };
 
   @action closeModal = () => {
     this.showModal = false;
     this.title = '';
-    this.introduction = '';
     this.poster = '';
-    this.url = '';
   };
 
   @action onTitleChange = (e) => {
@@ -167,6 +153,6 @@ class ProjectStore {
   }
 }
 
-const projectStore = new ProjectStore(projectApi);
+const liveTourStore = new LiveToursStore(liveTourApi);
 
-export default projectStore;
+export default liveTourStore;

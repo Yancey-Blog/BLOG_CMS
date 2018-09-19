@@ -4,42 +4,42 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
 } from 'antd';
 
-import { formatJSONDate, beforeUpload, capitalized } from '../../util/tools';
+import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
-@inject('projectStore')
+@inject('featuredRecordStore')
 @observer
-class Project extends Component {
+class FeaturedRecord extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { projectStore } = this.props;
-    const selectedRowKeysLength = projectStore.selectedRowKeys.length;
+    const { featuredRecordStore } = this.props;
+    const selectedRowKeysLength = featuredRecordStore.selectedRowKeys.length;
     const rowSelection = {
-      selectedRowKeys: projectStore.selectedRowKeys,
-      onChange: projectStore.onSelectChange,
+      selectedRowKeys: featuredRecordStore.selectedRowKeys,
+      onChange: featuredRecordStore.onSelectChange,
     };
     const pagination = {
-      total: projectStore.dataSource.length,
+      total: featuredRecordStore.dataSource.length,
       showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       pageSize: 10,
       defaultCurrent: 1,
     };
     const uploadButton = (
       <div>
-        <Icon type={projectStore.uploadStatus ? 'loading' : 'plus'} />
+        <Icon type={featuredRecordStore.uploadStatus ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
     return (
-      <main className="project_wrapper">
+      <main className="featured_record_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
-            onClick={() => projectStore.openModal('add')}
+            onClick={() => featuredRecordStore.openModal('add')}
             type="primary"
             style={{
               marginBottom: 16,
@@ -55,7 +55,7 @@ class Project extends Component {
           <Popconfirm
             title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
-            onConfirm={() => projectStore.batchDelete()}
+            onConfirm={() => featuredRecordStore.batchDelete()}
           >
             <Button
               type="danger"
@@ -74,7 +74,7 @@ class Project extends Component {
         </div>
         <Table
           rowKey={record => record._id} /* eslint-disable-line */
-          dataSource={projectStore.dataSource}
+          dataSource={featuredRecordStore.dataSource}
           rowSelection={rowSelection}
           pagination={pagination}
         >
@@ -90,12 +90,7 @@ class Project extends Component {
               key="title"
             />
             <Column
-              title="Introduction"
-              dataIndex="introduction"
-              key="introduction"
-            />
-            <Column
-              title="Url"
+              title="Buy Link"
               dataIndex="url"
               key="url"
             />
@@ -147,13 +142,13 @@ class Project extends Component {
                     twoToneColor="#007fff"
                     style={{ cursor: 'pointer', marginRight: 16 }}
                     onClick={
-                      () => projectStore.openModal('update', record._id, record.title, record.introduction, record.poster, record.url) /* eslint-disable-line */
+                      () => featuredRecordStore.openModal('update', record._id, record.title, record.poster, record.url) /* eslint-disable-line */
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this project?"
+                    title="Are you sure to delete this record?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
-                    onConfirm={() => projectStore.deleteData(record._id)} /* eslint-disable-line */
+                    onConfirm={() => featuredRecordStore.deleteData(record._id)} /* eslint-disable-line */
                   >
                     <Icon
                       type="delete"
@@ -183,47 +178,35 @@ class Project extends Component {
           wrapClassName="reset_modal"
           closable={false}
           destroyOnClose
-          visible={projectStore.showModal}
-          okButtonProps={{ disabled: !projectStore.isFilled }}
-          okText={capitalized(projectStore.modalType)}
-          onOk={projectStore.modalType === 'add' ? () => projectStore.insertData() : () => projectStore.modifyData()}
-          onCancel={projectStore.closeModal}
+          visible={featuredRecordStore.showModal}
+          okButtonProps={{ disabled: !featuredRecordStore.isFilled }}
+          okText={capitalized(featuredRecordStore.modalType)}
+          onOk={featuredRecordStore.modalType === 'add' ? () => featuredRecordStore.insertData() : () => featuredRecordStore.modifyData()}
+          onCancel={featuredRecordStore.closeModal}
         >
           <Row gutter={16}>
             <Col className="gutter-row" span={8}>
               <span style={{ lineHeight: '32px' }}>
-                Project Title:
+                Record Title:
               </span>
             </Col>
             <Col className="gutter-row" span={16}>
               <Input
-                defaultValue={projectStore.title}
-                placeholder="Project Title"
-                onChange={event => projectStore.onTitleChange(event)}
+                defaultValue={featuredRecordStore.title}
+                placeholder="Record Title"
+                onChange={event => featuredRecordStore.onTitleChange(event)}
               />
             </Col>
             <Col className="gutter-row" span={8} style={{ marginTop: 20, marginBottom: 20 }}>
               <span style={{ lineHeight: '32px' }}>
-                Project Introduction:
+                Buy Url:
               </span>
             </Col>
             <Col className="gutter-row" span={16} style={{ marginTop: 20, marginBottom: 20 }}>
               <Input
-                defaultValue={projectStore.introduction}
-                placeholder="Project Introduction"
-                onChange={event => projectStore.onIntroductionChange(event)}
-              />
-            </Col>
-            <Col className="gutter-row" span={8} style={{ marginBottom: 20 }}>
-              <span style={{ lineHeight: '32px' }}>
-                Project Url:
-              </span>
-            </Col>
-            <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
-              <Input
-                defaultValue={projectStore.url}
-                placeholder="Project Url"
-                onChange={event => projectStore.onUrlChange(event)}
+                defaultValue={featuredRecordStore.url}
+                placeholder="Buy Url"
+                onChange={event => featuredRecordStore.onUrlChange(event)}
               />
             </Col>
             <Col className="gutter-row" span={8}>
@@ -240,9 +223,9 @@ class Project extends Component {
                 showUploadList={false}
                 action="http://127.0.0.1:3001/api/uploads"
                 beforeUpload={beforeUpload}
-                onChange={projectStore.onUploadChange}
+                onChange={featuredRecordStore.onUploadChange}
               >
-                {projectStore.poster ? <img src={projectStore.poster} alt="avatar" /> : uploadButton}
+                {featuredRecordStore.poster ? <img src={featuredRecordStore.poster} alt="avatar" /> : uploadButton}
               </Upload>
             </Col>
           </Row>
@@ -253,4 +236,4 @@ class Project extends Component {
 }
 
 
-export default Project;
+export default FeaturedRecord;

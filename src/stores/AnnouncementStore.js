@@ -94,6 +94,7 @@ class AnnouncementStore {
       const response = await this.announcementApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
+      this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
       this.getData();
     } catch (e) {
       message.error('unknown error!');

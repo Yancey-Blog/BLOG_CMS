@@ -4,9 +4,9 @@ import {
 } from 'antd';
 import {
   GET, PUT, POST, DELETE,
-} from '../../util/axios';
+} from '../../../util/axios';
 
-import { formatJSONDate } from '../../util/tools';
+import { formatJSONDate } from '../../../util/tools';
 import './motto.css';
 
 const { Column, ColumnGroup } = Table;

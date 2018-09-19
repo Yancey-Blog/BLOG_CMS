@@ -2,13 +2,13 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import projectApi from '../http/ProjectApi';
+import coverApi from '../http/CoverApi';
 
 configure({
   strict: 'always',
 });
 
-class ProjectStore {
+class CoverStore {
   @observable dataSource;
 
   @observable selectedRowKeys;
@@ -19,34 +19,31 @@ class ProjectStore {
 
   @observable curId;
 
-  @observable title;
+  @observable curShow;
 
-  @observable introduction;
+  @observable name;
 
-  @observable poster;
-
-  @observable url;
+  @observable coverUrl;
 
   @observable uploadStatus;
 
   constructor() {
-    this.projectApi = projectApi;
+    this.coverApi = coverApi;
     this.dataSource = [];
     this.selectedRowKeys = [];
     this.showModal = false;
     this.curId = '';
+    this.curShow = true;
     this.modalType = '';
-    this.title = '';
-    this.introduction = '';
-    this.poster = '';
-    this.url = '';
+    this.name = '';
+    this.coverUrl = '';
     this.uploadStatus = false;
     this.getData();
   }
 
   getData = async () => {
     try {
-      const response = await this.projectApi.getData();
+      const response = await this.coverApi.getData();
       runInAction(() => {
         this.dataSource = response.data;
       });
@@ -57,13 +54,12 @@ class ProjectStore {
 
   insertData = async () => {
     const params = {
-      title: this.title,
-      introduction: this.introduction,
-      poster: this.poster,
-      url: this.url,
+      name: this.name,
+      url: this.coverUrl,
+      show: true,
     };
     try {
-      const response = await this.projectApi.insertData(params);
+      const response = await this.coverApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -75,13 +71,12 @@ class ProjectStore {
 
   modifyData = async () => {
     const params = {
-      title: this.title,
-      introduction: this.introduction,
-      poster: this.poster,
-      url: this.url,
+      name: this.name,
+      url: this.coverUrl,
+      show: this.curShow,
     };
     try {
-      const response = await this.projectApi.modifyData(this.curId, params);
+      const response = await this.coverApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -91,9 +86,29 @@ class ProjectStore {
     }
   };
 
+  onSwitchShow = async (id, name, url, checked) => {
+    const params = {
+      name,
+      url,
+      show: checked,
+    };
+    try {
+      const response = await this.coverApi.modifyData(id, params);
+      if (checked) {
+        message.success('the cover will be shown');
+      } else {
+        message.success('the cover will be hidden');
+      }
+      this.dataSource.splice(0, this.dataSource.length);
+      this.getData();
+    } catch (e) {
+      message.error('unknown error!');
+    }
+  };
+
   deleteData = async (id) => {
     try {
-      const response = await this.projectApi.deleteData(id);
+      const response = await this.coverApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.getData();
@@ -107,7 +122,7 @@ class ProjectStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.projectApi.batchDeleteData(params);
+      const response = await this.coverApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
@@ -118,41 +133,30 @@ class ProjectStore {
   };
 
   @computed get isFilled() {
-    return this.title !== '' && this.introduction !== '' && this.poster !== '' && this.url !== '';
+    return this.name !== '' && this.coverUrl !== '';
   }
 
   @action onSelectChange = (selectedRowKeys) => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', title = '', introduction = '', poster = '', url = '') => {
+  @action openModal = (type, id = '', name = '', coverUrl = '', curShow) => {
     this.modalType = type;
     this.curId = id;
-    this.title = title;
-    this.introduction = introduction;
-    this.poster = poster;
-    this.url = url;
+    this.curShow = curShow;
+    this.name = name;
+    this.coverUrl = coverUrl;
     this.showModal = true;
   };
 
   @action closeModal = () => {
     this.showModal = false;
-    this.title = '';
-    this.introduction = '';
-    this.poster = '';
-    this.url = '';
+    this.name = '';
+    this.coverUrl = '';
   };
 
   @action onTitleChange = (e) => {
-    this.title = e.target.value;
-  };
-
-  @action onIntroductionChange = (e) => {
-    this.introduction = e.target.value;
-  };
-
-  @action onUrlChange = (e) => {
-    this.url = e.target.value;
+    this.name = e.target.value;
   };
 
   @action onUploadChange = (info) => {
@@ -162,11 +166,11 @@ class ProjectStore {
     }
     if (info.file.status === 'done') {
       this.uploadStatus = false;
-      this.poster = info.file.response.path;
+      this.coverUrl = info.file.response.path;
     }
-  }
+  };
 }
 
-const projectStore = new ProjectStore(projectApi);
+const coverStore = new CoverStore(coverApi);
 
-export default projectStore;
+export default coverStore;

@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
-import './layout.css';
+import './layouts.css';
 
+import {
+  Layout, Menu, Icon, Breadcrumb,
+} from 'antd';
 import Music from '../containers/Player/Player';
-import Motto from '../containers/Motto/Motto';
-import Project from '../containers/Project/Project';
-import Announcement from '../containers/Announcement/Announcement';
+import Motto from '../containers/Home/Motto/Motto';
+import Project from '../containers/Home/Project/Project';
+import Announcement from '../containers/Home/Announcement/Announcement';
+import Cover from '../containers/Home/Cover/Cover';
+import LiveTour from '../containers/Music/LiveTour/LiveTour';
+import FeaturedRecord from "../containers/Music/FeaturedRecord/FeaturedRecord";
 
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 
-const { Header, Sider, Content, Footer } = Layout;
+const {
+  Header, Sider, Content, Footer,
+} = Layout;
 const SubMenu = Menu.SubMenu;
 
 class Layouts extends React.Component {
@@ -49,37 +56,45 @@ class Layouts extends React.Component {
             </Menu.Item>
             <SubMenu
               key="sub1"
-              title={<span><Icon type="home" /><span>Home</span></span>}
+              title={(
+                <span>
+                  <Icon type="home" />
+                  <span>Home</span>
+                </span>
+              )}
             >
               <Menu.Item key="2">
-                <Icon type="desktop" />
                 Motto
               </Menu.Item>
               <Menu.Item key="3">
-                <Icon type="notification" />
                 Announcement
               </Menu.Item>
               <Menu.Item key="4">
-                <Icon type="project" />
                 Project
               </Menu.Item>
+              <Menu.Item key="5">
+                Cover
+              </Menu.Item>
             </SubMenu>
-            <Menu.Item key="5">
-              <Icon type="desktop" />
-              <span>Option 2</span>
-            </Menu.Item>
-
             <SubMenu
               key="sub2"
-              title={<span><Icon type="team" /><span>Team</span></span>}
+              title={(
+                <span>
+                  <Icon type="customer-service" />
+                  <span>Music</span>
+                </span>
+              )}
             >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
+              <Menu.Item key="6">
+                Live Tours
+              </Menu.Item>
+              <Menu.Item key="7">
+                Featured Records
+              </Menu.Item>
+              <Menu.Item key="8">
+                Yancey Music
+              </Menu.Item>
             </SubMenu>
-            <Menu.Item key="9">
-              <Icon type="file" />
-              <span>File</span>
-            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -90,16 +105,11 @@ class Layouts extends React.Component {
               onClick={this.toggle}
             />
           </Header>
-          {/*<div className="breadcrumb_wrapper">*/}
-          {/*<Breadcrumb>*/}
-            {/*<Breadcrumb.Item>Home</Breadcrumb.Item>*/}
-            {/*<Breadcrumb.Item><a href="">Application Center</a></Breadcrumb.Item>*/}
-            {/*<Breadcrumb.Item><a href="">Application List</a></Breadcrumb.Item>*/}
-            {/*<Breadcrumb.Item>An Application</Breadcrumb.Item>*/}
-          {/*</Breadcrumb>*/}
-          {/*</div>*/}
-          <Content style={{ margin: '24px 24px 0 24px', padding: 24, background: '#fff', minHeight: 280 }}>
-            <Project />
+          <Content style={{
+            margin: '24px 24px 0 24px', padding: 24, background: '#fff', minHeight: 280,
+          }}
+          >
+            <FeaturedRecord />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
             Copyright &copy;
