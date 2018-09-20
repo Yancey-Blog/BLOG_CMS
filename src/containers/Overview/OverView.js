@@ -34,11 +34,36 @@ class OverView extends Component {
   render() {
     return (
       <main className="over_view_wrapper">
-        <WaterWave
-          height={161}
-          title="Bandwidth Usage"
-          percent={34}
-        />
+        <section className="server_status_wrapper">
+          <div style={{ display: 'inline-block' }}>
+            <WaterWave
+              height={161}
+              title="Bandwidth Usage"
+              percent={34}
+            />
+          </div>
+          <div style={{ display: 'inline-block' }}>
+            <WaterWave
+              height={161}
+              title="Bandwidth Usage"
+              percent={34}
+            />
+          </div>
+          <div style={{ display: 'inline-block' }}>
+            <WaterWave
+              height={161}
+              title="Bandwidth Usage"
+              percent={34}
+            />
+          </div>
+          <div style={{ display: 'inline-block' }}>
+            <WaterWave
+              height={161}
+              title="Bandwidth Usage"
+              percent={34}
+            />
+          </div>
+        </section>
       </main>
     );
   }
