@@ -19,11 +19,15 @@ class FeaturedRecordStore {
 
   @observable curId;
 
-  @observable title;
+  @observable albumName;
 
-  @observable poster;
+  @observable artist;
 
-  @observable url;
+  @observable cover;
+
+  @observable buyUrl;
+
+  @observable releaseDate;
 
   @observable uploadStatus;
 
@@ -34,9 +38,11 @@ class FeaturedRecordStore {
     this.showModal = false;
     this.curId = '';
     this.modalType = '';
-    this.title = '';
-    this.poster = '';
-    this.url = '';
+    this.albumName = '';
+    this.artist = '';
+    this.cover = '';
+    this.buyUrl = '';
+    this.releaseDate = '';
     this.uploadStatus = false;
     this.getData();
   }
@@ -54,9 +60,11 @@ class FeaturedRecordStore {
 
   insertData = async () => {
     const params = {
-      title: this.title,
-      poster: this.poster,
-      url: this.url,
+      album_name: this.albumName,
+      artist: this.artist,
+      cover: this.cover,
+      buy_url: this.buyUrl,
+      release_date: this.releaseDate,
     };
     try {
       const response = await this.featuredRecordApi.insertData(params);
@@ -71,9 +79,11 @@ class FeaturedRecordStore {
 
   modifyData = async () => {
     const params = {
-      title: this.title,
-      poster: this.poster,
-      url: this.url,
+      album_name: this.albumName,
+      artist: this.artist,
+      cover: this.cover,
+      buy_url: this.buyUrl,
+      release_date: this.releaseDate,
     };
     try {
       const response = await this.featuredRecordApi.modifyData(this.curId, params);
@@ -113,35 +123,47 @@ class FeaturedRecordStore {
   };
 
   @computed get isFilled() {
-    return this.title !== '' && this.poster !== '' && this.url !== '';
+    return this.albumName !== '' && this.artist !== '' && this.cover !== '' && this.buyUrl !== '' && this.releaseDate !== '';
   }
 
   @action onSelectChange = (selectedRowKeys) => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', title = '', poster = '', url = '') => {
+  @action openModal = (type, id = '', albumName = '', artist = '', cover = '', buyUrl = '', releaseDate = '') => {
     this.modalType = type;
     this.curId = id;
-    this.title = title;
-    this.poster = poster;
-    this.url = url;
+    this.albumName = albumName;
+    this.artist = artist;
+    this.cover = cover;
+    this.buyUrl = buyUrl;
+    this.releaseDate = releaseDate;
     this.showModal = true;
   };
 
   @action closeModal = () => {
     this.showModal = false;
-    this.title = '';
-    this.poster = '';
-    this.url = '';
+    this.albumName = '';
+    this.artist = '';
+    this.cover = '';
+    this.buyUrl = '';
+    this.releaseDate = '';
   };
 
-  @action onTitleChange = (e) => {
-    this.title = e.target.value;
+  @action onAlbumNameChange = (e) => {
+    this.albumName = e.target.value;
   };
 
-  @action onUrlChange = (e) => {
-    this.url = e.target.value;
+  @action onArtistChange = (e) => {
+    this.artist = e.target.value;
+  };
+
+  @action onBuyUrlChange = (e) => {
+    this.buyUrl = e.target.value;
+  };
+
+  @action onReleaseDateChange = (date, dateString) => {
+    this.releaseDate = dateString;
   };
 
   @action onUploadChange = (info) => {
@@ -151,7 +173,7 @@ class FeaturedRecordStore {
     }
     if (info.file.status === 'done') {
       this.uploadStatus = false;
-      this.poster = info.file.response.path;
+      this.cover = info.file.response.path;
     }
   }
 }

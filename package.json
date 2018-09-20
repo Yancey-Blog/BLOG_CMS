@@ -11,6 +11,7 @@
     "eslint-loader": "^2.1.0",
     "mobx": "^5.1.1",
     "mobx-react": "^5.2.8",
+    "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-app-rewire-mobx": "^1.0.9",
     "react-dom": "^16.5.0",

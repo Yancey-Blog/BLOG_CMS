@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
+  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, DatePicker,
 } from 'antd';
-
+import moment from 'moment';
 import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -35,6 +35,7 @@ class FeaturedRecord extends Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const dateFormat = 'YYYY-MM-DD';
     return (
       <main className="featured_record_wrapper">
         <div className="add_batch_delete_wrapper">
@@ -85,23 +86,28 @@ class FeaturedRecord extends Component {
               key="_id"
             />
             <Column
-              title="Title"
-              dataIndex="title"
-              key="title"
+              title="Album"
+              dataIndex="album_name"
+              key="album_name"
+            />
+            <Column
+              title="Artist"
+              dataIndex="artist"
+              key="artist"
             />
             <Column
               title="Buy Link"
-              dataIndex="url"
-              key="url"
+              dataIndex="buy_url"
+              key="buy_url"
             />
             <Column
-              title="Poster"
-              dataIndex="poster"
+              title="Cover"
+              dataIndex="cover"
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.poster}
-                    alt={record.title}
+                    src={record.cover}
+                    alt={record.album_name}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
                     }}
@@ -111,8 +117,8 @@ class FeaturedRecord extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.poster}
-                        alt={record.title}
+                        src={record.cover}
+                        alt={record.album_name}
                         style={{
                           marginTop: 10, width: '600px',
                         }}
@@ -123,11 +129,11 @@ class FeaturedRecord extends Component {
               )}
             />
             <Column
-              title="Upload Date"
-              key="upload_date"
+              title="Release Date"
+              key="release_date"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.upload_date)}
+                  {formatJSONDate(record.release_date)}
                 </span>
               )}
             />
@@ -142,7 +148,7 @@ class FeaturedRecord extends Component {
                     twoToneColor="#007fff"
                     style={{ cursor: 'pointer', marginRight: 16 }}
                     onClick={
-                      () => featuredRecordStore.openModal('update', record._id, record.title, record.poster, record.url) /* eslint-disable-line */
+                      () => featuredRecordStore.openModal('update', record._id, record.album_name, record.artist, record.buy_url, record.release_date) /* eslint-disable-line */
                     }
                   />
                   <Popconfirm
@@ -171,7 +177,7 @@ class FeaturedRecord extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new Project
+                Add new Album
             </span>
           )}
           width={600}
@@ -187,31 +193,55 @@ class FeaturedRecord extends Component {
           <Row gutter={16}>
             <Col className="gutter-row" span={8}>
               <span style={{ lineHeight: '32px' }}>
-                Record Title:
+                Album Name:
               </span>
             </Col>
             <Col className="gutter-row" span={16}>
               <Input
-                defaultValue={featuredRecordStore.title}
-                placeholder="Record Title"
-                onChange={event => featuredRecordStore.onTitleChange(event)}
+                defaultValue={featuredRecordStore.albumName}
+                placeholder="Album Name"
+                onChange={event => featuredRecordStore.onAlbumNameChange(event)}
               />
             </Col>
             <Col className="gutter-row" span={8} style={{ marginTop: 20, marginBottom: 20 }}>
               <span style={{ lineHeight: '32px' }}>
-                Buy Url:
+                Artist:
               </span>
             </Col>
             <Col className="gutter-row" span={16} style={{ marginTop: 20, marginBottom: 20 }}>
               <Input
-                defaultValue={featuredRecordStore.url}
+                defaultValue={featuredRecordStore.artist}
+                placeholder="Artist"
+                onChange={event => featuredRecordStore.onArtistChange(event)}
+              />
+            </Col>
+            <Col className="gutter-row" span={8} style={{ marginBottom: 20 }}>
+              <span style={{ lineHeight: '32px' }}>
+                Buy Url:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
+              <Input
+                defaultValue={featuredRecordStore.buyUrl}
                 placeholder="Buy Url"
-                onChange={event => featuredRecordStore.onUrlChange(event)}
+                onChange={event => featuredRecordStore.onBuyUrlChange(event)}
+              />
+            </Col>
+            <Col className="gutter-row" span={8} style={{ marginBottom: 20 }}>
+              <span style={{ lineHeight: '32px' }}>
+                Release Date:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
+              <DatePicker
+                defaultValue={moment('2018-01-01', dateFormat)}
+                format={dateFormat}
+                onChange={(date, dateString) => featuredRecordStore.onReleaseDateChange(date, dateString)}
               />
             </Col>
             <Col className="gutter-row" span={8}>
               <span style={{ lineHeight: '102px' }}>
-                Upload Poster:
+                Upload Cover:
                 <br />
               </span>
             </Col>
