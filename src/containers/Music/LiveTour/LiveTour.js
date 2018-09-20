@@ -41,7 +41,7 @@ class Project extends Component {
       </div>
     );
     return (
-      <main className="live_tour_wrapper">
+      <main className="wrapper live_tour_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={() => liveTourStore.openModal('add')}

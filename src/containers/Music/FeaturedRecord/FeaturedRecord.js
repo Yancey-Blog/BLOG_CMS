@@ -4,7 +4,9 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, DatePicker,
 } from 'antd';
 import moment from 'moment';
-import { formatJSONDate, beforeUpload, capitalized, getCurrentDate } from '../../../util/tools';
+import {
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate,
+} from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -42,7 +44,7 @@ class FeaturedRecord extends Component {
     );
     const dateFormat = 'YYYY-MM-DD';
     return (
-      <main className="featured_record_wrapper">
+      <main className="wrapper featured_record_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={() => featuredRecordStore.openModal('add')}

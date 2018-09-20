@@ -41,7 +41,7 @@ class Cover extends Component {
       </div>
     );
     return (
-      <main className="cover_wrapper">
+      <main className="wrapper cover_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={() => coverStore.openModal('add')}

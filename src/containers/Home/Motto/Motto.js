@@ -161,7 +161,7 @@ class Motto extends Component {
     };
 
     return (
-      <main className="motto_wrapper">
+      <main className="wrapper motto_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={this.openInsertModal}

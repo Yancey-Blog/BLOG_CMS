@@ -47,7 +47,7 @@ class OverView extends Component {
             )}
             contentHeight={46}
           >
-            <MiniProgress percent={overViewStore.bandwidthUsage} strokeWidth={8} target={overViewStore.bandwidthUsage + 2} />
+            <MiniProgress percent={overViewStore.bandwidthUsage} strokeWidth={8} target={overViewStore.bandwidthUsage + 10} />
           </ChartCard>
           <ChartCard
             title="线上购物转化率"

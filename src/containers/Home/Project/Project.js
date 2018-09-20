@@ -42,7 +42,7 @@ class Project extends Component {
       </div>
     );
     return (
-      <main className="project_wrapper">
+      <main className="wrapper project_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={() => projectStore.openModal('add')}

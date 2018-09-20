@@ -35,7 +35,7 @@ class Announcement extends Component {
       defaultCurrent: 1,
     };
     return (
-      <main className="announcement_wrapper">
+      <main className="wrapper announcement_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
             onClick={announcementStore.openInsertModal}

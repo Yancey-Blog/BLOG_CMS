@@ -5,7 +5,7 @@ import './layouts.css';
 import {
   Layout, Menu, Icon, Breadcrumb,
 } from 'antd';
-import Music from '../containers/Player/Player';
+import Music from '../containers/Music/Player/Player';
 import Motto from '../containers/Home/Motto/Motto';
 import Project from '../containers/Home/Project/Project';
 import Announcement from '../containers/Home/Announcement/Announcement';
@@ -133,13 +133,7 @@ class Layouts extends React.Component {
               onClick={this.toggle}
             />
           </Header>
-          <Content style={{
-            margin: '24px 24px 0 24px',
-            padding: 24,
-            background: '#fff',
-            minHeight: 280,
-          }}
-          >
+          <Content>
             <Switch>
               <Route path="/" exact component={OverView} />
               <Route path="/home/motto" component={Motto} />

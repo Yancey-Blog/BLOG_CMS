@@ -1,6 +1,11 @@
-.server_status_wrapper {
-  display: flex; }
-  .server_status_wrapper .antd-pro-charts-water-wave-waterWave {
-    display: inline-block; }
+.overview_wrapper {
+  background: #f0f2f5 !important;
+  padding: 0 !important; }
+  .overview_wrapper .server_status_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 24px; }
+    .overview_wrapper .server_status_wrapper .ant-card {
+      background: #fff; }
 
 /*# sourceMappingURL=overview.css.map */

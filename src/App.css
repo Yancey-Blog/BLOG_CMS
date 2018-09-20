@@ -1,5 +1,12 @@
-.ant-upload img{
+.ant-upload img {
     width: 102px;
     height: 102px;
     object-fit: cover;
+}
+
+.wrapper {
+    margin: 24px 24px 0 24px;
+    padding: 24px;
+    background: #fff;
+    min-height: 900px;
 }
