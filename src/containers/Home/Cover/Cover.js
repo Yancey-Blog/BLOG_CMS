@@ -16,6 +16,11 @@ class Cover extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    const { coverStore } = this.props;
+    coverStore.getData();
+  }
+
   render() {
     const { coverStore } = this.props;
     const selectedRowKeysLength = coverStore.selectedRowKeys.length;
@@ -180,7 +185,9 @@ class Cover extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new Cover
+              {coverStore.modalType === 'add' ? 'Add' : 'Update'}
+              {' '}
+              new Cover
             </span>
           )}
           width={600}

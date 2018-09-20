@@ -18,13 +18,18 @@ export const beforeUpload = (file) => {
   return isImageFormat && isLt2M;
 };
 
-export const formatJSONDate = (jsonDate) => {
-  return new Date(+new Date(new Date(jsonDate).toJSON()) + 8 * 3600 * 1000).toISOString()
-    .replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
-};
+export const formatJSONDate = jsonDate => new Date(+new Date(new Date(jsonDate).toJSON()) + 8 * 3600 * 1000).toISOString()
+  .replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
 
-export const getType = (param) => {
-  return Object.prototype.toString.call(param).slice(8, -1).toLowerCase();
-};
+export const getType = param => Object.prototype.toString.call(param).slice(8, -1).toLowerCase();
 
 export const capitalized = str => str.toLowerCase().replace(/( |^)[a-z]/g, L => L.toUpperCase());
+
+
+export const getCurrentDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month}-${day}`;
+};

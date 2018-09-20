@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ant-design-pro": "^2.0.0",
     "antd": "^3.9.2",
     "axios": "^0.18.0",
     "babel-eslint": "^9.0.0",

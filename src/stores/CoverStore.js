@@ -38,7 +38,6 @@ class CoverStore {
     this.name = '';
     this.coverUrl = '';
     this.uploadStatus = false;
-    this.getData();
   }
 
   getData = async () => {

@@ -16,6 +16,11 @@ class Project extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    const { liveTourStore } = this.props;
+    liveTourStore.getData();
+  }
+
   render() {
     const { liveTourStore } = this.props;
     const selectedRowKeysLength = liveTourStore.selectedRowKeys.length;
@@ -166,7 +171,9 @@ class Project extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new Project
+              {liveTourStore.modalType === 'add' ? 'Add' : 'Update'}
+              {' '}
+              new live tour
             </span>
           )}
           width={600}

@@ -16,6 +16,12 @@ class Project extends Component {
     this.state = {};
   }
 
+
+  componentDidMount() {
+    const { projectStore } = this.props;
+    projectStore.getData();
+  }
+
   render() {
     const { projectStore } = this.props;
     const selectedRowKeysLength = projectStore.selectedRowKeys.length;
@@ -176,7 +182,9 @@ class Project extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new Project
+              {projectStore.modalType === 'add' ? 'Add' : 'Update'}
+              {' '}
+              new Project
             </span>
           )}
           width={600}

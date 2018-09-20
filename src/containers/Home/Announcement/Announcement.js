@@ -17,6 +17,8 @@ class Announcement extends Component {
   }
 
   componentDidMount() {
+    const { announcementStore } = this.props;
+    announcementStore.getData();
   }
 
   render() {

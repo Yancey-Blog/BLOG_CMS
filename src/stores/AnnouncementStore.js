@@ -28,7 +28,6 @@ class AnnouncementStore {
     this.showInsertModal = false;
     this.insertedContent = '';
     this.modifiedContent = '';
-    this.getData();
   }
 
   getData = async () => {

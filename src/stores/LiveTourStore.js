@@ -35,7 +35,6 @@ class LiveToursStore {
     this.title = '';
     this.poster = '';
     this.uploadStatus = false;
-    this.getData();
   }
 
   getData = async () => {

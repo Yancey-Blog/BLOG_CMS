@@ -3,6 +3,7 @@ import {
 } from 'mobx';
 import { message } from 'antd/lib/index';
 import featuredRecordApi from '../http/FeaturedRecordApi';
+import { getCurrentDate } from '../util/tools';
 
 configure({
   strict: 'always',
@@ -44,7 +45,6 @@ class FeaturedRecordStore {
     this.buyUrl = '';
     this.releaseDate = '';
     this.uploadStatus = false;
-    this.getData();
   }
 
   getData = async () => {
@@ -66,6 +66,7 @@ class FeaturedRecordStore {
       buy_url: this.buyUrl,
       release_date: this.releaseDate,
     };
+    console.log(params)
     try {
       const response = await this.featuredRecordApi.insertData(params);
       this.showModal = false;
@@ -130,14 +131,14 @@ class FeaturedRecordStore {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', albumName = '', artist = '', cover = '', buyUrl = '', releaseDate = '') => {
+  @action openModal = (type, id = '', albumName = '', artist = '', buyUrl = '', releaseDate = getCurrentDate(), cover = '') => {
     this.modalType = type;
     this.curId = id;
     this.albumName = albumName;
     this.artist = artist;
-    this.cover = cover;
     this.buyUrl = buyUrl;
     this.releaseDate = releaseDate;
+    this.cover = cover;
     this.showModal = true;
   };
 

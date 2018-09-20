@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, DatePicker,
 } from 'antd';
 import moment from 'moment';
-import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
+import { formatJSONDate, beforeUpload, capitalized, getCurrentDate } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -14,6 +14,11 @@ class FeaturedRecord extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    const { featuredRecordStore } = this.props;
+    featuredRecordStore.getData();
   }
 
   render() {
@@ -133,7 +138,7 @@ class FeaturedRecord extends Component {
               key="release_date"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.release_date)}
+                  {formatJSONDate(record.release_date).split(' ')[0]}
                 </span>
               )}
             />
@@ -148,7 +153,7 @@ class FeaturedRecord extends Component {
                     twoToneColor="#007fff"
                     style={{ cursor: 'pointer', marginRight: 16 }}
                     onClick={
-                      () => featuredRecordStore.openModal('update', record._id, record.album_name, record.artist, record.buy_url, record.release_date) /* eslint-disable-line */
+                      () => featuredRecordStore.openModal('update', record._id, record.album_name, record.artist, record.buy_url, record.release_date, record.cover) /* eslint-disable-line */
                     }
                   />
                   <Popconfirm
@@ -177,7 +182,9 @@ class FeaturedRecord extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new Album
+              {featuredRecordStore.modalType === 'add' ? 'Add' : 'Update'}
+              {' '}
+              new Album
             </span>
           )}
           width={600}
@@ -234,7 +241,7 @@ class FeaturedRecord extends Component {
             </Col>
             <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
               <DatePicker
-                defaultValue={moment('2018-01-01', dateFormat)}
+                defaultValue={moment(featuredRecordStore.releaseDate !== '' ? featuredRecordStore.releaseDate : getCurrentDate(), dateFormat)}
                 format={dateFormat}
                 onChange={(date, dateString) => featuredRecordStore.onReleaseDateChange(date, dateString)}
               />
@@ -255,7 +262,7 @@ class FeaturedRecord extends Component {
                 beforeUpload={beforeUpload}
                 onChange={featuredRecordStore.onUploadChange}
               >
-                {featuredRecordStore.poster ? <img src={featuredRecordStore.poster} alt="avatar" /> : uploadButton}
+                {featuredRecordStore.cover ? <img src={featuredRecordStore.cover} alt="avatar" /> : uploadButton}
               </Upload>
             </Col>
           </Row>

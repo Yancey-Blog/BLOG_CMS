@@ -41,7 +41,6 @@ class ProjectStore {
     this.poster = '';
     this.url = '';
     this.uploadStatus = false;
-    this.getData();
   }
 
   getData = async () => {
