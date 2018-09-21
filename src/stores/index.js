@@ -4,6 +4,7 @@ import coverStore from './CoverStore';
 import liveTourStore from './LiveTourStore';
 import featuredRecordStore from './FeaturedRecordStore';
 import overViewStore from './OverViewStore';
+import serverStatusStore from './ServerStatusStore';
 
 export default {
   announcementStore,
@@ -12,4 +13,5 @@ export default {
   liveTourStore,
   featuredRecordStore,
   overViewStore,
+  serverStatusStore,
 };

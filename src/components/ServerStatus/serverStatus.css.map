@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AACE,gCAAU;EACR,UAAU,EAAE,IAAI;AAElB,+CAAyB;EACvB,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,cAAc;EACrC,eAAe,EAAE,IAAI;AAEvB,gDAA0B;EACxB,UAAU,EAAE,IAAI;EAChB,uDAAO;IACL,UAAU,EAAE,IAAI",
+"sources": ["serverStatus.scss"],
 "names": [],
-"file": "player.css"
+"file": "serverStatus.css"
 }

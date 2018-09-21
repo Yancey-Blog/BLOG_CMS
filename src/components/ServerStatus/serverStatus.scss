@@ -1,0 +1,16 @@
+.server_status_wrapper {
+  .ant-card {
+    background: #fff;
+  }
+  .server_params_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 24px;
+  }
+  .server_running_container {
+    margin-top: 24px;
+    canvas {
+      margin-top: 24px;
+    }
+  }
+}

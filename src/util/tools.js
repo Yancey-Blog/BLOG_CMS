@@ -33,3 +33,14 @@ export const getCurrentDate = () => {
   const day = date.getDate();
   return `${year}-${month}-${day}`;
 };
+
+export const formatTimestampDate = (date) => {
+  const timestampDate = new Date(date);
+  const Y = `${timestampDate.getFullYear()}-`;
+  const M = `${timestampDate.getMonth() + 1 < 10 ? `0${timestampDate.getMonth() + 1}` : timestampDate.getMonth() + 1}-`;
+  const D = `${timestampDate.getDate() < 10 ? `0${timestampDate.getDate()}` : timestampDate.getDate()} `;
+  const h = `${timestampDate.getHours() < 10 ? `0${timestampDate.getHours()}` : timestampDate.getHours()}:`;
+  const m = `${timestampDate.getMinutes() < 10 ? `0${timestampDate.getMinutes()}` : timestampDate.getMinutes()}:`;
+  const s = (timestampDate.getSeconds() < 10 ? `0${timestampDate.getSeconds()}` : timestampDate.getSeconds());
+  return Y + M + D + h + m + s;
+};

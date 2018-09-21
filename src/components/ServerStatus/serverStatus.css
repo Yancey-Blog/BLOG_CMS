@@ -1,3 +1,12 @@
+.server_status_wrapper .ant-card {
+  background: #fff; }
+.server_status_wrapper .server_params_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 24px; }
+.server_status_wrapper .server_running_container {
+  margin-top: 24px; }
+  .server_status_wrapper .server_running_container canvas {
+    margin-top: 24px; }
 
-
-/*# sourceMappingURL=serverStatus.css.mapss.map */
+/*# sourceMappingURL=serverStatus.css.map */
