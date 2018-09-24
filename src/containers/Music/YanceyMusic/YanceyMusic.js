@@ -1,50 +1,53 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
+  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, DatePicker,
 } from 'antd';
-
-import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
+import moment from 'moment';
+import {
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate,
+} from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
-@inject('liveTourStore')
+@inject('yanceyMusicStore')
 @observer
-class Project extends Component {
+class YanceyMusic extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    const { liveTourStore } = this.props;
-    liveTourStore.getData();
+    const { yanceyMusicStore } = this.props;
+    yanceyMusicStore.getData();
   }
 
   render() {
-    const { liveTourStore } = this.props;
-    const selectedRowKeysLength = liveTourStore.selectedRowKeys.length;
+    const { yanceyMusicStore } = this.props;
+    const selectedRowKeysLength = yanceyMusicStore.selectedRowKeys.length;
     const rowSelection = {
-      selectedRowKeys: liveTourStore.selectedRowKeys,
-      onChange: liveTourStore.onSelectChange,
+      selectedRowKeys: yanceyMusicStore.selectedRowKeys,
+      onChange: yanceyMusicStore.onSelectChange,
     };
     const pagination = {
-      total: liveTourStore.dataSource.length,
+      total: yanceyMusicStore.dataSource.length,
       showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       pageSize: 10,
       defaultCurrent: 1,
     };
     const uploadButton = (
       <div>
-        <Icon type={liveTourStore.uploadStatus ? 'loading' : 'plus'} />
+        <Icon type={yanceyMusicStore.uploadStatus ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const dateFormat = 'YYYY-MM-DD';
     return (
-      <main className="wrapper live_tour_wrapper">
+      <main className="wrapper featured_record_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
-            onClick={() => liveTourStore.openModal('add')}
+            onClick={() => yanceyMusicStore.openModal('add')}
             type="primary"
             style={{
               marginBottom: 16,
@@ -60,7 +63,7 @@ class Project extends Component {
           <Popconfirm
             title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
-            onConfirm={() => liveTourStore.batchDelete()}
+            onConfirm={() => yanceyMusicStore.batchDelete()}
           >
             <Button
               type="danger"
@@ -79,7 +82,7 @@ class Project extends Component {
         </div>
         <Table
           rowKey={record => record._id} /* eslint-disable-line */
-          dataSource={liveTourStore.dataSource}
+          dataSource={yanceyMusicStore.dataSource}
           rowSelection={rowSelection}
           pagination={pagination}
         >
@@ -95,12 +98,17 @@ class Project extends Component {
               key="title"
             />
             <Column
-              title="Poster"
-              dataIndex="poster"
+              title="SoundCloud Url"
+              dataIndex="soundCloud_url"
+              key="soundCloud_url"
+            />
+            <Column
+              title="Cover"
+              dataIndex="cover"
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.poster}
+                    src={record.cover}
                     alt={record.title}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -111,7 +119,7 @@ class Project extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.poster}
+                        src={record.cover}
                         alt={record.title}
                         style={{
                           marginTop: 10, width: '600px',
@@ -123,11 +131,11 @@ class Project extends Component {
               )}
             />
             <Column
-              title="Upload Date"
-              key="upload_date"
+              title="Release Date"
+              key="release_date"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.upload_date)}
+                  {formatJSONDate(record.release_date).split(' ')[0]}
                 </span>
               )}
             />
@@ -142,13 +150,13 @@ class Project extends Component {
                     twoToneColor="#007fff"
                     style={{ cursor: 'pointer', marginRight: 16 }}
                     onClick={
-                      () => liveTourStore.openModal('update', record._id, record.title, record.poster) /* eslint-disable-line */
+                      () => yanceyMusicStore.openModal('update', record._id, record.title, record.soundCloud_url, record.release_date, record.cover) /* eslint-disable-line */
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this live tour information?"
+                    title="Are you sure to delete this music?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
-                    onConfirm={() => liveTourStore.deleteData(record._id)} /* eslint-disable-line */
+                    onConfirm={() => yanceyMusicStore.deleteData(record._id)} /* eslint-disable-line */
                   >
                     <Icon
                       type="delete"
@@ -171,37 +179,61 @@ class Project extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-              {liveTourStore.modalType === 'add' ? 'Add New' : 'Update The'}
+              {yanceyMusicStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              Live Tour
+              Music
             </span>
           )}
           width={600}
           wrapClassName="reset_modal"
           closable={false}
           destroyOnClose
-          visible={liveTourStore.showModal}
-          okButtonProps={{ disabled: !liveTourStore.isFilled }}
-          okText={capitalized(liveTourStore.modalType)}
-          onOk={liveTourStore.modalType === 'add' ? () => liveTourStore.insertData() : () => liveTourStore.modifyData()}
-          onCancel={liveTourStore.closeModal}
+          visible={yanceyMusicStore.showModal}
+          okButtonProps={{ disabled: !yanceyMusicStore.isFilled }}
+          okText={capitalized(yanceyMusicStore.modalType)}
+          onOk={yanceyMusicStore.modalType === 'add' ? () => yanceyMusicStore.insertData() : () => yanceyMusicStore.modifyData()}
+          onCancel={yanceyMusicStore.closeModal}
         >
           <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <span style={{ lineHeight: '32px' }}>
+                Music Title:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16}>
+              <Input
+                defaultValue={yanceyMusicStore.title}
+                placeholder="Music Title"
+                onChange={event => yanceyMusicStore.onTitleChange(event)}
+              />
+            </Col>
+            <Col className="gutter-row" span={8} style={{ marginTop: 20, marginBottom: 20 }}>
+              <span style={{ lineHeight: '32px' }}>
+                SoundCloud Url:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16} style={{ marginTop: 20, marginBottom: 20 }}>
+              <Input
+                defaultValue={yanceyMusicStore.soundCloudUrl}
+                placeholder="SoundCloud Url"
+                onChange={event => yanceyMusicStore.onSoundCloudUrlChange(event)}
+              />
+            </Col>
             <Col className="gutter-row" span={8} style={{ marginBottom: 20 }}>
               <span style={{ lineHeight: '32px' }}>
-                Live Tour Title:
+                Release Date:
               </span>
             </Col>
             <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
-              <Input
-                defaultValue={liveTourStore.title}
-                placeholder="Live Tour Title"
-                onChange={event => liveTourStore.onTitleChange(event)}
+              <DatePicker
+                defaultValue={moment(yanceyMusicStore.releaseDate !== '' ? yanceyMusicStore.releaseDate : getCurrentDate(), dateFormat)}
+                format={dateFormat}
+                onChange={(date, dateString) => yanceyMusicStore.onReleaseDateChange(date, dateString)}
               />
             </Col>
             <Col className="gutter-row" span={8}>
               <span style={{ lineHeight: '102px' }}>
-                Upload Poster:
+                Upload Cover:
                 <br />
               </span>
             </Col>
@@ -213,9 +245,9 @@ class Project extends Component {
                 showUploadList={false}
                 action="http://127.0.0.1:3001/api/uploads"
                 beforeUpload={beforeUpload}
-                onChange={liveTourStore.onUploadChange}
+                onChange={yanceyMusicStore.onUploadChange}
               >
-                {liveTourStore.poster ? <img src={liveTourStore.poster} alt="avatar" /> : uploadButton}
+                {yanceyMusicStore.cover ? <img src={yanceyMusicStore.cover} alt="avatar" /> : uploadButton}
               </Upload>
             </Col>
           </Row>
@@ -226,4 +258,4 @@ class Project extends Component {
 }
 
 
-export default Project;
+export default YanceyMusic;

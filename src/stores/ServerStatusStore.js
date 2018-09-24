@@ -2,7 +2,7 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import serverStatusApi from '../http/ServerStatusApi';
+import { serverStatusApi } from '../http/index';
 import { formatJSONDate } from '../util/tools';
 
 configure({
@@ -26,8 +26,6 @@ class ServerStatusStore {
 
   @observable totalRAM;
 
-  @observable chartData;
-
   @observable timestampData;
 
   @observable networkInBytesData;
@@ -40,6 +38,10 @@ class ServerStatusStore {
 
   @observable cpuUsageData;
 
+  @observable dataLength;
+
+  @observable curTab;
+
   constructor() {
     this.serverStatusApi = serverStatusApi;
     this.bandwidthDosage = 0;
@@ -50,13 +52,14 @@ class ServerStatusStore {
     this.totalSWAP = 0;
     this.RAMDosage = 0;
     this.totalRAM = 0;
-    this.chartData = [];
     this.timestampData = [];
     this.networkInBytesData = [];
     this.networkOutBytesData = [];
     this.diskReadBytesData = [];
     this.diskWriteBytesData = [];
     this.cpuUsageData = [];
+    this.dataLength = 12;
+    this.curTab = 'oneHour';
   }
 
   @computed get bandwidthUsage() {
@@ -108,6 +111,20 @@ class ServerStatusStore {
       });
     } catch (e) {
       message.error('unknown error!');
+    }
+  };
+
+  @action onSelectRange = (e) => {
+    const value = e.target.value;
+    this.curTab = value;
+    if (value === 'sevenDays') {
+      this.dataLength = 2016;
+    } else if (value === 'oneDay') {
+      this.dataLength = 288;
+    } else if (value === 'halfDay') {
+      this.dataLength = 144;
+    } else {
+      this.dataLength = 12;
     }
   };
 }

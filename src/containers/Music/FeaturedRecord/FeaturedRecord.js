@@ -184,9 +184,9 @@ class FeaturedRecord extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-              {featuredRecordStore.modalType === 'add' ? 'Add' : 'Update'}
+              {featuredRecordStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              new Album
+              Album
             </span>
           )}
           width={600}

@@ -1,0 +1,109 @@
+.cv_wrapper {
+  display: grid;
+  grid-template-columns: 33.3333% 33.3333% 33.3333%;
+  .add_wrapper {
+    display: flex;
+    align-items: center;
+    .add_intro {
+      display: inline-block;
+      margin-left: 20px;
+      font-size: 18px;
+    }
+  }
+  .work_experience_container, .program_experience_container {
+    border-right: 1px solid #ccc;
+  }
+  .work_experience_list {
+    margin-top: 20px;
+    width: 96%;
+    .work_experience_item {
+      margin-bottom: 20px;
+      padding: 24px;
+      list-style-type: none;
+      color: #414a60;
+      border-radius: 4px;
+      transition: background-color 500ms linear;
+      &:hover {
+        background: #f2f5f9;
+        transition: background-color 500ms linear;
+      }
+      &:hover .operation {
+        display: inline-block;
+      }
+      .operation {
+        display: none;
+        float: right;
+        color: #9fa3b0;
+        font-size: 18px;
+        cursor: pointer;
+        .anticon:hover {
+          color: #5dd5c8;
+        }
+        .anticon:first-child {
+          margin-right: 16px;
+        }
+      }
+      .enterprise_name {
+        display: inline-block;
+        font-size: 15px;
+      }
+      .in_service {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: #8d92a1;
+      }
+      .position {
+        font-weight: bold;
+      }
+      .work_content {
+        color: #61687c;
+        line-height: 24px;
+      }
+      .technology_stack {
+        margin-top: 20px;
+        .technology_stack_item {
+          display: inline-block;
+          font-size: 12px;
+          line-height: 20px;
+          color: #9fa3b0;
+          padding: 0 14px;
+          margin-top: 10px;
+          margin-right: 10px;
+          border: 1px solid #cfd1d7;
+          border-radius: 50px;
+        }
+      }
+    }
+  }
+  .add_btn {
+    display: inline-block;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 0 #bbb;
+    outline: none;
+    cursor: pointer;
+    &::after {
+      position: absolute;
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: #666;
+      top: 23px;
+      left: 12px;
+    }
+    &::before {
+      position: absolute;
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: #666;
+      top: 23px;
+      left: 12px;
+      transform: rotate(90deg);
+    }
+  }
+}

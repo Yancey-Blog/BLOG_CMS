@@ -2,13 +2,13 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import { announcementApi } from '../http/index';
+import { mottoApi } from '../http/index';
 
 configure({
   strict: 'always',
 });
 
-class AnnouncementStore {
+class MottoStore {
   @observable dataSource;
 
   @observable selectedRowKeys;
@@ -22,7 +22,7 @@ class AnnouncementStore {
   @observable content;
 
   constructor() {
-    this.announcementApi = announcementApi;
+    this.mottoApi = mottoApi;
     this.dataSource = [];
     this.selectedRowKeys = [];
     this.showModal = false;
@@ -33,7 +33,7 @@ class AnnouncementStore {
 
   getData = async () => {
     try {
-      const response = await this.announcementApi.getData();
+      const response = await this.mottoApi.getData();
       runInAction(() => {
         this.dataSource = response.data;
       });
@@ -47,7 +47,7 @@ class AnnouncementStore {
       content: this.content,
     };
     try {
-      const response = await this.announcementApi.insertData(params);
+      const response = await this.mottoApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -62,7 +62,7 @@ class AnnouncementStore {
       content: this.content,
     };
     try {
-      const response = await this.announcementApi.modifyData(this.curId, params);
+      const response = await this.mottoApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -74,7 +74,7 @@ class AnnouncementStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.announcementApi.deleteData(id);
+      const response = await this.mottoApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.getData();
@@ -88,7 +88,7 @@ class AnnouncementStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.announcementApi.batchDeleteData(params);
+      const response = await this.mottoApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
@@ -123,6 +123,6 @@ class AnnouncementStore {
   };
 }
 
-const announcementStore = new AnnouncementStore(announcementApi);
+const mottoStore = new MottoStore(mottoApi);
 
-export default announcementStore;
+export default mottoStore;

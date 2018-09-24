@@ -18,6 +18,18 @@ export const beforeUpload = (file) => {
   return isImageFormat && isLt2M;
 };
 
+export const musicBeforeUpload = (file) => {
+  const isMusicFormat = file.type === 'audio/mpeg' || file.type === 'audio/x-m4a';
+  if (!isMusicFormat) {
+    message.error('You can only upload MP3 or M4A music!');
+  }
+  const isLt15M = file.size / 1024 / 1024 < 15;
+  if (!isLt15M) {
+    message.error('Music File must smaller than 15MB!');
+  }
+  return isMusicFormat && isLt15M;
+};
+
 export const formatJSONDate = jsonDate => new Date(+new Date(new Date(jsonDate).toJSON()) + 8 * 3600 * 1000).toISOString()
   .replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
 

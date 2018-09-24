@@ -5,8 +5,10 @@
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 24px; }
 .server_status_wrapper .server_running_container {
-  margin-top: 24px; }
+  margin-top: 24px;
+  background: #fff;
+  padding: 24px; }
   .server_status_wrapper .server_running_container canvas {
     margin-top: 24px; }
 
-/*# sourceMappingURL=serverStatus.css.map */
+/*# sourceMappingURL=serverStatus.cssStatus.css.map */

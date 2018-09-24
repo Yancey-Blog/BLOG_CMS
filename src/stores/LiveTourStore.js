@@ -2,7 +2,7 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import liveTourApi from '../http/LiveTourApi';
+import { liveTourApi } from '../http/index';
 
 configure({
   strict: 'always',

@@ -182,9 +182,9 @@ class Project extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-              {projectStore.modalType === 'add' ? 'Add' : 'Update'}
+              {projectStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              new Project
+              Project
             </span>
           )}
           width={600}

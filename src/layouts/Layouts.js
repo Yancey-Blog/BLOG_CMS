@@ -3,16 +3,19 @@ import { Route, Switch, Link } from 'react-router-dom';
 import './layouts.css';
 
 import {
-  Layout, Menu, Icon, Breadcrumb,
+  Layout, Menu, Icon,
 } from 'antd';
-import Music from '../containers/Music/Player/Player';
 import Motto from '../containers/Home/Motto/Motto';
 import Project from '../containers/Home/Project/Project';
 import Announcement from '../containers/Home/Announcement/Announcement';
 import Cover from '../containers/Home/Cover/Cover';
 import LiveTour from '../containers/Music/LiveTour/LiveTour';
 import FeaturedRecord from '../containers/Music/FeaturedRecord/FeaturedRecord';
+import YanceyMusic from '../containers/Music/YanceyMusic/YanceyMusic';
+import Player from '../containers/Music/Player/Player';
 import OverView from '../containers/Overview/OverView';
+import CV from '../containers/CV/CV';
+import Article from '../containers/Article/Article';
 
 const {
   Header, Sider, Content, Footer,
@@ -62,6 +65,22 @@ class Layouts extends React.Component {
                 <span>
                   Overview
                 </span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="9">
+              <Link to="/cv">
+                <Icon type="solution" />
+                <span>
+                  CV
+                </span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="11">
+              <Link to="/article">
+                <Icon type="file-text" />
+                <span>
+                  Article
+                  </span>
               </Link>
             </Menu.Item>
             <SubMenu
@@ -118,6 +137,11 @@ class Layouts extends React.Component {
                   Yancey Music
                 </Link>
               </Menu.Item>
+              <Menu.Item key="10">
+                <Link to="/music/player">
+                  Player
+                </Link>
+              </Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>
@@ -142,6 +166,10 @@ class Layouts extends React.Component {
               <Route path="/home/cover" component={Cover} />
               <Route path="/music/liveTour" component={LiveTour} />
               <Route path="/music/featuredRecord" component={FeaturedRecord} />
+              <Route path="/music/yanceyMusic" component={YanceyMusic} />
+              <Route path="/music/player" component={Player} />
+              <Route path="/cv" component={CV} />
+              <Route path="/article" component={Article} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

@@ -134,6 +134,9 @@ class Cover extends Component {
             <Column
               title="Show"
               dataIndex="show"
+              filters={[{ text: 'show', value: 'true' }, { text: 'hide', value: 'false' }]}
+              filterMultiple={false}
+              onFilter={(value, record) => record.show.toString().indexOf(value) === 0}
               render={(text, record) => (
                 <span>
                   <Switch
@@ -185,9 +188,9 @@ class Cover extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-              {coverStore.modalType === 'add' ? 'Add' : 'Update'}
+              {coverStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              new Cover
+              Cover
             </span>
           )}
           width={600}

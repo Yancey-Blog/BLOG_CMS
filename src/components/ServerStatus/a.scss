@@ -1,0 +1,52 @@
+.server_status_wrapper {
+  .ant-card {
+    background: #fff;
+  }
+  .server_params_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 24px;
+    .server_params {
+      background: #fff;
+      padding: 20px 24px 8px;
+      .param_title {
+        display: flex;
+        justify-content: space-between;
+        color: rgba(#000, .45);
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .usage_ratio {
+        display: block;
+        color: rgba(#000, .85);
+        font-size: 30px;
+      }
+      .progress_wrapper{
+        background: #f5f5f5;
+        width: 100%;
+        height: 8px;
+        margin-top: 30px;
+        margin-bottom: 12px;
+        .current_progress{
+          width: 0;
+          height: 8px;
+          background: #13C2C2;
+          transition: width 500ms linear;
+        }
+      }
+      .dosage_total{
+        border-top: 1px solid #e8e8e8;
+        margin-top: 18px;
+        padding-top: 9px;
+      }
+    }
+  }
+  .server_running_container {
+    margin-top: 24px;
+    background: #fff;
+    padding: 24px;
+    canvas {
+      margin-top: 24px;
+    }
+  }
+}

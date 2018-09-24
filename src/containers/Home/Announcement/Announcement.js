@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm,
+  Table, Button, Modal, Input, Icon, Popconfirm, Row, Col,
 } from 'antd';
 
-import { formatJSONDate } from '../../../util/tools';
+import { capitalized } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -15,6 +15,7 @@ class Announcement extends Component {
     super(props);
     this.state = {};
   }
+
 
   componentDidMount() {
     const { announcementStore } = this.props;
@@ -35,10 +36,10 @@ class Announcement extends Component {
       defaultCurrent: 1,
     };
     return (
-      <main className="wrapper announcement_wrapper">
+      <main className="wrapper project_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
-            onClick={announcementStore.openInsertModal}
+            onClick={() => announcementStore.openModal('add')}
             type="primary"
             style={{
               marginBottom: 16,
@@ -89,15 +90,6 @@ class Announcement extends Component {
               key="content"
             />
             <Column
-              title="Upload Date"
-              key="upload_date"
-              render={(text, record) => (
-                <span>
-                  {formatJSONDate(record.upload_date)}
-                </span>
-              )}
-            />
-            <Column
               title="Operation"
               key="operation"
               render={(text, record) => (
@@ -106,26 +98,21 @@ class Announcement extends Component {
                     type="edit"
                     theme="twoTone"
                     twoToneColor="#007fff"
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => Modal.confirm({
-                      width: 600,
-                      iconType: 'form',
-                      maskClosable: true,
-                      title: 'Modify the announcement',
-                      content: <Input defaultValue={record.content} onChange={event => announcementStore.onModifyInputChange(event)} />,
-                      onOk: () => announcementStore.modifyRow(record._id), /* eslint-disable-line */
-                    })}
+                    style={{ cursor: 'pointer', marginRight: 16 }}
+                    onClick={
+                      () => announcementStore.openModal('update', record._id, record.content) /* eslint-disable-line */
+                    }
                   />
                   <Popconfirm
                     title="Are you sure to delete this announcement?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
-                    onConfirm={() => announcementStore.deleteRow(record._id)} /* eslint-disable-line */
+                    onConfirm={() => announcementStore.deleteData(record._id)} /* eslint-disable-line */
                   >
                     <Icon
                       type="delete"
                       theme="twoTone"
                       twoToneColor="#f5222d"
-                      style={{ cursor: 'pointer', marginLeft: '16px' }}
+                      style={{ cursor: 'pointer' }}
                     />
                   </Popconfirm>
                 </span>
@@ -142,22 +129,35 @@ class Announcement extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add new announcement
+              {announcementStore.modalType === 'add' ? 'Add New' : 'Update The'}
+              {' '}
+              Announcement
             </span>
           )}
           width={600}
           wrapClassName="reset_modal"
           closable={false}
           destroyOnClose
-          visible={announcementStore.showInsertModal}
-          okButtonProps={{ disabled: announcementStore.insertedContent.length === 0 }}
-          onOk={announcementStore.insertData}
-          onCancel={announcementStore.closeInsertModal}
+          visible={announcementStore.showModal}
+          okButtonProps={{ disabled: !announcementStore.isFilled }}
+          okText={capitalized(announcementStore.modalType)}
+          onOk={announcementStore.modalType === 'add' ? () => announcementStore.insertData() : () => announcementStore.modifyData()}
+          onCancel={announcementStore.closeModal}
         >
-          <Input
-            placeholder="Announcement"
-            onChange={event => announcementStore.onInsertInputChange(event)}
-          />
+          <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <span>
+                Announcement Content:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16}>
+              <Input
+                defaultValue={announcementStore.content}
+                placeholder="Announcement Content"
+                onChange={event => announcementStore.onContentChange(event)}
+              />
+            </Col>
+          </Row>
         </Modal>
       </main>
     );

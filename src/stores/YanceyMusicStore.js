@@ -2,14 +2,14 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import { featuredRecordApi } from '../http/index';
+import { yanceyMusicApi } from '../http/index';
 import { getCurrentDate } from '../util/tools';
 
 configure({
   strict: 'always',
 });
 
-class FeaturedRecordStore {
+class YanceyMusicStore {
   @observable dataSource;
 
   @observable selectedRowKeys;
@@ -20,36 +20,33 @@ class FeaturedRecordStore {
 
   @observable curId;
 
-  @observable albumName;
-
-  @observable artist;
+  @observable title;
 
   @observable cover;
 
-  @observable buyUrl;
+  @observable soundCloudUrl;
 
   @observable releaseDate;
 
   @observable uploadStatus;
 
   constructor() {
-    this.featuredRecordApi = featuredRecordApi;
+    this.yanceyMusicApi = yanceyMusicApi;
     this.dataSource = [];
     this.selectedRowKeys = [];
     this.showModal = false;
     this.curId = '';
     this.modalType = '';
-    this.albumName = '';
-    this.artist = '';
+    this.title = '';
     this.cover = '';
-    this.buyUrl = '';
+    this.soundCloudUrl = '';
     this.releaseDate = '';
     this.uploadStatus = false;
   }
 
   getData = async () => {
     try {
-      const response = await this.featuredRecordApi.getData();
+      const response = await this.yanceyMusicApi.getData();
       runInAction(() => {
         this.dataSource = response.data;
       });
@@ -60,15 +57,13 @@ class FeaturedRecordStore {
 
   insertData = async () => {
     const params = {
-      album_name: this.albumName,
-      artist: this.artist,
+      title: this.title,
       cover: this.cover,
-      buy_url: this.buyUrl,
+      soundCloud_url: this.soundCloudUrl,
       release_date: this.releaseDate,
     };
-    console.log(params)
     try {
-      const response = await this.featuredRecordApi.insertData(params);
+      const response = await this.yanceyMusicApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -80,14 +75,13 @@ class FeaturedRecordStore {
 
   modifyData = async () => {
     const params = {
-      album_name: this.albumName,
-      artist: this.artist,
+      title: this.title,
       cover: this.cover,
-      buy_url: this.buyUrl,
+      soundCloud_url: this.soundCloudUrl,
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.featuredRecordApi.modifyData(this.curId, params);
+      const response = await this.yanceyMusicApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
@@ -99,7 +93,7 @@ class FeaturedRecordStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.featuredRecordApi.deleteData(id);
+      const response = await this.yanceyMusicApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.getData();
@@ -113,7 +107,7 @@ class FeaturedRecordStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.featuredRecordApi.batchDeleteData(params);
+      const response = await this.yanceyMusicApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
@@ -124,19 +118,18 @@ class FeaturedRecordStore {
   };
 
   @computed get isFilled() {
-    return this.albumName !== '' && this.artist !== '' && this.cover !== '' && this.buyUrl !== '' && this.releaseDate !== '';
+    return this.title !== '' && this.cover !== '' && this.soundCloudUrl !== '' && this.releaseDate !== '';
   }
 
   @action onSelectChange = (selectedRowKeys) => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action openModal = (type, id = '', albumName = '', artist = '', buyUrl = '', releaseDate = getCurrentDate(), cover = '') => {
+  @action openModal = (type, id = '', title = '', soundCloudUrl = '', releaseDate = getCurrentDate(), cover = '') => {
     this.modalType = type;
     this.curId = id;
-    this.albumName = albumName;
-    this.artist = artist;
-    this.buyUrl = buyUrl;
+    this.title = title;
+    this.soundCloudUrl = soundCloudUrl;
     this.releaseDate = releaseDate;
     this.cover = cover;
     this.showModal = true;
@@ -144,23 +137,18 @@ class FeaturedRecordStore {
 
   @action closeModal = () => {
     this.showModal = false;
-    this.albumName = '';
-    this.artist = '';
+    this.title = '';
     this.cover = '';
-    this.buyUrl = '';
+    this.soundCloudUrl = '';
     this.releaseDate = '';
   };
 
-  @action onAlbumNameChange = (e) => {
-    this.albumName = e.target.value;
+  @action onTitleChange = (e) => {
+    this.title = e.target.value;
   };
 
-  @action onArtistChange = (e) => {
-    this.artist = e.target.value;
-  };
-
-  @action onBuyUrlChange = (e) => {
-    this.buyUrl = e.target.value;
+  @action onSoundCloudUrlChange = (e) => {
+    this.soundCloudUrl = e.target.value;
   };
 
   @action onReleaseDateChange = (date, dateString) => {
@@ -179,6 +167,6 @@ class FeaturedRecordStore {
   }
 }
 
-const featuredRecordStore = new FeaturedRecordStore(featuredRecordApi);
+const yanceyMusicStore = new YanceyMusicStore(yanceyMusicApi);
 
-export default featuredRecordStore;
+export default yanceyMusicStore;

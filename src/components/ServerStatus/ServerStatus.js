@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { Button, Radio } from 'antd';
 import {
-  ChartCard, MiniProgress,
-} from 'ant-design-pro/lib/Charts';
+  Button, Radio, Tabs, Icon,
+} from 'antd';
 import { Line } from 'react-chartjs-2';
-import './serverStatus.css';
+import './a.css';
+
+const TabPane = Tabs.TabPane;
 
 @inject('serverStatusStore')
 @observer
@@ -30,7 +31,7 @@ class ServerStatus extends Component {
   render() {
     const { serverStatusStore } = this.props;
     const networkChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-200),
+      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
       datasets: [
         {
           label: 'Network In Bytes',
@@ -51,7 +52,7 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.networkInBytesData.slice(-200),
+          data: serverStatusStore.networkInBytesData.slice(-serverStatusStore.dataLength),
         },
         {
           label: 'Network Out Bytes',
@@ -72,12 +73,12 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.networkOutBytesData.slice(-200),
+          data: serverStatusStore.networkOutBytesData.slice(-serverStatusStore.dataLength),
         },
       ],
     };
     const diskChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-200),
+      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
       datasets: [
         {
           label: 'Disk Read Bytes',
@@ -98,7 +99,7 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.diskReadBytesData.slice(-200),
+          data: serverStatusStore.diskReadBytesData.slice(-serverStatusStore.dataLength),
         },
         {
           label: 'Disk Write Bytes',
@@ -119,12 +120,12 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.diskWriteBytesData.slice(-200),
+          data: serverStatusStore.diskWriteBytesData.slice(-serverStatusStore.dataLength),
         },
       ],
     };
     const cpuChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-200),
+      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
       datasets: [
         {
           label: 'CPU Usage',
@@ -145,137 +146,188 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.cpuUsageData.slice(-200),
+          data: serverStatusStore.cpuUsageData.slice(-serverStatusStore.dataLength),
         },
       ],
     };
+    const operations = (
+      <Radio.Group
+        defaultValue={serverStatusStore.curTab}
+        buttonStyle="solid"
+        onChange={event => serverStatusStore.onSelectRange(event)}
+      >
+        <Radio.Button value="sevenDays">7 days</Radio.Button>
+        <Radio.Button value="oneDay">24 Hours</Radio.Button>
+        <Radio.Button value="halfDay">12 Hours</Radio.Button>
+        <Radio.Button value="oneHour">1 Hour</Radio.Button>
+      </Radio.Group>
+    );
     return (
       <section className="server_status_wrapper">
         <div className="server_params_container">
-          <ChartCard
-            title="Bandwidth Usage"
-            total={`${serverStatusStore.bandwidthUsage}%`}
-            footer={(
-              <div>
-                <span>
+          <div className="server_params">
+            <span className="param_title">
+              Bandwidth Usage
+              <span>
+                <Icon type="info-circle" theme="outlined" />
+              </span>
+            </span>
+            <span className="usage_ratio">
+              {serverStatusStore.bandwidthUsage}
+%
+            </span>
+            <div className="progress_wrapper">
+              <div
+                className="current_progress"
+                style={{ width: `${serverStatusStore.bandwidthUsage}%` }}
+              />
+            </div>
+            <div className="dosage_total">
+              <span>
                 Dosage:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.bandwidthDosage}
-                  </span>
-                  {' '}
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.bandwidthDosage}
+                </span>
+                {' '}
                 GB
-                </span>
-                <span style={{ marginLeft: 16 }}>
+              </span>
+              <span style={{ marginLeft: 16 }}>
                 Total:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.totalBandwidth}
-                  </span>
-                  {' '}
-                  GB
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.totalBandwidth}
                 </span>
-              </div>
-            )}
-            contentHeight={46}
-          >
-            <MiniProgress percent={serverStatusStore.bandwidthUsage} strokeWidth={8} target={serverStatusStore.bandwidthUsage + 2} />
-          </ChartCard>
-          <ChartCard
-            title="Disk Usage"
-            total={`${serverStatusStore.diskUsage}%`}
-            footer={(
-              <div>
-                <span>
-                Dosage:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.diskDosage}
-                  </span>
-                  {' '}
+                {' '}
                 GB
-                </span>
-                <span style={{ marginLeft: 16 }}>
-                Total:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.totalDisk}
-                  </span>
-                  {' '}
-                  GB
-                </span>
-              </div>
-            )}
-            contentHeight={46}
-          >
-            <MiniProgress percent={serverStatusStore.diskUsage} strokeWidth={8} target={serverStatusStore.diskUsage + 2} />
-          </ChartCard>
-          <ChartCard
-            title="RAM Usage"
-            total={`${serverStatusStore.RAMUsage}%`}
-            footer={(
-              <div>
-                <span>
+              </span>
+            </div>
+          </div>
+          <div className="server_params">
+            <span className="param_title">
+              Disk Usage
+              <span>
+                <Icon type="info-circle" theme="outlined" />
+              </span>
+            </span>
+            <span className="usage_ratio">
+              {serverStatusStore.diskUsage}
+              %
+            </span>
+            <div className="progress_wrapper">
+              <div
+                className="current_progress"
+                style={{ width: `${serverStatusStore.diskUsage}%` }}
+              />
+            </div>
+            <div className="dosage_total">
+              <span>
                 Dosage:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.RAMUsage}
-                  </span>
-                  {' '}
-                MB
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.diskDosage}
                 </span>
-                <span style={{ marginLeft: 16 }}>
+                {' '}
+                GB
+              </span>
+              <span style={{ marginLeft: 16 }}>
                 Total:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.totalRAM}
-                  </span>
-                  {' '}
-                  MB
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.totalDisk}
                 </span>
-              </div>
-            )}
-            contentHeight={46}
-          >
-            <MiniProgress percent={serverStatusStore.RAMUsage} strokeWidth={8} target={serverStatusStore.RAMUsage + 2} />
-          </ChartCard>
-          <ChartCard
-            title="SWAP Usage"
-            total={`${serverStatusStore.SWAPUsage}%`}
-            footer={(
-              <div>
-                <span>
+                {' '}
+                GB
+              </span>
+            </div>
+          </div>
+          <div className="server_params">
+            <span className="param_title">
+              RAM Usage
+              <span>
+                <Icon type="info-circle" theme="outlined" />
+              </span>
+            </span>
+            <span className="usage_ratio">
+              {serverStatusStore.RAMUsage}
+              %
+            </span>
+            <div className="progress_wrapper">
+              <div
+                className="current_progress"
+                style={{ width: `${serverStatusStore.RAMUsage}%` }}
+              />
+            </div>
+            <div className="dosage_total">
+              <span>
                 Dosage:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.SWAPDosage}
-                  </span>
-                  {' '}
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.RAMDosage}
+                </span>
+                {' '}
                 MB
-                </span>
-                <span style={{ marginLeft: 16 }}>
+              </span>
+              <span style={{ marginLeft: 16 }}>
                 Total:
-                  <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
-                    {serverStatusStore.totalSWAP}
-                  </span>
-                  {' '}
-                  MB
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.totalRAM}
                 </span>
-              </div>
-            )}
-            contentHeight={46}
-          >
-            <MiniProgress percent={serverStatusStore.SWAPUsage} strokeWidth={8} target={serverStatusStore.SWAPUsage + 2} />
-          </ChartCard>
+                {' '}
+                MB
+              </span>
+            </div>
+          </div>
+          <div className="server_params">
+            <span className="param_title">
+              SWAP Usage
+              <span>
+                <Icon type="info-circle" theme="outlined" />
+              </span>
+            </span>
+            <span className="usage_ratio">
+              {serverStatusStore.SWAPUsage}
+              %
+            </span>
+            <div className="progress_wrapper">
+              <div
+                className="current_progress"
+                style={{ width: `${serverStatusStore.SWAPUsage}%` }}
+              />
+            </div>
+            <div className="dosage_total">
+              <span>
+                Dosage:
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.SWAPDosage}
+                </span>
+                {' '}
+                MB
+              </span>
+              <span style={{ marginLeft: 16 }}>
+                Total:
+                <span style={{ marginLeft: 4, color: 'rgba(0,0,0,.85)' }}>
+                  {serverStatusStore.totalSWAP}
+                </span>
+                {' '}
+                MB
+              </span>
+            </div>
+          </div>
         </div>
         <div className="server_running_container">
-          <Radio.Group value={size} onChange={this.handleSizeChange}>
-            <Radio.Button value="large">Large</Radio.Button>
-            <Radio.Button value="default">Default</Radio.Button>
-            <Radio.Button value="small">Small</Radio.Button>
-          </Radio.Group>
-          <Line
-            data={networkChartConfig}
-          />
-          <Line
-            data={diskChartConfig}
-          />
-          <Line
-            data={cpuChartConfig}
-          />
+          <Tabs tabBarExtraContent={operations}>
+            <TabPane tab="Network" key="1">
+              <Line
+                data={networkChartConfig}
+              />
+            </TabPane>
+            <TabPane tab="Disk" key="2">
+              <Line
+                data={diskChartConfig}
+              />
+            </TabPane>
+            <TabPane tab="CPU" key="3">
+              <Line
+                data={cpuChartConfig}
+              />
+            </TabPane>
+          </Tabs>
         </div>
       </section>
     );

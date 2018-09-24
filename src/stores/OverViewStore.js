@@ -2,7 +2,7 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import overViewApi from '../http/OverViewApi';
+import { overViewApi } from '../http/index';
 
 configure({
   strict: 'always',

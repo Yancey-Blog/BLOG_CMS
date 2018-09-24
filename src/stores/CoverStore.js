@@ -2,7 +2,7 @@ import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
-import coverApi from '../http/CoverApi';
+import { coverApi } from '../http/index';
 
 configure({
   strict: 'always',

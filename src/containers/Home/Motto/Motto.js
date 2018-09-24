@@ -1,187 +1,65 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm, message,
+  Table, Button, Modal, Input, Icon, Popconfirm, Row, Col,
 } from 'antd';
-import {
-  GET, PUT, POST, DELETE,
-} from '../../../util/axios';
 
-import { formatJSONDate } from '../../../util/tools';
-import './motto.css';
+import { capitalized } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
+@inject('mottoStore')
+@observer
 class Motto extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataSource: [],
-      selectedRowKeys: [],
-      content: '',
-      modifyContent: '',
-      showInsertModal: false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.modifyInputChange = this.modifyInputChange.bind(this);
+    this.state = {};
   }
 
-  componentWillMount() {
-  }
 
   componentDidMount() {
-    this.getData();
+    const { mottoStore } = this.props;
+    mottoStore.getData();
   }
-
-  componentWillUnmount() {
-  }
-
-  // get table data
-  getData = () => {
-    GET('/mottoes', {})
-      .then((res) => {
-        this.setState({
-          dataSource: res.data,
-        });
-      })
-      .catch((error) => {
-        // todo
-      });
-  };
-
-  // click 'add row' btn
-  openInsertModal = () => {
-    this.setState({ showInsertModal: true });
-  };
-
-  closeInsertModal = () => {
-    this.setState({ showInsertModal: false });
-  };
-
-  // listen input status on insert modal
-  handleChange = (event) => {
-    this.setState({ content: event.target.value });
-  };
-
-  // insert a row
-  insertMotto = () => {
-    const { content, dataSource } = this.state;
-    const params = {
-      content,
-    };
-    POST('/mottoes', params)
-      .then((res) => {
-        this.setState({ showInsertModal: false, content: '' });
-        message.success('insert success');
-        dataSource.splice(0, dataSource.length);
-        this.getData();
-      })
-      .catch((error) => {
-      });
-  };
-
-  // listen input status on insert modal
-  modifyInputChange = (event) => {
-    this.setState({ modifyContent: event.target.value });
-  };
-
-  // click modify btn
-  modifyRow = (id) => {
-    const { modifyContent, dataSource } = this.state;
-    const params = {
-      content: modifyContent,
-    };
-    if (modifyContent.length === 0) {
-      message.error('This area is not allowed empty!', 2);
-    } else {
-      PUT(`/mottoes/${id}`, params)
-        .then((res) => {
-          message.success('modify success');
-          dataSource.splice(0, dataSource.length);
-          this.getData();
-        })
-        .catch((error) => {
-        });
-    }
-  };
-
-  // delete a row
-  deleteRow = (id) => {
-    const { dataSource } = this.state;
-    DELETE(`/mottoes/${id}`, {})
-      .then((res) => {
-        message.success('delete success');
-        dataSource.splice(0, dataSource.length);
-        this.getData();
-      })
-      .catch((error) => {
-        // todo
-      });
-  };
-
-  // get the rows to be deleted
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedRowKeys });
-  };
-
-  // batch delete
-  batchDelete = () => {
-    const { dataSource, selectedRowKeys } = this.state;
-    const params = {
-      selectedList: selectedRowKeys,
-    };
-    POST('/batchMottoes', params)
-      .then((res) => {
-        selectedRowKeys.splice(0, selectedRowKeys.length);
-        message.success('delete success');
-        dataSource.splice(0, dataSource.length);
-        this.getData();
-      })
-      .catch((error) => {
-        // todo
-      });
-  };
 
   render() {
-    const {
-      dataSource, selectedRowKeys, showInsertModal, content,
-    } = this.state;
-
+    const { mottoStore } = this.props;
+    const selectedRowKeysLength = mottoStore.selectedRowKeys.length;
     const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange,
+      selectedRowKeys: mottoStore.selectedRowKeys,
+      onChange: mottoStore.onSelectChange,
     };
-
-    const hasSelected = selectedRowKeys.length > 0;
-
     const pagination = {
-      total: dataSource.length,
+      total: mottoStore.dataSource.length,
       showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       pageSize: 10,
       defaultCurrent: 1,
     };
-
     return (
-      <main className="wrapper motto_wrapper">
+      <main className="wrapper project_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
-            onClick={this.openInsertModal}
+            onClick={() => mottoStore.openModal('add')}
             type="primary"
-            style={{ marginBottom: 16, marginRight: 20 }}
+            style={{
+              marginBottom: 16,
+              marginRight: 20,
+            }}
           >
             <Icon
-              type="edit"
+              type="plus"
               theme="outlined"
             />
             Add a row
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeys.length} ${selectedRowKeys.length > 1 ? 'mottoes' : 'motto'}?`}
-            icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-            onConfirm={() => this.batchDelete()}
+            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            icon={<Icon type="warning" style={{ color: 'red' }} />}
+            onConfirm={() => mottoStore.batchDelete()}
           >
             <Button
-              type="primary"
-              disabled={!hasSelected}
+              type="danger"
+              disabled={!(selectedRowKeysLength > 0)}
             >
               <Icon
                 type="delete"
@@ -191,12 +69,12 @@ class Motto extends Component {
             </Button>
           </Popconfirm>
           <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} ${selectedRowKeys.length > 1 ? 'items' : 'item'}` : ''}
+            {selectedRowKeysLength > 0 ? `Selected ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}` : ''}
           </span>
         </div>
         <Table
           rowKey={record => record._id} /* eslint-disable-line */
-          dataSource={dataSource}
+          dataSource={mottoStore.dataSource}
           rowSelection={rowSelection}
           pagination={pagination}
         >
@@ -212,44 +90,30 @@ class Motto extends Component {
               key="content"
             />
             <Column
-              title="Upload Date"
-              key="upload_date"
+              title="Operation"
+              key="operation"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.upload_date)}
-                </span>
-              )}
-            />
-            <Column
-              title="Action"
-              key="action"
-              render={(text, record) => (
-                <span>
-                  <Button
-                    size="small"
-                    onClick={() => Modal.confirm({
-                      width: 600,
-                      iconType: 'form',
-                      maskClosable: true,
-                      title: 'Modify the motto',
-                      content: <Input defaultValue={record.content} onChange={this.modifyInputChange} />,
-                      onOk: () => this.modifyRow(record._id), /* eslint-disable-line */
-                    })}
-                  >
-                    Modify
-                  </Button>
+                  <Icon
+                    type="edit"
+                    theme="twoTone"
+                    twoToneColor="#007fff"
+                    style={{ cursor: 'pointer', marginRight: 16 }}
+                    onClick={
+                      () => mottoStore.openModal('update', record._id, record.content) /* eslint-disable-line */
+                    }
+                  />
                   <Popconfirm
-                    title="Are you sure to delete this motto?"
-                    icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-                    onConfirm={() => this.deleteRow(record._id)} /* eslint-disable-line */
+                    title="Are you sure to delete this announcement?"
+                    icon={<Icon type="warning" style={{ color: 'red' }} />}
+                    onConfirm={() => mottoStore.deleteData(record._id)} /* eslint-disable-line */
                   >
-                    <Button
-                      size="small"
-                      type="danger"
-                      style={{ marginLeft: 10 }}
-                    >
-                      Delete
-                    </Button>
+                    <Icon
+                      type="delete"
+                      theme="twoTone"
+                      twoToneColor="#f5222d"
+                      style={{ cursor: 'pointer' }}
+                    />
                   </Popconfirm>
                 </span>
               )}
@@ -262,24 +126,38 @@ class Motto extends Component {
               <Icon
                 type="plus-circle"
                 theme="twoTone"
+                twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-                Add a new motto
+              {mottoStore.modalType === 'add' ? 'Add New' : 'Update The'}
+              {' '}
+              Motto
             </span>
           )}
           width={600}
           wrapClassName="reset_modal"
           closable={false}
           destroyOnClose
-          visible={showInsertModal}
-          okButtonProps={{ disabled: content.length === 0 }}
-          onOk={this.insertMotto}
-          onCancel={this.closeInsertModal}
+          visible={mottoStore.showModal}
+          okButtonProps={{ disabled: !mottoStore.isFilled }}
+          okText={capitalized(mottoStore.modalType)}
+          onOk={mottoStore.modalType === 'add' ? () => mottoStore.insertData() : () => mottoStore.modifyData()}
+          onCancel={mottoStore.closeModal}
         >
-          <Input
-            placeholder="Motto"
-            onChange={this.handleChange}
-          />
+          <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <span>
+                Motto Content:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16}>
+              <Input
+                defaultValue={mottoStore.content}
+                placeholder="Motto Content"
+                onChange={event => mottoStore.onContentChange(event)}
+              />
+            </Col>
+          </Row>
         </Modal>
       </main>
     );
