@@ -9,7 +9,9 @@
     "babel-loader": "^8.0.2",
     "babel-plugin-import": "^1.8.0",
     "chart.js": "^2.7.2",
+    "codemirror": "^5.40.2",
     "eslint-loader": "^2.1.0",
+    "highlightjs": "^9.10.0",
     "mobx": "^5.1.1",
     "mobx-react": "^5.2.8",
     "moment": "^2.22.2",
@@ -18,7 +20,8 @@
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.5.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "tui-editor": "^1.2.6"
   },
   "scripts": {
     "start": "PORT=3002 react-app-rewired start",

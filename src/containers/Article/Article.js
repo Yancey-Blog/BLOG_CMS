@@ -90,6 +90,7 @@ class Article extends Component {
               title="Summary"
               dataIndex="summary"
               key="summary"
+              width={300}
             />
             <Column
               title="Publish Date"

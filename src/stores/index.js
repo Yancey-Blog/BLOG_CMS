@@ -11,6 +11,7 @@ import serverStatusStore from './ServerStatusStore';
 import workExperienceStore from './WorkExperienceStore';
 import programExperienceStore from './ProgramExperienceStore';
 import articleStore from './ArticleStore';
+import articleDetailStore from './ArticleDetailStore';
 
 export default {
   mottoStore,
@@ -26,4 +27,5 @@ export default {
   workExperienceStore,
   programExperienceStore,
   articleStore,
+  articleDetailStore,
 };

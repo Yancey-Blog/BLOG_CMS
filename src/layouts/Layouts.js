@@ -16,6 +16,7 @@ import Player from '../containers/Music/Player/Player';
 import OverView from '../containers/Overview/OverView';
 import CV from '../containers/CV/CV';
 import Article from '../containers/Article/Article';
+import ArticleDetail from '../containers/Article/ArticleDetail';
 
 const {
   Header, Sider, Content, Footer,
@@ -80,7 +81,15 @@ class Layouts extends React.Component {
                 <Icon type="file-text" />
                 <span>
                   Article
-                  </span>
+                </span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="12">
+              <Link to="/p/add">
+                <Icon type="file-text" />
+                <span>
+                  Article Detail
+                </span>
               </Link>
             </Menu.Item>
             <SubMenu
@@ -170,6 +179,7 @@ class Layouts extends React.Component {
               <Route path="/music/player" component={Player} />
               <Route path="/cv" component={CV} />
               <Route path="/article" component={Article} />
+              <Route path="/p/add" component={ArticleDetail} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
