@@ -77,7 +77,7 @@ class Layouts extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="11">
-              <Link to="/article">
+              <Link to="/article/list">
                 <Icon type="file-text" />
                 <span>
                   Article
@@ -85,7 +85,7 @@ class Layouts extends React.Component {
               </Link>
             </Menu.Item>
             <Menu.Item key="12">
-              <Link to="/p/add">
+              <Link to="/article/add">
                 <Icon type="file-text" />
                 <span>
                   Article Detail
@@ -178,8 +178,9 @@ class Layouts extends React.Component {
               <Route path="/music/yanceyMusic" component={YanceyMusic} />
               <Route path="/music/player" component={Player} />
               <Route path="/cv" component={CV} />
-              <Route path="/article" component={Article} />
-              <Route path="/p/add" component={ArticleDetail} />
+              <Route path="/article/list" component={Article} />
+              <Route path="/article/add" component={ArticleDetail} />
+              <Route path="/article/update/:id" component={ArticleDetail} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

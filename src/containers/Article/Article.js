@@ -45,7 +45,7 @@ class Article extends Component {
               marginRight: 20,
             }}
           >
-            <Link to="/article/:id">
+            <Link to="/article/add">
               <Icon
                 type="plus"
                 theme="outlined"
@@ -153,15 +153,14 @@ class Article extends Component {
               key="operation"
               render={(text, record) => (
                 <span>
-                  <Icon
-                    type="edit"
-                    theme="twoTone"
-                    twoToneColor="#007fff"
-                    style={{ cursor: 'pointer', marginRight: 16 }}
-                    onClick={
-                      () => articleStore.openModal('update', record._id, record.title, record.introduction, record.poster, record.url) /* eslint-disable-line */
-                    }
-                  />
+                  <Link to={`/article/update/${record._id}`}>
+                    <Icon
+                      type="edit"
+                      theme="twoTone"
+                      twoToneColor="#007fff"
+                      style={{ cursor: 'pointer', marginRight: 16 }}
+                    />
+                  </Link>
                   <Popconfirm
                     title="Are you sure to delete this project?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}

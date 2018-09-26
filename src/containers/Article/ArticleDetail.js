@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Button, Icon, Popconfirm, Input, Upload, Modal, message,
+  Button, Icon, Input, Upload, Modal, Tag, Tooltip,
 } from 'antd';
 import 'tui-editor/dist/tui-editor-extScrollSync.min';
 import { beforeUpload } from '../../util/tools';
@@ -11,7 +11,6 @@ import 'tui-editor/dist/tui-editor-contents.min.css';
 import 'highlightjs/styles/github.css';
 import './articleDetail.css';
 
-const { TextArea } = Input;
 const Dragger = Upload.Dragger;
 
 @inject('articleDetailStore')
@@ -25,6 +24,8 @@ class ArticleDetail extends Component {
   componentDidMount() {
     const { articleDetailStore } = this.props;
     articleDetailStore.initEditor();
+    articleDetailStore.getPageType();
+    if (articleDetailStore.pageType) articleDetailStore.getDataById();
     this.uploadImage();
   }
 
@@ -54,7 +55,6 @@ class ArticleDetail extends Component {
         ),
         onOk() {
           editor.insertText(`\n\n![${articleDetailStore.editorImageName}](${articleDetailStore.editorImage})`);
-          console.log(editor.getValue());
         },
       });
     });
@@ -68,10 +68,11 @@ class ArticleDetail extends Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const tagColorList = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple'];
     return (
       <main className="wrapper article_detail_wrapper">
         <h1>
-            Add New Article
+          { articleDetailStore.pageType ? 'Update this article' : 'Add new article'}
         </h1>
         <section className="article_detail_container">
           <span style={{ lineHeight: '102px' }}>
@@ -93,17 +94,20 @@ class ArticleDetail extends Component {
           </span>
           <Input
             defaultValue={articleDetailStore.title}
-            placeholder="Input title..."
+            placeholder="Input Title..."
             onChange={event => articleDetailStore.onTitleChange(event)}
           />
           <span>
             Summary:
           </span>
-          <TextArea
-            rows={8}
-            defaultValue={articleDetailStore.title}
-            placeholder="Input summary..."
+          <textarea
+            name="summary"
+            id="summary"
+            cols="30"
+            rows="8"
+            value={articleDetailStore.summary}
             onChange={event => articleDetailStore.onSummaryChange(event)}
+            placeholder="Input Summary..."
           />
         </section>
         <span
@@ -112,6 +116,80 @@ class ArticleDetail extends Component {
           Content:
         </span>
         <div id="editSection" />
+        <span className="tags_label">
+          Tags:
+        </span>
+        <div className="tags_container">
+          {articleDetailStore.tags.map((tag, index) => {
+            const isLongTag = tag.length > 10;
+            const tagElem = (
+              <Tag
+                key={tag}
+                closable
+                color={tagColorList[index]}
+                afterClose={() => articleDetailStore.handleClose(tag)}
+              >
+                {isLongTag ? `${tag.slice(0, 10)}...` : tag}
+              </Tag>
+            );
+            return isLongTag ? <Tooltip title={tag} key={tag}>{tagElem}</Tooltip> : tagElem;
+          })}
+          {articleDetailStore.inputVisible && (
+            <Input
+              ref={articleDetailStore.saveInputRef}
+              type="text"
+              size="small"
+              style={{ width: 78 }}
+              value={articleDetailStore.inputValue}
+              onChange={articleDetailStore.handleInputChange}
+              onBlur={articleDetailStore.handleInputConfirm}
+              onPressEnter={articleDetailStore.handleInputConfirm}
+            />
+          )}
+          {!articleDetailStore.inputVisible && (
+            <Tag
+              onClick={articleDetailStore.showInput}
+              style={{ background: '#fff', borderStyle: 'dashed' }}
+            >
+              <Icon type="plus" />
+              {' '}
+              New Tag
+            </Tag>
+          )}
+        </div>
+        <div className="submit_btn_group">
+          <Button
+            onClick={() => console.log(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
+            type="primary"
+            style={{
+              marginBottom: 16,
+            }}
+          >
+            Save and add another
+          </Button>
+          <Button
+            onClick={() => articleDetailStore.handleSave(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
+            style={{
+              marginBottom: 16,
+              marginLeft: 20,
+              background: '#f90',
+              borderColor: '#f90',
+            }}
+          >
+            Save and continue editing
+          </Button>
+          <Button
+            onClick={() => console.log(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
+            style={{
+              marginBottom: 16,
+              marginLeft: 20,
+              background: '#19be6b',
+              borderColor: '#19be6b',
+            }}
+          >
+            SAVE
+          </Button>
+        </div>
       </main>
     );
   }

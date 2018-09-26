@@ -5,6 +5,8 @@ import {
 class ArticleApi {
   getData = () => GET('/articles', {});
 
+  getDataById = id => GET(`articles/${id}`, {});
+
   insertData = params => POST('/articles', params);
 
   modifyData = (id, params) => PUT(`/articles/${id}`, params);
