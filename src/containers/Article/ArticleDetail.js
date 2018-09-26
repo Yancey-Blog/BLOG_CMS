@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Button, Icon, Popconfirm, Input, Upload, Modal, message, Spin,
+  Button, Icon, Popconfirm, Input, Upload, Modal, message,
 } from 'antd';
-import Editor from 'tui-editor';
 import 'tui-editor/dist/tui-editor-extScrollSync.min';
 import { beforeUpload } from '../../util/tools';
 import 'codemirror/lib/codemirror.css';
@@ -23,47 +22,15 @@ class ArticleDetail extends Component {
     this.state = {};
   }
 
-
   componentDidMount() {
-    this.initEditor();
+    const { articleDetailStore } = this.props;
+    articleDetailStore.initEditor();
+    this.uploadImage();
   }
 
-  initEditor = () => {
+  uploadImage = () => {
     const { articleDetailStore } = this.props;
-
-    const editor = new Editor({
-      el: document.querySelector('#editSection'),
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
-      height: '800px',
-      hideModeSwitch: true,
-      exts: ['scrollSync'],
-      toolbarItems: [
-        'heading',
-        'bold',
-        'italic',
-        'strike',
-        'divider',
-        'hr',
-        'quote',
-        'divider',
-        'ul',
-        'ol',
-        'task',
-        'indent',
-        'outdent',
-        'divider',
-        'table',
-        'link',
-        'divider',
-        'code',
-        'codeblock',
-        'divider',
-      ],
-    });
-
-    const toolbar = editor.getUI().getToolbar();
-
+    const editor = articleDetailStore.editorInstance;
     editor.eventManager.addEventType('upload');
     editor.eventManager.listen('upload', () => {
       Modal.confirm({
@@ -71,7 +38,6 @@ class ArticleDetail extends Component {
         width: 700,
         content: (
           <div>
-            <Spin spinning={articleDetailStore.loading} />
             <Dragger
               name="avatar"
               action="http://127.0.0.1:3001/api/uploads"
@@ -92,14 +58,6 @@ class ArticleDetail extends Component {
         },
       });
     });
-
-    toolbar.addButton({
-      name: 'upload',
-      className: 'tui-image',
-      event: 'upload',
-      tooltip: 'Upload Images',
-    }, -1);
-
   };
 
   render() {

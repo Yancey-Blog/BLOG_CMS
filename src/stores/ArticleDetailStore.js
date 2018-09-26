@@ -2,6 +2,7 @@ import {
   action, observable, configure, runInAction,
 } from 'mobx';
 import { message } from 'antd/lib/index';
+import Editor from 'tui-editor';
 import { articleApi } from '../http/index';
 
 configure({
@@ -29,6 +30,8 @@ class ArticleDetailStore {
 
   @observable loading;
 
+  @observable editorInstance;
+
   constructor() {
     this.articleApi = articleApi;
     this.headerCover = '';
@@ -41,7 +44,51 @@ class ArticleDetailStore {
     this.editorImage = '';
     this.editorImageName = '';
     this.loading = false;
+    this.editorInstance = {};
   }
+
+  initEditor = () => {
+    const editor = new Editor({
+      el: document.querySelector('#editSection'),
+      initialEditType: 'markdown',
+      previewStyle: 'vertical',
+      height: '800px',
+      hideModeSwitch: true,
+      exts: ['scrollSync'],
+      toolbarItems: [
+        'heading',
+        'bold',
+        'italic',
+        'strike',
+        'divider',
+        'hr',
+        'quote',
+        'divider',
+        'ul',
+        'ol',
+        'task',
+        'indent',
+        'outdent',
+        'divider',
+        'table',
+        'link',
+        'divider',
+        'code',
+        'codeblock',
+        'divider',
+      ],
+    });
+
+    const toolbar = editor.getUI().getToolbar();
+    toolbar.addButton({
+      name: 'upload',
+      className: 'tui-image',
+      event: 'upload',
+      tooltip: 'Upload Images',
+    }, -1);
+
+    this.editorInstance = editor;
+  };
 
   @action onHeaderCoverChange = (e) => {
     this.headerCover = e.target.value;
