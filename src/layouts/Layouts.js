@@ -83,6 +83,14 @@ class Layouts extends React.Component {
                 </span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="12">
+              <Link to="/about">
+                <Icon type="team" />
+                <span>
+                  About Me
+                </span>
+              </Link>
+            </Menu.Item>
             <SubMenu
               key="sub1"
               title={(

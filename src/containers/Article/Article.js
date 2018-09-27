@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Table, Button, Modal, Icon, Popconfirm, Switch,
 } from 'antd';
+// import Switch from 'rc-switch';
 import { formatJSONDate } from '../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -15,7 +16,6 @@ class Article extends Component {
     super(props);
     this.state = {};
   }
-
 
   componentDidMount() {
     const { articleStore } = this.props;
@@ -156,6 +156,7 @@ class Article extends Component {
                   <Switch
                     checkedChildren={<Icon type="check" />}
                     unCheckedChildren={<Icon type="close" />}
+                    checked={record.status}
                     defaultChecked={record.status}
                     onChange={checked => articleStore.switchStatus(record._id, checked)} /* eslint-disable-line */
                   />

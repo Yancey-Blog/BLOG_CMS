@@ -88,11 +88,6 @@ class FeaturedRecord extends Component {
         >
           <ColumnGroup>
             <Column
-              title="Id"
-              dataIndex="_id"
-              key="_id"
-            />
-            <Column
               title="Album"
               dataIndex="album_name"
               key="album_name"

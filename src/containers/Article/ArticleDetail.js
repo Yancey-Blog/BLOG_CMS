@@ -3,7 +3,6 @@ import { observer, inject } from 'mobx-react';
 import {
   Button, Icon, Input, Upload, Modal, Tag, Tooltip, Popconfirm,
 } from 'antd';
-import { withRouter } from 'react-router-dom';
 import 'tui-editor/dist/tui-editor-extScrollSync.min';
 import { beforeUpload } from '../../util/tools';
 import 'codemirror/lib/codemirror.css';
