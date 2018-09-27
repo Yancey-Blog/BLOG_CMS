@@ -11,6 +11,8 @@ class ArticleApi {
 
   modifyData = (id, params) => PUT(`/articles/${id}`, params);
 
+  switchStatus = (id, params) => PUT(`/articleStatus/${id}`, params);
+
   deleteData = id => DELETE(`/articles/${id}`, {});
 
   batchDeleteData = params => POST('/batchArticles', params);

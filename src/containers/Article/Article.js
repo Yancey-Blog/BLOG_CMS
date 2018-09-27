@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import {
-  Table, Button, Modal, Icon, Popconfirm,
+  Table, Button, Modal, Icon, Popconfirm, Switch,
 } from 'antd';
 import { formatJSONDate } from '../../util/tools';
 
@@ -106,7 +106,7 @@ class Article extends Component {
               dataIndex="last_modified_date"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.publish_date)}
+                  {formatJSONDate(record.last_modified_date)}
                 </span>
               )}
             />
@@ -144,6 +144,20 @@ class Article extends Component {
                         }}
                       />,
                     })}
+                  />
+                </span>
+              )}
+            />
+            <Column
+              title="Status"
+              dataIndex="status"
+              render={(text, record) => (
+                <span>
+                  <Switch
+                    checkedChildren={<Icon type="check" />}
+                    unCheckedChildren={<Icon type="close" />}
+                    defaultChecked={record.status}
+                    onChange={checked => articleStore.switchStatus(record._id, checked)} /* eslint-disable-line */
                   />
                 </span>
               )}

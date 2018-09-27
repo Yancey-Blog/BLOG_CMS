@@ -4,6 +4,7 @@ import {
 import { message } from 'antd/lib/index';
 import Editor from 'tui-editor';
 import { articleApi } from '../http/index';
+import history from '../history';
 
 configure({
   strict: 'always',
@@ -15,8 +16,6 @@ class ArticleDetailStore {
   @observable title;
 
   @observable summary;
-
-  @observable lastModifiedDate;
 
   @observable uploadStatus;
 
@@ -32,7 +31,7 @@ class ArticleDetailStore {
 
   @observable inputValue;
 
-  @observable pageType;
+  @observable activity;
 
   constructor() {
     this.articleApi = articleApi;
@@ -40,7 +39,6 @@ class ArticleDetailStore {
     this.title = '';
     this.summary = '';
     this.tags = [];
-    this.lastModifiedDate = '';
     this.uploadStatus = false;
     this.editorImage = '';
     this.editorImageName = '';
@@ -48,8 +46,7 @@ class ArticleDetailStore {
     this.tags = [];
     this.inputVisible = false;
     this.inputValue = '';
-    // "True" means update an article while "false" means add a new article.
-    this.pageType = false;
+    this.activity = '';
   }
 
   initEditor = () => {
@@ -94,13 +91,28 @@ class ArticleDetailStore {
     this.editorInstance = editor;
   };
 
-  @action getPageType = () => {
-    this.pageType = document.location.pathname.indexOf('update') !== -1;
+  insertData = async (content, status) => {
+    const params = {
+      header_cover: this.headerCover,
+      title: this.title,
+      summary: this.summary,
+      content,
+      tags: this.tags,
+      status,
+    };
+    try {
+      const response = await this.articleApi.insertData(params);
+      message.success('insert success');
+      if (this.activity === 'toUpdate') {
+        history.push(`/article/update/${response.data._id}`);
+      } else {
+        history.push('/article/list');
+        history.go();
+      }
+    } catch (e) {
+      message.error('unknown error!');
+    }
   };
-
-  @computed get curId() {
-    return document.location.pathname.split('/').slice(-1)[0];
-  }
 
   getDataById = async () => {
     try {
@@ -110,28 +122,47 @@ class ArticleDetailStore {
         this.title = response.data.title;
         this.summary = response.data.summary;
         this.tags = response.data.tags;
+        this.editorInstance.insertText(this.editorInstance.convertor.toMarkdown(response.data.content));
       });
     } catch (e) {
       message.error('unknown error!');
     }
   };
 
-  insertData = async (content) => {
+  modifyData = async (content, status) => {
     const params = {
       header_cover: this.headerCover,
       title: this.title,
       summary: this.summary,
       content,
       tags: this.tags,
+      status,
     };
     try {
-      const response = await this.articleApi.insertData(params);
-      message.success('insert success');
+      const response = await this.articleApi.modifyData(this.curId, params);
+      message.success('modify success');
+      if (this.activity === 'toList') {
+        history.push('/article/list');
+        history.go();
+      }
     } catch (e) {
       message.error('unknown error!');
     }
   };
 
+  clearData = () => {
+    this.headerCover = '';
+    this.title = '';
+    this.summary = '';
+    this.tags = [];
+  };
+
+  @computed get curId() {
+    return document.location.pathname.split('/')
+      .slice(-1)[0];
+  }
+
+  // input change listening
   @action onHeaderCoverChange = (e) => {
     this.headerCover = e.target.value;
   };
@@ -142,7 +173,6 @@ class ArticleDetailStore {
 
   @action onSummaryChange = (e) => {
     this.summary = e.target.value;
-    console.log(this.summary);
   };
 
   @action onContentChange = (e) => {
@@ -151,10 +181,6 @@ class ArticleDetailStore {
 
   @action onTagsChange = (e) => {
     this.tags = e.target.value;
-  };
-
-  @action onLastModifiedDateChange = (e) => {
-    this.lastModifiedDate = e.target.value;
   };
 
   @action onHeaderCoverUploadChange = (info) => {
@@ -199,24 +225,30 @@ class ArticleDetailStore {
     if (this.inputValue && this.tags.indexOf(this.inputValue) === -1) {
       this.tags = [...this.tags, this.inputValue];
     }
-    console.log(this.tags);
     this.inputValue = '';
     this.inputVisible = false;
   };
 
-  saveInputRef = input => this.input = input; /* eslint-disable-line */
+  saveInputRef = input => this.input = input;
+
+  /* eslint-disable-line */
 
   @computed get isFilled() {
     return this.headerCover !== '' && this.title !== '' && this.summary !== '' && this.tags.length !== 0;
   }
 
   // save
-  @action handleSave = (content) => {
+  @action handleSave = (activity, content, status) => {
     if (content) {
       if (this.isFilled) {
-        this.insertData(content);
+        this.activity = activity;
+        if (window.location.pathname.indexOf('update') !== -1) {
+          this.modifyData(content, status);
+        } else {
+          this.insertData(content, status);
+        }
       } else {
-        message.error('All items are required～');
+        message.error('All items are required!');
       }
     } else {
       message.error('Write something?');

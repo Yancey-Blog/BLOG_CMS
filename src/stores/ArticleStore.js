@@ -33,6 +33,24 @@ class ArticleStore {
     }
   };
 
+  switchStatus = async (id, checked) => {
+    const params = {
+      status: checked,
+    };
+    try {
+      const response = await this.articleApi.switchStatus(id, params);
+      if (checked) {
+        message.success('this article has been published');
+      } else {
+        message.success('the article will be hidden');
+      }
+      this.dataSource.splice(0, this.dataSource.length);
+      this.getData();
+    } catch (e) {
+      message.error('unknown error!');
+    }
+  };
+
   deleteData = async (id) => {
     try {
       const response = await this.articleApi.deleteData(id);

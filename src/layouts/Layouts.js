@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import './layouts.css';
-
 import {
   Layout, Menu, Icon,
 } from 'antd';
@@ -81,14 +80,6 @@ class Layouts extends React.Component {
                 <Icon type="file-text" />
                 <span>
                   Article
-                </span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="12">
-              <Link to="/article/add">
-                <Icon type="file-text" />
-                <span>
-                  Article Detail
                 </span>
               </Link>
             </Menu.Item>

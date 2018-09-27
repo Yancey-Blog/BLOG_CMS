@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Button, Icon, Input, Upload, Modal, Tag, Tooltip,
+  Button, Icon, Input, Upload, Modal, Tag, Tooltip, Popconfirm,
 } from 'antd';
+import { withRouter } from 'react-router-dom';
 import 'tui-editor/dist/tui-editor-extScrollSync.min';
 import { beforeUpload } from '../../util/tools';
 import 'codemirror/lib/codemirror.css';
@@ -24,8 +25,11 @@ class ArticleDetail extends Component {
   componentDidMount() {
     const { articleDetailStore } = this.props;
     articleDetailStore.initEditor();
-    articleDetailStore.getPageType();
-    if (articleDetailStore.pageType) articleDetailStore.getDataById();
+    if (window.location.pathname.indexOf('update') !== -1) {
+      articleDetailStore.getDataById();
+    } else {
+      articleDetailStore.clearData();
+    }
     this.uploadImage();
   }
 
@@ -72,7 +76,7 @@ class ArticleDetail extends Component {
     return (
       <main className="wrapper article_detail_wrapper">
         <h1>
-          { articleDetailStore.pageType ? 'Update this article' : 'Add new article'}
+          { window.location.pathname.indexOf('update') !== -1 ? 'Update the article' : 'Add new article'}
         </h1>
         <section className="article_detail_container">
           <span style={{ lineHeight: '102px' }}>
@@ -92,8 +96,10 @@ class ArticleDetail extends Component {
           <span>
             Title:
           </span>
-          <Input
-            defaultValue={articleDetailStore.title}
+          <input
+            id="title"
+            type="text"
+            value={articleDetailStore.title}
             placeholder="Input Title..."
             onChange={event => articleDetailStore.onTitleChange(event)}
           />
@@ -104,7 +110,7 @@ class ArticleDetail extends Component {
             name="summary"
             id="summary"
             cols="30"
-            rows="8"
+            rows="6"
             value={articleDetailStore.summary}
             onChange={event => articleDetailStore.onSummaryChange(event)}
             placeholder="Input Summary..."
@@ -158,28 +164,24 @@ class ArticleDetail extends Component {
           )}
         </div>
         <div className="submit_btn_group">
-          <Button
-            onClick={() => console.log(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
-            type="primary"
-            style={{
-              marginBottom: 16,
-            }}
+          <Popconfirm
+            title="Save and Publish Now?"
+            icon={<Icon type="warning" style={{ color: 'red' }} />}
+            onConfirm={() => articleDetailStore.handleSave('toUpdate', articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()), true)}
+            onCancel={() => articleDetailStore.handleSave('toUpdate', articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()), false)}
           >
-            Save and add another
-          </Button>
+            <Button
+              type="primary"
+              style={{
+                marginBottom: 16,
+                marginLeft: 20,
+              }}
+            >
+              Save and continue editing
+            </Button>
+          </Popconfirm>
           <Button
-            onClick={() => articleDetailStore.handleSave(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
-            style={{
-              marginBottom: 16,
-              marginLeft: 20,
-              background: '#f90',
-              borderColor: '#f90',
-            }}
-          >
-            Save and continue editing
-          </Button>
-          <Button
-            onClick={() => console.log(articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()))}
+            onClick={() => articleDetailStore.handleSave('toList', articleDetailStore.editorInstance.convertor.toHTML(articleDetailStore.editorInstance.getValue()), true)}
             style={{
               marginBottom: 16,
               marginLeft: 20,

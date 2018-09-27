@@ -12,6 +12,7 @@
     "codemirror": "^5.40.2",
     "eslint-loader": "^2.1.0",
     "highlightjs": "^9.10.0",
+    "history": "^4.7.2",
     "mobx": "^5.1.1",
     "mobx-react": "^5.2.8",
     "moment": "^2.22.2",
