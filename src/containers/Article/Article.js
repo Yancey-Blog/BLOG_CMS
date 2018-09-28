@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import {
-  Table, Button, Modal, Icon, Popconfirm, Switch,
+  Table, Button, Modal, Icon, Popconfirm, Switch, Pagination, Spin, Input, DatePicker,
 } from 'antd';
-// import Switch from 'rc-switch';
 import { formatJSONDate } from '../../util/tools';
 
 const { Column, ColumnGroup } = Table;
+const Search = Input.Search;
+const { RangePicker } = DatePicker;
 
 @inject('articleStore')
 @observer
@@ -29,14 +30,28 @@ class Article extends Component {
       selectedRowKeys: articleStore.selectedRowKeys,
       onChange: articleStore.onSelectChange,
     };
-    const pagination = {
-      total: articleStore.dataSource.length,
-      showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-      pageSize: 10,
-      defaultCurrent: 1,
-    };
     return (
       <main className="wrapper article_wrapper">
+        <div
+          className="search_container"
+          style={{
+            display: 'flex', justifyContent: 'space-between', margin: '0 0 30px 0', width: '50%',
+          }}
+        >
+          <Search
+            placeholder="Search by title..."
+            onSearch={value => articleStore.onTitleSearchChange(value)}
+            enterButton
+            style={{ width: 300 }}
+          />
+          <RangePicker onChange={articleStore.onDateRangeSearchChange} />
+          <Button
+            type="primary"
+            onClick={articleStore.resetSearch}
+          >
+            Reset
+          </Button>
+        </div>
         <div className="add_batch_delete_wrapper">
           <Button
             type="primary"
@@ -78,7 +93,7 @@ class Article extends Component {
           rowKey={record => record._id} /* eslint-disable-line */
           dataSource={articleStore.dataSource}
           rowSelection={rowSelection}
-          pagination={pagination}
+          pagination={false}
         >
           <ColumnGroup>
             <Column
@@ -91,34 +106,6 @@ class Article extends Component {
               dataIndex="summary"
               key="summary"
               width={300}
-            />
-            <Column
-              title="Publish Date"
-              dataIndex="publish_date"
-              render={(text, record) => (
-                <span>
-                  {formatJSONDate(record.publish_date)}
-                </span>
-              )}
-            />
-            <Column
-              title="Last Modified Date"
-              dataIndex="last_modified_date"
-              render={(text, record) => (
-                <span>
-                  {formatJSONDate(record.last_modified_date)}
-                </span>
-              )}
-            />
-            <Column
-              title="Like Count"
-              dataIndex="like_count"
-              key="like_count"
-            />
-            <Column
-              title="PV Count"
-              dataIndex="pv_count"
-              key="pv_count"
             />
             <Column
               title="Header Cover"
@@ -147,6 +134,34 @@ class Article extends Component {
                   />
                 </span>
               )}
+            />
+            <Column
+              title="Publish Date"
+              dataIndex="publish_date"
+              render={(text, record) => (
+                <span>
+                  {formatJSONDate(record.publish_date)}
+                </span>
+              )}
+            />
+            <Column
+              title="Last Modified Date"
+              dataIndex="last_modified_date"
+              render={(text, record) => (
+                <span>
+                  {formatJSONDate(record.last_modified_date)}
+                </span>
+              )}
+            />
+            <Column
+              title="Like Count"
+              dataIndex="like_count"
+              key="like_count"
+            />
+            <Column
+              title="PV Count"
+              dataIndex="pv_count"
+              key="pv_count"
             />
             <Column
               title="Status"
@@ -193,6 +208,19 @@ class Article extends Component {
             />
           </ColumnGroup>
         </Table>
+        <Spin
+          spinning={articleStore.spinning}
+          style={{ marginLeft: '50%', marginTop: 20 }}
+        />
+        <Pagination
+          size="small"
+          showQuickJumper
+          defaultCurrent={1}
+          total={articleStore.totalAmount}
+          showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+          onChange={articleStore.onSwitchPage}
+          style={{ marginTop: 20, textAlign: 'right' }}
+        />
       </main>
     );
   }

@@ -5,6 +5,12 @@ import {
 class ArticleApi {
   getData = () => GET('/articles', {});
 
+  getDataByPage = page => GET(`/articles/page/${page}`, {});
+
+  getDataByTitle = title => GET(`/articlesByTitle?title=${title}`, {});
+
+  getDataByDateRange = (start, end) => GET(`/articlesByDateRange?start=${start}&end=${end}`, {});
+
   getDataById = id => GET(`articles/${id}`, {});
 
   insertData = params => POST('/articles', params);

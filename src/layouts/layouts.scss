@@ -28,14 +28,11 @@
   box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 }
 
-//.breadcrumb_wrapper{
-//  margin: -24px -24px 0px;
-//  .ant-breadcrumb{
-//    background: #fff;
-//    border-bottom: 1px solid #e8e8e8;
-//    padding: 16px 32px 0;
-//  }
-//}
+.header_right {
+  display: inline-block;
+  position: relative;
+  top: -26px;
+}
 
 .trigger {
   cursor: pointer;

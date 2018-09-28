@@ -23,6 +23,11 @@
 .ant-layout-header {
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08); }
 
+.header_right {
+  display: inline-block;
+  position: relative;
+  top: -26px; }
+
 .trigger {
   cursor: pointer;
   font-size: 20px;
@@ -33,4 +38,4 @@
   .trigger:hover {
     background: rgba(0, 0, 0, 0.025); }
 
-/*# sourceMappingURL=progressBar.css.map.map */
+/*# sourceMappingURL=layouts.css.map */

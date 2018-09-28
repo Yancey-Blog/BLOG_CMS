@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import './layouts.css';
 import {
-  Layout, Menu, Icon,
+  Layout, Menu, Icon, Switch as AntSwitch,
 } from 'antd';
 import Motto from '../containers/Home/Motto/Motto';
 import Project from '../containers/Home/Project/Project';
@@ -58,100 +58,102 @@ class Layouts extends React.Component {
               </h1>
             </a>
           </div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1">
-              <Link to="/">
-                <Icon type="dashboard" />
-                <span>
+          <div>
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+              <Menu.Item key="1">
+                <Link to="/">
+                  <Icon type="dashboard" />
+                  <span>
                   Overview
-                </span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="9">
-              <Link to="/cv">
-                <Icon type="solution" />
-                <span>
-                  CV
-                </span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="11">
-              <Link to="/article/list">
-                <Icon type="file-text" />
-                <span>
-                  Article
-                </span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="12">
-              <Link to="/about">
-                <Icon type="team" />
-                <span>
-                  About Me
-                </span>
-              </Link>
-            </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={(
-                <span>
-                  <Icon type="home" />
-                  <span>Home</span>
-                </span>
+                  </span>
+                </Link>
+              </Menu.Item>
+              <SubMenu
+                key="sub1"
+                title={(
+                  <span>
+                    <Icon type="home" />
+                    <span>Home</span>
+                  </span>
               )}
-            >
-              <Menu.Item key="2">
-                <Link to="/home/motto">
+              >
+                <Menu.Item key="2">
+                  <Link to="/home/motto">
                   Motto
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Link to="/home/announcement">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Link to="/home/announcement">
                   Announcement
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="4">
-                <Link to="/home/project">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                  <Link to="/home/project">
                   Project
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="5">
-                <Link to="/home/cover">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                  <Link to="/home/cover">
                   Cover
-                </Link>
-              </Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={(
-                <span>
-                  <Icon type="customer-service" />
-                  <span>Music</span>
-                </span>
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+              <SubMenu
+                key="sub2"
+                title={(
+                  <span>
+                    <Icon type="customer-service" />
+                    <span>Music</span>
+                  </span>
               )}
-            >
-              <Menu.Item key="6">
-                <Link to="/music/liveTour">
+              >
+                <Menu.Item key="6">
+                  <Link to="/music/liveTour">
                   Live Tours
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="7">
-                <Link to="/music/featuredRecord">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="7">
+                  <Link to="/music/featuredRecord">
                   Featured Records
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <Link to="/music/yanceyMusic">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="8">
+                  <Link to="/music/yanceyMusic">
                   Yancey Music
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="10">
-                <Link to="/music/player">
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="10">
+                  <Link to="/music/player">
                   Player
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+              <Menu.Item key="9">
+                <Link to="/cv">
+                  <Icon type="solution" />
+                  <span>
+                  CV
+                  </span>
                 </Link>
               </Menu.Item>
-            </SubMenu>
-          </Menu>
+              <Menu.Item key="11">
+                <Link to="/article/list">
+                  <Icon type="file-text" />
+                  <span>
+                  Article
+                  </span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="12">
+                <Link to="/about">
+                  <Icon type="team" />
+                  <span>
+                  About
+                  </span>
+                </Link>
+              </Menu.Item>
+            </Menu>
+          </div>
         </Sider>
         <Layout>
           <Header style={{
@@ -164,6 +166,15 @@ class Layouts extends React.Component {
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
+            <div className="header_right">
+              <AntSwitch
+                checkedChildren={<Icon type="check" />}
+                unCheckedChildren={<Icon type="close" />}
+                checked={false}
+                defaultChecked={false}
+                onChange={checked => this.switchStatus(checked)}
+              />
+            </div>
           </Header>
           <Content>
             <Switch>

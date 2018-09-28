@@ -107,7 +107,6 @@ class ArticleDetailStore {
         history.push(`/article/update/${response.data._id}`);
       } else {
         history.push('/article/list');
-        // history.go();
       }
     } catch (e) {
       message.error('unknown error!');
@@ -143,7 +142,6 @@ class ArticleDetailStore {
       message.success('modify success');
       if (this.activity === 'toList') {
         history.push('/article/list');
-        // history.go();
       }
     } catch (e) {
       message.error('unknown error!');
