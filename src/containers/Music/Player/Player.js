@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch, message,
 } from 'antd';
 import {
-  formatJSONDate, beforeUpload, musicBeforeUpload, capitalized,
+  formatJSONDate, beforeUpload, musicBeforeUpload, capitalized, checkWebp, webp,
 } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -124,7 +124,7 @@ class Player extends Component {
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.cover}
+                    src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                     alt={`${record.artist} - ${record.title}`}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -135,7 +135,7 @@ class Player extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.cover}
+                        src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                         alt={`${record.artist} - ${record.title}`}
                         style={{
                           marginTop: 10, width: '800px',

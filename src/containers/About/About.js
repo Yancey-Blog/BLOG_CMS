@@ -1,52 +1,54 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
+  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, DatePicker,
 } from 'antd';
-
+import moment from 'moment';
 import {
-  formatJSONDate, beforeUpload, capitalized, checkWebp, webp,
-} from '../../../util/tools';
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp,
+} from '../../util/tools';
 
 const { Column, ColumnGroup } = Table;
+const { TextArea } = Input;
 
-@inject('liveTourStore')
+@inject('aboutStore')
 @observer
-class Project extends Component {
+class About extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
-    const { liveTourStore } = this.props;
-    liveTourStore.getData();
+    const { aboutStore } = this.props;
+    aboutStore.getData();
   }
 
   render() {
-    const { liveTourStore } = this.props;
-    const selectedRowKeysLength = liveTourStore.selectedRowKeys.length;
+    const { aboutStore } = this.props;
+    const selectedRowKeysLength = aboutStore.selectedRowKeys.length;
     const rowSelection = {
-      selectedRowKeys: liveTourStore.selectedRowKeys,
-      onChange: liveTourStore.onSelectChange,
+      selectedRowKeys: aboutStore.selectedRowKeys,
+      onChange: aboutStore.onSelectChange,
     };
     const pagination = {
-      total: liveTourStore.dataSource.length,
+      total: aboutStore.dataSource.length,
       showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       pageSize: 10,
       defaultCurrent: 1,
     };
     const uploadButton = (
       <div>
-        <Icon type={liveTourStore.uploadStatus ? 'loading' : 'plus'} />
+        <Icon type={aboutStore.uploadStatus ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+    const dateFormat = 'YYYY-MM-DD';
     return (
-      <main className="wrapper live_tour_wrapper">
+      <main className="wrapper about_wrapper">
         <div className="add_batch_delete_wrapper">
           <Button
-            onClick={() => liveTourStore.openModal('add')}
+            onClick={() => aboutStore.openModal('add')}
             type="primary"
             style={{
               marginBottom: 16,
@@ -62,7 +64,7 @@ class Project extends Component {
           <Popconfirm
             title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
-            onConfirm={() => liveTourStore.batchDelete()}
+            onConfirm={() => aboutStore.batchDelete()}
           >
             <Button
               type="danger"
@@ -81,28 +83,28 @@ class Project extends Component {
         </div>
         <Table
           rowKey={record => record._id} /* eslint-disable-line */
-          dataSource={liveTourStore.dataSource}
+          dataSource={aboutStore.dataSource}
           rowSelection={rowSelection}
           pagination={pagination}
         >
           <ColumnGroup>
-            <Column
-              title="Id"
-              dataIndex="_id"
-              key="_id"
-            />
             <Column
               title="Title"
               dataIndex="title"
               key="title"
             />
             <Column
-              title="Poster"
-              dataIndex="poster"
+              title="Introduction"
+              dataIndex="introduction"
+              key="introduction"
+            />
+            <Column
+              title="Cover"
+              dataIndex="cover"
               render={(text, record) => (
                 <span>
                   <img
-                    src={checkWebp() ? `${record.poster}${webp}` : record.poster}
+                    src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                     alt={record.title}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -113,7 +115,7 @@ class Project extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={checkWebp() ? `${record.poster}${webp}` : record.poster}
+                        src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                         alt={record.title}
                         style={{
                           marginTop: 10, width: '600px',
@@ -125,11 +127,11 @@ class Project extends Component {
               )}
             />
             <Column
-              title="Upload Date"
-              key="upload_date"
+              title="Date"
+              key="release_date"
               render={(text, record) => (
                 <span>
-                  {formatJSONDate(record.upload_date)}
+                  {formatJSONDate(record.release_date).split(' ')[0]}
                 </span>
               )}
             />
@@ -144,13 +146,13 @@ class Project extends Component {
                     twoToneColor="#007fff"
                     style={{ cursor: 'pointer', marginRight: 16 }}
                     onClick={
-                      () => liveTourStore.openModal('update', record._id, record.title, record.poster) /* eslint-disable-line */
+                      () => aboutStore.openModal('update', record._id, record.title, record.introduction, record.release_date, record.cover) /* eslint-disable-line */
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this live tour information?"
+                    title="Are you sure to delete this record?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
-                    onConfirm={() => liveTourStore.deleteData(record._id)} /* eslint-disable-line */
+                    onConfirm={() => aboutStore.deleteData(record._id)} /* eslint-disable-line */
                   >
                     <Icon
                       type="delete"
@@ -173,37 +175,62 @@ class Project extends Component {
                 twoToneColor="#faad14"
                 style={{ marginRight: 10 }}
               />
-              {liveTourStore.modalType === 'add' ? 'Add New' : 'Update The'}
+              {aboutStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              Live Tour
+              Album
             </span>
           )}
           width={600}
           wrapClassName="reset_modal"
           closable={false}
           destroyOnClose
-          visible={liveTourStore.showModal}
-          okButtonProps={{ disabled: !liveTourStore.isFilled }}
-          okText={capitalized(liveTourStore.modalType)}
-          onOk={liveTourStore.modalType === 'add' ? () => liveTourStore.insertData() : () => liveTourStore.modifyData()}
-          onCancel={liveTourStore.closeModal}
+          visible={aboutStore.showModal}
+          okButtonProps={{ disabled: !aboutStore.isFilled }}
+          okText={capitalized(aboutStore.modalType)}
+          onOk={aboutStore.modalType === 'add' ? () => aboutStore.insertData() : () => aboutStore.modifyData()}
+          onCancel={aboutStore.closeModal}
         >
           <Row gutter={16}>
+            <Col className="gutter-row" span={8}>
+              <span style={{ lineHeight: '32px' }}>
+                Title:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16}>
+              <Input
+                defaultValue={aboutStore.title}
+                placeholder="Title"
+                onChange={event => aboutStore.onTitleChange(event)}
+              />
+            </Col>
+            <Col className="gutter-row" span={8} style={{ marginTop: 20, marginBottom: 20 }}>
+              <span style={{ lineHeight: '32px' }}>
+                Introduction:
+              </span>
+            </Col>
+            <Col className="gutter-row" span={16} style={{ marginTop: 20, marginBottom: 20 }}>
+              <TextArea
+                rows={3}
+                defaultValue={aboutStore.introduction}
+                placeholder="Introduction"
+                onChange={event => aboutStore.onIntroductionChange(event)}
+              />
+            </Col>
             <Col className="gutter-row" span={8} style={{ marginBottom: 20 }}>
               <span style={{ lineHeight: '32px' }}>
-                Live Tour Title:
+                Release Date:
               </span>
             </Col>
             <Col className="gutter-row" span={16} style={{ marginBottom: 20 }}>
-              <Input
-                defaultValue={liveTourStore.title}
-                placeholder="Live Tour Title"
-                onChange={event => liveTourStore.onTitleChange(event)}
+              <DatePicker
+                defaultValue={moment(aboutStore.releaseDate !== '' ? aboutStore.releaseDate : getCurrentDate(), dateFormat)}
+                format={dateFormat}
+                onChange={(date, dateString) => aboutStore.onReleaseDateChange(date, dateString)}
               />
             </Col>
             <Col className="gutter-row" span={8}>
               <span style={{ lineHeight: '102px' }}>
-                Upload Poster:
+                Upload Cover:
                 <br />
               </span>
             </Col>
@@ -215,9 +242,9 @@ class Project extends Component {
                 showUploadList={false}
                 action="http://127.0.0.1:3001/api/uploads"
                 beforeUpload={beforeUpload}
-                onChange={liveTourStore.onUploadChange}
+                onChange={aboutStore.onUploadChange}
               >
-                {liveTourStore.poster ? <img src={liveTourStore.poster} alt="avatar" /> : uploadButton}
+                {aboutStore.cover ? <img src={aboutStore.cover} alt="avatar" /> : uploadButton}
               </Upload>
             </Col>
           </Row>
@@ -228,4 +255,4 @@ class Project extends Component {
 }
 
 
-export default Project;
+export default About;

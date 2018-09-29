@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
 } from 'antd';
 
-import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
+import { formatJSONDate, beforeUpload, capitalized, checkWebp, webp } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -111,7 +111,7 @@ class Project extends Component {
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.poster}
+                    src={checkWebp() ? `${record.poster}${webp}` : record.poster}
                     alt={record.title}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -122,7 +122,7 @@ class Project extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.poster}
+                        src={checkWebp() ? `${record.poster}${webp}` : record.poster}
                         alt={record.title}
                         style={{
                           marginTop: 10, width: '600px',

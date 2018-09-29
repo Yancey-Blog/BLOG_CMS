@@ -128,6 +128,8 @@ class ArticleStore {
   @action onSwitchPage = (pageNumber) => {
     this.curPage = pageNumber;
     this.getData();
+    // reset pageNumber, make sure the first request is the first page
+    this.curPage = 1;
   };
 
   @action onTitleSearchChange = (value) => {

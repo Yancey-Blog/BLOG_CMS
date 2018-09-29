@@ -56,3 +56,11 @@ export const formatTimestampDate = (date) => {
   const s = (timestampDate.getSeconds() < 10 ? `0${timestampDate.getSeconds()}` : timestampDate.getSeconds());
   return Y + M + D + h + m + s;
 };
+
+export function checkWebp() {
+  return (document.createElement('canvas')
+    .toDataURL('image/webp')
+    .indexOf('data:image/webp') === 0);
+}
+
+export const webp = '?x-oss-process=image/format,webp';

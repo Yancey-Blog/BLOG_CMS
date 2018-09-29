@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch,
 } from 'antd';
 
-import { formatJSONDate, beforeUpload, capitalized } from '../../../util/tools';
+import { formatJSONDate, beforeUpload, capitalized, checkWebp, webp } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -100,7 +100,7 @@ class Cover extends Component {
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.url}
+                    src={checkWebp() ? `${record.url}${webp}` : record.url}
                     alt={record.name}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -111,7 +111,7 @@ class Cover extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.url}
+                        src={checkWebp() ? `${record.url}${webp}` : record.url}
                         alt={record.name}
                         style={{
                           marginTop: 10, width: '800px',

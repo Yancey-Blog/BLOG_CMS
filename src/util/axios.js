@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { message } from 'antd/lib/index';
+import history from '../history';
 
 // config timeout
 axios.defaults.timeout = 5 * 10000;
@@ -13,17 +15,28 @@ axios.defaults.headers.put['Content-Type'] = 'application/json';
 // config base url
 axios.defaults.baseURL = 'http://127.0.0.1:3001/api';
 
-
 // config request interceptors
 axios.interceptors.request.use(
-  (config) => {
-    if (config.method === 'post') {
-      // config.data = qs.stringify(config.data);
+  (req) => {
+    const now = new Date().getTime();
+    const token = window.localStorage.getItem('token');
+    const expires = window.localStorage.getItem('expires_date');
+    if (expires && token) {
+      if (expires - now < 0) {
+        message.error('token expires!');
+        window.localStorage.clear();
+        history.push('/Login');
+      } else {
+        req.headers.Authorization = `Bearer ${token}`;
+      }
+    } else {
+      history.push('/Login');
     }
-    return config;
+    return req;
   },
   err => Promise.reject(err),
 );
+
 // config response interceptors
 axios.interceptors.response.use(
   res => res,

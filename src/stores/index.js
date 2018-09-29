@@ -12,6 +12,7 @@ import workExperienceStore from './WorkExperienceStore';
 import programExperienceStore from './ProgramExperienceStore';
 import articleStore from './ArticleStore';
 import articleDetailStore from './ArticleDetailStore';
+import aboutStore from './AboutStore';
 
 export default {
   mottoStore,
@@ -28,4 +29,5 @@ export default {
   programExperienceStore,
   articleStore,
   articleDetailStore,
+  aboutStore,
 };

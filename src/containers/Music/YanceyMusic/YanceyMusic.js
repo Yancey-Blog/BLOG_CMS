@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import {
-  formatJSONDate, beforeUpload, capitalized, getCurrentDate,
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp
 } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -108,7 +108,7 @@ class YanceyMusic extends Component {
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.cover}
+                    src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                     alt={record.title}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -119,7 +119,7 @@ class YanceyMusic extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.cover}
+                        src={checkWebp() ? `${record.cover}${webp}` : record.cover}
                         alt={record.title}
                         style={{
                           marginTop: 10, width: '600px',

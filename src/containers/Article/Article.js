@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Table, Button, Modal, Icon, Popconfirm, Switch, Pagination, Spin, Input, DatePicker,
 } from 'antd';
-import { formatJSONDate } from '../../util/tools';
+import { formatJSONDate, checkWebp, webp } from '../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 const Search = Input.Search;
@@ -113,7 +113,7 @@ class Article extends Component {
               render={(text, record) => (
                 <span>
                   <img
-                    src={record.header_cover}
+                    src={checkWebp() ? `${record.header_cover}${webp}` : record.header_cover}
                     alt={record.title}
                     style={{
                       width: 120, height: 120, objectFit: 'cover', cursor: 'pointer', borderRadius: 4,
@@ -124,7 +124,7 @@ class Article extends Component {
                       maskClosable: true,
                       title: 'Look full size picture',
                       content: <img
-                        src={record.header_cover}
+                        src={checkWebp() ? `${record.header_cover}${webp}` : record.header_cover}
                         alt={record.title}
                         style={{
                           marginTop: 10, width: '600px',

@@ -16,6 +16,7 @@ import OverView from '../containers/Overview/OverView';
 import CV from '../containers/CV/CV';
 import Article from '../containers/Article/Article';
 import ArticleDetail from '../containers/Article/ArticleDetail';
+import About from '../containers/About/About';
 
 const {
   Header, Sider, Content, Footer,
@@ -191,6 +192,7 @@ class Layouts extends React.Component {
               <Route path="/article/list" component={Article} />
               <Route path="/article/add" component={ArticleDetail} />
               <Route path="/article/update/:id" component={ArticleDetail} />
+              <Route path="/about" component={About} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
