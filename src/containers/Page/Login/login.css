@@ -32,26 +32,28 @@
     background: url("./yancey-official-blog-logo.png") no-repeat center top;
     background-size: contain;
     text-align: center; }
-  .login_container label {
-    color: #585858;
-    font-size: 14px;
-    cursor: pointer; }
-  .login_container input {
-    display: block;
-    width: 100%;
-    margin-top: 12px;
-    border: 1px solid #EAEAEA;
-    background: none;
-    padding: 5px 10px;
-    color: #444;
-    font-weight: normal;
-    font-size: 14px;
-    background: #FFF;
-    box-shadow: 0 0 0 1000px white inset;
-    height: 46px;
-    border-radius: 3px;
-    outline: none; }
-    .login_container input:focus {
-      border: 1px solid #FF5656; }
+  .login_container .user_input_group {
+    margin-bottom: 18px; }
+    .login_container .user_input_group label {
+      color: #585858;
+      font-size: 14px;
+      cursor: pointer; }
+    .login_container .user_input_group input {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      border: 1px solid #EAEAEA;
+      background: none;
+      padding: 5px 10px;
+      color: #444;
+      font-weight: normal;
+      font-size: 14px;
+      background: #FFF;
+      box-shadow: 0 0 0 1000px white inset;
+      height: 46px;
+      border-radius: 3px;
+      outline: none; }
+      .login_container .user_input_group input:focus {
+        border: 1px solid #FF5656; }
 
 /*# sourceMappingURL=login.css.map */

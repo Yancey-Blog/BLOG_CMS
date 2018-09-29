@@ -21,9 +21,15 @@ class Login extends Component {
             </a>
           </h1>
           <div className="user_input_group">
-            <label htmlFor="userName">
-              Username or Email Address
-              <input id="userName" type="text" />
+            <label htmlFor="account">
+              Email Address
+              <input id="account" type="email" />
+            </label>
+          </div>
+          <div className="user_input_group">
+            <label htmlFor="password">
+              PassWord
+              <input id="password" type="password" />
             </label>
           </div>
         </section>

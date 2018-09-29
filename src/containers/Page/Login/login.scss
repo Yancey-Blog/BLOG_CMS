@@ -36,28 +36,31 @@
     background-size: contain;
     text-align: center;
   }
-  label {
-    color: #585858;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  input{
-    display: block;
-    width: 100%;
-    margin-top: 12px;
-    border: 1px solid #EAEAEA;
-    background: none;
-    padding: 5px 10px;
-    color: #444;
-    font-weight: normal;
-    font-size: 14px;
-    background: #FFF;
-    box-shadow: 0 0 0 1000px white inset;
-    height: 46px;
-    border-radius: 3px;
-    outline: none;
-    &:focus{
-      border: 1px solid #FF5656;
+  .user_input_group {
+    margin-bottom: 18px;
+    label {
+      color: #585858;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      border: 1px solid #EAEAEA;
+      background: none;
+      padding: 5px 10px;
+      color: #444;
+      font-weight: normal;
+      font-size: 14px;
+      background: #FFF;
+      box-shadow: 0 0 0 1000px white inset;
+      height: 46px;
+      border-radius: 3px;
+      outline: none;
+      &:focus {
+        border: 1px solid #FF5656;
+      }
     }
   }
 }
