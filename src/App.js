@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import history from './history';
 import Layouts from './layouts/Layouts';
 import Login from './containers/Page/Login/Login';
@@ -19,7 +19,7 @@ class App extends React.Component {
         <Router history={history}>
           <div className="App">
             <Route path="/" exact component={Layouts} />
-            <Route path="/login" exact component={Login} />
+            <Route path="/login" component={Login} />
           </div>
         </Router>
       </Provider>

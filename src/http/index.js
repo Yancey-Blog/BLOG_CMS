@@ -12,6 +12,7 @@ import workExperienceApi from './WorkExperienceApi';
 import programExperienceApi from './ProgramExperienceApi';
 import articleApi from './ArticleApi';
 import aboutApi from './AboutApi';
+import loginApi from './LoginApi';
 
 export {
   mottoApi,
@@ -28,4 +29,5 @@ export {
   programExperienceApi,
   articleApi,
   aboutApi,
+  loginApi,
 };

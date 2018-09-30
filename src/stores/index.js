@@ -13,6 +13,7 @@ import programExperienceStore from './ProgramExperienceStore';
 import articleStore from './ArticleStore';
 import articleDetailStore from './ArticleDetailStore';
 import aboutStore from './AboutStore';
+import loginStore from './LoginStore';
 
 export default {
   mottoStore,
@@ -30,4 +31,5 @@ export default {
   articleStore,
   articleDetailStore,
   aboutStore,
+  loginStore,
 };
