@@ -8,8 +8,7 @@ import { inject, observer } from 'mobx-react/index';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -21,6 +20,9 @@ class Login extends Component {
 
   render() {
     const { loginStore } = this.props;
+    window.recaptchaOptions = {
+      lang: 'ja',
+    };
     return (
       <main className="login_wrapper">
         <figure className="blur_bg" />
@@ -33,20 +35,26 @@ class Login extends Component {
           <div className="user_input_group">
             <label htmlFor="account">
               Email Address
-              <input id="account" type="email" onChange={e => loginStore.onEmailChange(e)}/>
+              <input id="account" type="email" onChange={e => loginStore.onEmailChange(e)} />
             </label>
           </div>
           <div className="user_input_group">
             <label htmlFor="password">
-              PassWord
-              <input id="password" type="password" onChange={e => loginStore.onPasswordChange(e)}/>
+              Password
+              <input id="password" type="password" onChange={e => loginStore.onPasswordChange(e)} />
             </label>
           </div>
-          <Recaptcha
-            sitekey="6LdLTDgUAAAAAPq-N2YNVoqcYPLyDTypJ8SMvCEj"
-            onChange={value => loginStore.onCaptchaChange(value)}
-          />
+          <div className="user_input_group">
+            <span>
+              Recaptcha
+            </span>
+            <Recaptcha
+              sitekey="6LdLTDgUAAAAAPq-N2YNVoqcYPLyDTypJ8SMvCEj"
+              onChange={value => loginStore.onCaptchaChange(value)}
+            />
+          </div>
           <button
+            className="login_btn"
             onClick={loginStore.login}
           >
             login

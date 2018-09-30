@@ -3,7 +3,8 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; }
+  overflow: hidden;
+  font-family: Lato, sans-serif; }
   .login_wrapper figure {
     margin: 0;
     padding: 0; }
@@ -20,7 +21,7 @@
     filter: blur(2px); }
 
 .login_container {
-  width: 350px;
+  width: 372px;
   height: 520px;
   margin: auto;
   padding: 0 35px;
@@ -35,10 +36,13 @@
     text-align: center; }
   .login_container .user_input_group {
     margin-bottom: 18px; }
-    .login_container .user_input_group label {
+    .login_container .user_input_group label, .login_container .user_input_group span {
       color: #585858;
       font-size: 14px;
       cursor: pointer; }
+    .login_container .user_input_group span {
+      margin-bottom: 10px;
+      display: inline-block; }
     .login_container .user_input_group input {
       display: block;
       width: 100%;
@@ -56,5 +60,30 @@
       outline: none; }
       .login_container .user_input_group input:focus {
         border: 1px solid #FF5656; }
+  .login_container .login_btn {
+    width: 100%;
+    margin: 16px auto;
+    border: none;
+    float: none;
+    border-radius: 30px;
+    height: 50px;
+    font-size: 14px;
+    text-align: center;
+    color: #FFF;
+    background: #FF5656;
+    font-weight: normal;
+    cursor: pointer;
+    box-shadow: none;
+    text-shadow: none;
+    letter-spacing: 2px;
+    outline: none;
+    transition-property: transform, opacity, visibility;
+    transition-duration: 0.25s, 0.15s, 0s;
+    transition-timing-function: cubic-bezier(0.31, 0.32, 0.38, 2), linear, linear;
+    transition-delay: 0s, 0s, 0.15s;
+    transform: scale3d(1, 1, 1); }
+    .login_container .login_btn:hover {
+      box-shadow: 0 0 4px rgba(241, 39, 66, 0.85);
+      transform: scale3d(1.05, 1.05, 1); }
 
 /*# sourceMappingURL=login.css.map */
