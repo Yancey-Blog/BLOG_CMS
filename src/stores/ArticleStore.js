@@ -42,7 +42,7 @@ class ArticleStore {
         this.spinning = false;
       });
     } catch (e) {
-      message.error('no articles!');
+      // message.error('no articles!');
     }
   };
 

@@ -92,7 +92,7 @@ class ServerStatusStore {
         this.totalSWAP = (response.data.swap_total_kb / 1024).toFixed(2);
       });
     } catch (e) {
-      message.error('unknown error!');
+      // message.error('unknown error!');
     }
   };
 
@@ -110,7 +110,7 @@ class ServerStatusStore {
         }
       });
     } catch (e) {
-      message.error('unknown error!');
+      // message.error('unknown error!');
     }
   };
 

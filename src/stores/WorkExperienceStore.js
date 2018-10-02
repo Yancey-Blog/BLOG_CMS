@@ -53,7 +53,7 @@ class WorkExperienceStore {
       const response = await this.workExperienceApi.getData();
       this.dataSource = response.data;
     } catch (e) {
-      message.error('unknown error!');
+      // message.error('unknown error!');
     }
   };
 

@@ -75,7 +75,7 @@ class PlayerStore {
         }
       });
     } catch (e) {
-      message.error('unknown error!');
+      // message.error('unknown error!');
     }
   };
 

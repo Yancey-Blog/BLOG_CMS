@@ -6,7 +6,6 @@ import liveTourStore from './LiveTourStore';
 import featuredRecordStore from './FeaturedRecordStore';
 import yanceyMusicStore from './YanceyMusicStore';
 import playerStore from './PlayerStore';
-import overViewStore from './OverViewStore';
 import serverStatusStore from './ServerStatusStore';
 import workExperienceStore from './WorkExperienceStore';
 import programExperienceStore from './ProgramExperienceStore';
@@ -24,7 +23,6 @@ export default {
   featuredRecordStore,
   yanceyMusicStore,
   playerStore,
-  overViewStore,
   serverStatusStore,
   workExperienceStore,
   programExperienceStore,

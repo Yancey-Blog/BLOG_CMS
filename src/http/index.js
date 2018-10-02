@@ -6,7 +6,6 @@ import liveTourApi from './LiveTourApi';
 import featuredRecordApi from './FeaturedRecordApi';
 import yanceyMusicApi from './YanceyMusicApi';
 import playerApi from './PlayerApi';
-import overViewApi from './OverViewApi';
 import serverStatusApi from './ServerStatusApi';
 import workExperienceApi from './WorkExperienceApi';
 import programExperienceApi from './ProgramExperienceApi';
@@ -23,7 +22,6 @@ export {
   featuredRecordApi,
   yanceyMusicApi,
   playerApi,
-  overViewApi,
   serverStatusApi,
   workExperienceApi,
   programExperienceApi,

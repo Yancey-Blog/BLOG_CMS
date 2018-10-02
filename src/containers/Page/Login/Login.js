@@ -14,14 +14,14 @@ class Login extends Component {
   componentDidMount() {
   }
 
-  onChange = (value) => {
-    console.log('Captcha value:', value);
-  };
-
   render() {
     const { loginStore } = this.props;
     window.recaptchaOptions = {
       lang: 'ja',
+    };
+    const btnStyle = {
+      background: '#ccc',
+      boxShadow: '0 0 4px #ccc',
     };
     return (
       <main className="login_wrapper">
@@ -54,8 +54,11 @@ class Login extends Component {
             />
           </div>
           <button
+            type="button"
             className="login_btn"
             onClick={loginStore.login}
+            disabled={!loginStore.isFilled}
+            style={!loginStore.isFilled ? btnStyle : {}}
           >
             login
           </button>

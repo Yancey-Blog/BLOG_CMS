@@ -16,21 +16,29 @@ axios.defaults.headers.put['Content-Type'] = 'application/json';
 axios.defaults.baseURL = 'http://127.0.0.1:3001/api';
 
 // config request interceptors
+let cancelFlag = true;
 axios.interceptors.request.use(
   (req) => {
-    const now = new Date().getTime();
-    const token = window.localStorage.getItem('token');
-    const expires = window.localStorage.getItem('expires_date');
-    if (expires && token) {
-      if (expires - now < 0) {
-        message.error('token expires!');
-        window.localStorage.clear();
-        history.push('/Login');
-      } else {
+    if (req.url !== '/login') {
+      const now = new Date().getTime();
+      const token = window.localStorage.getItem('token');
+      const expires = window.localStorage.getItem('expires_date');
+      if (expires && token) {
+        if (expires - now < 0) {
+          message.error('token expires!');
+          window.localStorage.clear();
+          setTimeout(() => {
+            history.push('/login');
+          }, 2000);
+          return false;
+        }
         req.headers.Authorization = `Bearer ${token}`;
+      } else if (cancelFlag) {
+        message.error('login first!');
+        history.push('/login');
+        cancelFlag = false;
+        return false;
       }
-    } else {
-      history.push('/Login');
     }
     return req;
   },
@@ -40,7 +48,8 @@ axios.interceptors.request.use(
 // config response interceptors
 axios.interceptors.response.use(
   res => res,
-  err => Promise.reject(err),
+  err => Promise.reject(err)
+  ,
 );
 
 // GET

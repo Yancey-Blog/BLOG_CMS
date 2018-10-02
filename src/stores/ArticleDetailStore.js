@@ -124,7 +124,7 @@ class ArticleDetailStore {
         this.editorInstance.insertText(this.editorInstance.convertor.toMarkdown(response.data.content));
       });
     } catch (e) {
-      message.error('unknown error!');
+      // message.error('unknown error!');
     }
   };
 
