@@ -33,7 +33,7 @@ class LoginStore {
       const response = await this.loginApi.login(params);
       window.localStorage.token = response.data.token;
       window.localStorage.expires_date = response.data.expires_date;
-      history.push('/home/motto');
+      history.push('/');
       this.email = '';
       this.password = '';
       this.captcha = '';
