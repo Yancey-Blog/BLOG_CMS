@@ -34,6 +34,9 @@ class LoginStore {
       window.localStorage.token = response.data.token;
       window.localStorage.expires_date = response.data.expires_date;
       history.push('/home/motto');
+      this.email = '';
+      this.password = '';
+      this.captcha = '';
     } catch (e) {
       message.error(e.response.data.message);
     }
