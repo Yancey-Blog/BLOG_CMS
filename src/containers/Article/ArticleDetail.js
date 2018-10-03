@@ -4,7 +4,7 @@ import {
   Button, Icon, Input, Upload, Modal, Tag, Tooltip, Popconfirm,
 } from 'antd';
 import 'tui-editor/dist/tui-editor-extScrollSync.min';
-import { beforeUpload } from '../../util/tools';
+import { beforeUpload, upload } from '../../util/tools';
 import 'codemirror/lib/codemirror.css';
 import 'tui-editor/dist/tui-editor.min.css';
 import 'tui-editor/dist/tui-editor-contents.min.css';
@@ -44,7 +44,7 @@ class ArticleDetail extends Component {
           <div>
             <Dragger
               name="avatar"
-              action="http://127.0.0.1:3001/api/uploads"
+              {...upload()}
               beforeUpload={beforeUpload}
               onChange={articleDetailStore.onContentImageUploadChange}
             >
@@ -86,7 +86,7 @@ class ArticleDetail extends Component {
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
-            action="http://127.0.0.1:3001/api/uploads"
+            {...upload()}
             beforeUpload={beforeUpload}
             onChange={articleDetailStore.onHeaderCoverUploadChange}
           >

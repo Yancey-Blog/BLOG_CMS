@@ -42,6 +42,11 @@ class ServerStatusStore {
 
   @observable curTab;
 
+  @observable serverStatusLoading;
+
+  @observable serverUsageLoading;
+
+
   constructor() {
     this.serverStatusApi = serverStatusApi;
     this.bandwidthDosage = 0;
@@ -60,6 +65,8 @@ class ServerStatusStore {
     this.cpuUsageData = [];
     this.dataLength = 12;
     this.curTab = 'oneHour';
+    this.serverStatusLoading = false;
+    this.serverUsageLoading = false;
   }
 
   @computed get bandwidthUsage() {
@@ -79,6 +86,7 @@ class ServerStatusStore {
   }
 
   getServerData = async () => {
+    this.serverStatusLoading = true;
     try {
       const response = await this.serverStatusApi.getServerData();
       runInAction(() => {
@@ -90,13 +98,16 @@ class ServerStatusStore {
         this.totalRAM = (response.data.plan_ram / 1024 / 1024).toFixed(2);
         this.SWAPDosage = (response.data.swap_total_kb / 1024 - response.data.swap_available_kb / 1024).toFixed(2);
         this.totalSWAP = (response.data.swap_total_kb / 1024).toFixed(2);
+        this.serverStatusLoading = false;
       });
     } catch (e) {
+      this.serverStatusLoading = false;
       // message.error('unknown error!');
     }
   };
 
   getRawUsageStatusData = async () => {
+    this.serverUsageLoading = true;
     try {
       const response = await this.serverStatusApi.getRawUsageStatusData();
       runInAction(() => {
@@ -107,9 +118,11 @@ class ServerStatusStore {
           this.diskReadBytesData.push(parseInt(response.data.data[i].disk_read_bytes, 10));
           this.diskWriteBytesData.push(parseInt(response.data.data[i].disk_write_bytes, 10));
           this.cpuUsageData.push(parseInt(response.data.data[i].cpu_usage, 10));
+          this.serverUsageLoading = false;
         }
       });
     } catch (e) {
+      this.serverUsageLoading = false;
       // message.error('unknown error!');
     }
   };

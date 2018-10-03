@@ -11,6 +11,8 @@ configure({
 class ArticleStore {
   @observable dataSource;
 
+  @observable dayDataSource;
+
   @observable selectedRowKeys;
 
   @observable curId;
@@ -24,6 +26,7 @@ class ArticleStore {
   constructor() {
     this.articleApi = articleApi;
     this.dataSource = [];
+    this.dayDataSource = [];
     this.selectedRowKeys = [];
     this.curId = '';
     this.curPage = 1;
@@ -58,6 +61,26 @@ class ArticleStore {
       });
     } catch (e) {
       message.error('no articles!');
+    }
+  };
+
+  getDataByDay = async () => {
+    try {
+      const response = await this.articleApi.getDataByDay();
+      runInAction(() => {
+        const arr = [];
+        for (let i = 0, l = response.data.length; i < l; i += 1) {
+          const obj = {
+            date: response.data[i]._id, /* eslint-disable-line */
+            count: response.data[i].count,
+          };
+          arr.push(obj);
+        }
+        this.dayDataSource = arr;
+        console.log(this.dayDataSource)
+      });
+    } catch (e) {
+      message.error('unknown error!');
     }
   };
 

@@ -22,6 +22,7 @@ class Login extends Component {
     const btnStyle = {
       background: '#ccc',
       boxShadow: '0 0 4px #ccc',
+      cursor: 'not-allowed',
     };
     return (
       <main className="login_wrapper">
@@ -57,8 +58,8 @@ class Login extends Component {
             type="button"
             className="login_btn"
             onClick={loginStore.login}
-            disabled={!loginStore.isFilled}
-            style={!loginStore.isFilled ? btnStyle : {}}
+            disabled={(!loginStore.isFilled) || (loginStore.loginStatus)}
+            style={((!loginStore.isFilled) || (loginStore.loginStatus)) ? btnStyle : {}}
           >
             login
           </button>

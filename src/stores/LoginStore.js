@@ -16,11 +16,14 @@ class LoginStore {
 
   @observable captcha;
 
+  @observable loginStatus;
+
   constructor() {
     this.loginApi = loginApi;
     this.email = '';
     this.password = '';
     this.captcha = '';
+    this.loginStatus = false;
   }
 
   login = async () => {
@@ -29,6 +32,7 @@ class LoginStore {
       pwd: this.password,
       response: this.captcha,
     };
+    this.loginStatus = true;
     try {
       const response = await this.loginApi.login(params);
       window.localStorage.token = response.data.token;
@@ -37,6 +41,7 @@ class LoginStore {
       this.email = '';
       this.password = '';
       this.captcha = '';
+      this.loginStatus = false;
     } catch (e) {
       message.error(e.response.data.message);
     }

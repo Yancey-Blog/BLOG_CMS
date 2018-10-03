@@ -28,10 +28,23 @@
   box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 }
 
-.header_right {
-  display: inline-block;
-  position: relative;
-  top: -26px;
+.global_config {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 48px;
+  top: 0;
+  font-size: 16px;
+  color: rgba(0, 0, 0, .65);
+  .config_item {
+    display: inline-block;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all .3s, padding 0s;
+    &:hover {
+      background: rgba(0, 0, 0, .025);
+    }
+  }
 }
 
 .trigger {

@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import {
-  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp,
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp, upload,
 } from '../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -177,7 +177,7 @@ class About extends Component {
               />
               {aboutStore.modalType === 'add' ? 'Add New' : 'Update The'}
               {' '}
-              Album
+              Blog History
             </span>
           )}
           width={600}
@@ -240,7 +240,7 @@ class About extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://127.0.0.1:3001/api/uploads"
+                {...upload()}
                 beforeUpload={beforeUpload}
                 onChange={aboutStore.onUploadChange}
               >

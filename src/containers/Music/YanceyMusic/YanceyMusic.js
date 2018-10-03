@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import {
-  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp
+  formatJSONDate, beforeUpload, capitalized, getCurrentDate, checkWebp, webp, upload,
 } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -243,7 +243,7 @@ class YanceyMusic extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://127.0.0.1:3001/api/uploads"
+                {...upload()}
                 beforeUpload={beforeUpload}
                 onChange={yanceyMusicStore.onUploadChange}
               >

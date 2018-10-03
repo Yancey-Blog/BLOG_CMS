@@ -1,6 +1,6 @@
 .cv_wrapper {
   display: grid;
-  grid-template-columns: 33.3333% 33.3333% 33.3333%;
+  grid-template-columns: repeat(2, 1fr);
   .add_wrapper {
     display: flex;
     align-items: center;
@@ -10,7 +10,7 @@
       font-size: 18px;
     }
   }
-  .work_experience_container, .program_experience_container {
+  .work_experience_container {
     border-right: 1px solid #ccc;
   }
   .work_experience_list {

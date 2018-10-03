@@ -94,6 +94,7 @@ class Article extends Component {
           dataSource={articleStore.dataSource}
           rowSelection={rowSelection}
           pagination={false}
+          loading={articleStore.loading}
         >
           <ColumnGroup>
             <Column

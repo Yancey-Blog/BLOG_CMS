@@ -13,6 +13,8 @@ import articleStore from './ArticleStore';
 import articleDetailStore from './ArticleDetailStore';
 import aboutStore from './AboutStore';
 import loginStore from './LoginStore';
+import userInfoStore from './UserInfoStore';
+import globalStore from './GlobalStore';
 
 export default {
   mottoStore,
@@ -30,4 +32,6 @@ export default {
   articleDetailStore,
   aboutStore,
   loginStore,
+  userInfoStore,
+  globalStore,
 };

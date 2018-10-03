@@ -12,6 +12,9 @@ import programExperienceApi from './ProgramExperienceApi';
 import articleApi from './ArticleApi';
 import aboutApi from './AboutApi';
 import loginApi from './LoginApi';
+import uploadApi from './UploadApi';
+import userInfoApi from './UserInfoApi';
+import globalApi from './GlobalApi';
 
 export {
   mottoApi,
@@ -28,4 +31,7 @@ export {
   articleApi,
   aboutApi,
   loginApi,
+  uploadApi,
+  userInfoApi,
+  globalApi,
 };

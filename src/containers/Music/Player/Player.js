@@ -4,7 +4,7 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch, message,
 } from 'antd';
 import {
-  formatJSONDate, beforeUpload, musicBeforeUpload, capitalized, checkWebp, webp,
+  formatJSONDate, beforeUpload, musicBeforeUpload, capitalized, checkWebp, webp, upload,
 } from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
@@ -304,7 +304,7 @@ class Player extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://127.0.0.1:3001/api/uploads"
+                {...upload()}
                 beforeUpload={beforeUpload}
                 onChange={playerStore.onImgUploadChange}
               >
@@ -325,7 +325,7 @@ class Player extends Component {
                 // Similarly, if a file is being uploaded, you also can not click the upload button.
                 disabled={playerStore.musicUploadStatus || playerStore.musicFileUrl !== ''}
                 beforeUpload={musicBeforeUpload}
-                action="http://127.0.0.1:3001/api/uploads"
+                {...upload()}
                 onChange={playerStore.onMusicFileUploadChange}
               >
                 <Button>

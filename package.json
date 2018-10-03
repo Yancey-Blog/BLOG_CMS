@@ -17,12 +17,14 @@
     "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-app-rewire-mobx": "^1.0.9",
+    "react-calendar-heatmap": "^1.7.0",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.5.0",
     "react-google-recaptcha": "^1.0.4",
     "react-recaptcha": "^2.3.10",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
+    "react-tooltip": "^3.8.4",
     "tui-editor": "^1.2.6"
   },
   "scripts": {

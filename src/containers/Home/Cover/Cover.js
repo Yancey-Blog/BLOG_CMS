@@ -4,7 +4,9 @@ import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch,
 } from 'antd';
 
-import { formatJSONDate, beforeUpload, capitalized, checkWebp, webp } from '../../../util/tools';
+import {
+  formatJSONDate, beforeUpload, capitalized, checkWebp, webp, upload,
+} from '../../../util/tools';
 
 const { Column, ColumnGroup } = Table;
 
@@ -228,7 +230,7 @@ class Cover extends Component {
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="http://127.0.0.1:3001/api/uploads"
+                {...upload()}
                 beforeUpload={beforeUpload}
                 onChange={coverStore.onUploadChange}
               >

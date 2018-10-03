@@ -9,6 +9,10 @@ class ArticleApi {
 
   getDataByTitle = title => GET(`/articlesByTitle?title=${title}`, {});
 
+  getDataByDay = () => GET('/articlesByDay', {});
+
+  getDataByPV = () => GET('/articlesByPV', {});
+
   getDataByDateRange = (start, end) => GET(`/articlesByDateRange?start=${start}&end=${end}`, {});
 
   getDataById = id => GET(`articles/${id}`, {});

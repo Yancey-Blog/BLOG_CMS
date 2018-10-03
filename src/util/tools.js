@@ -1,10 +1,5 @@
 import { message } from 'antd';
-
-export const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
+import { uploadApi } from '../http/index';
 
 export const beforeUpload = (file) => {
   const isImageFormat = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -31,11 +26,15 @@ export const musicBeforeUpload = (file) => {
 };
 
 export const formatJSONDate = jsonDate => new Date(+new Date(new Date(jsonDate).toJSON()) + 8 * 3600 * 1000).toISOString()
-  .replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+  .replace(/T/g, ' ')
+  .replace(/\.[\d]{3}Z/, '');
 
-export const getType = param => Object.prototype.toString.call(param).slice(8, -1).toLowerCase();
+export const getType = param => Object.prototype.toString.call(param)
+  .slice(8, -1)
+  .toLowerCase();
 
-export const capitalized = str => str.toLowerCase().replace(/( |^)[a-z]/g, L => L.toUpperCase());
+export const capitalized = str => str.toLowerCase()
+  .replace(/( |^)[a-z]/g, L => L.toUpperCase());
 
 
 export const getCurrentDate = () => {
@@ -64,3 +63,13 @@ export function checkWebp() {
 }
 
 export const webp = '?x-oss-process=image/format,webp';
+
+export const upload = () => {
+  const token = window.localStorage.getItem('token');
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    action: uploadApi,
+  };
+};
