@@ -4,7 +4,8 @@ import { Link, Switch, Route } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import SecurityCenter from '../../components/SecurityCenter/SecurityCenter';
-import Global from '../../components/Global/Global';
+import GlobalConfig from '../../components/GlobalConfig/GlobalConfig';
+import Exception from '../Exception/Exception';
 
 @inject('announcementStore')
 @observer
@@ -61,7 +62,8 @@ class Setting extends Component {
         <Switch>
           <Route path="/setting/basic" component={UserInfo} />
           <Route path="/setting/security" component={SecurityCenter} />
-          <Route path="/setting/global" component={Global} />
+          <Route path="/setting/global" component={GlobalConfig} />
+          <Route component={Exception} />
         </Switch>
       </main>
     );

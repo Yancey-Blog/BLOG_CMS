@@ -13,6 +13,8 @@ class ArticleStore {
 
   @observable dayDataSource;
 
+  @observable PVDataSource;
+
   @observable selectedRowKeys;
 
   @observable curId;
@@ -27,6 +29,7 @@ class ArticleStore {
     this.articleApi = articleApi;
     this.dataSource = [];
     this.dayDataSource = [];
+    this.PVDataSource = [];
     this.selectedRowKeys = [];
     this.curId = '';
     this.curPage = 1;
@@ -45,7 +48,7 @@ class ArticleStore {
         this.spinning = false;
       });
     } catch (e) {
-      // message.error('no articles!');
+      message.error('unknown error');
     }
   };
 
@@ -60,7 +63,7 @@ class ArticleStore {
         this.spinning = false;
       });
     } catch (e) {
-      message.error('no articles!');
+      message.error('unknown error');
     }
   };
 
@@ -77,7 +80,25 @@ class ArticleStore {
           arr.push(obj);
         }
         this.dayDataSource = arr;
-        console.log(this.dayDataSource)
+      });
+    } catch (e) {
+      message.error('unknown error!');
+    }
+  };
+
+  getDataByPV = async () => {
+    try {
+      const response = await this.articleApi.getDataByPV();
+      runInAction(() => {
+        const arr = [];
+        for (let i = 0, l = response.data.length; i < l; i += 1) {
+          const obj = {
+            title: response.data[i].title, /* eslint-disable-line */
+            pv_count: response.data[i].pv_count,
+          };
+          arr.push(obj);
+        }
+        this.PVDataSource = arr;
       });
     } catch (e) {
       message.error('unknown error!');
@@ -105,14 +126,14 @@ class ArticleStore {
       status: checked,
     };
     try {
-      const response = await this.articleApi.switchStatus(id, params);
+      await this.articleApi.switchStatus(id, params);
       if (checked) {
         message.success('this article has been published');
       } else {
         message.success('the article will be hidden');
       }
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -120,10 +141,10 @@ class ArticleStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.articleApi.deleteData(id);
+      await this.articleApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -134,11 +155,11 @@ class ArticleStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.articleApi.batchDeleteData(params);
+      await this.articleApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

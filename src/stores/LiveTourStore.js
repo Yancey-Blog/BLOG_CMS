@@ -44,7 +44,7 @@ class LiveToursStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -54,11 +54,11 @@ class LiveToursStore {
       poster: this.poster,
     };
     try {
-      const response = await this.liveTourApi.insertData(params);
+      await this.liveTourApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -70,11 +70,11 @@ class LiveToursStore {
       poster: this.poster,
     };
     try {
-      const response = await this.liveTourApi.modifyData(this.curId, params);
+      await this.liveTourApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -82,10 +82,10 @@ class LiveToursStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.liveTourApi.deleteData(id);
+      await this.liveTourApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -96,11 +96,11 @@ class LiveToursStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.liveTourApi.batchDeleteData(params);
+      await this.liveTourApi.batchDeleteData(params);
       message.success('delete success');
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

@@ -38,7 +38,7 @@ class AnnouncementStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -47,11 +47,11 @@ class AnnouncementStore {
       content: this.content,
     };
     try {
-      const response = await this.announcementApi.insertData(params);
+      await this.announcementApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -62,11 +62,11 @@ class AnnouncementStore {
       content: this.content,
     };
     try {
-      const response = await this.announcementApi.modifyData(this.curId, params);
+      await this.announcementApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -74,10 +74,10 @@ class AnnouncementStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.announcementApi.deleteData(id);
+      await this.announcementApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -88,11 +88,11 @@ class AnnouncementStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.announcementApi.batchDeleteData(params);
+      await this.announcementApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

@@ -58,10 +58,10 @@ class YanceyMusic extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => yanceyMusicStore.batchDelete()}
           >
@@ -154,7 +154,7 @@ class YanceyMusic extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this music?"
+                    title="Are you sure delete this music?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => yanceyMusicStore.deleteData(record._id)} /* eslint-disable-line */
                   >

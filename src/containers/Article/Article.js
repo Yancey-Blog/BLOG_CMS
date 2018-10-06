@@ -70,7 +70,7 @@ class Article extends Component {
             </Link>
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => articleStore.batchDelete()}
           >
@@ -193,7 +193,7 @@ class Article extends Component {
                     />
                   </Link>
                   <Popconfirm
-                    title="Are you sure to delete this project?"
+                    title="Are you sure delete this project?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => articleStore.deleteData(record._id)} /* eslint-disable-line */
                   >

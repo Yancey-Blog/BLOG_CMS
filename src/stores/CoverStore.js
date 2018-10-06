@@ -47,7 +47,7 @@ class CoverStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -58,11 +58,11 @@ class CoverStore {
       show: true,
     };
     try {
-      const response = await this.coverApi.insertData(params);
+      await this.coverApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -75,11 +75,11 @@ class CoverStore {
       show: this.curShow,
     };
     try {
-      const response = await this.coverApi.modifyData(this.curId, params);
+      await this.coverApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -94,12 +94,12 @@ class CoverStore {
     try {
       const response = await this.coverApi.modifyData(id, params);
       if (checked) {
-        message.success('the cover will be shown');
+        message.success(`"${response.data.name}" will be shown`);
       } else {
-        message.success('the cover will be hidden');
+        message.success(`"${response.data.name}" will be hidden`);
       }
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -107,10 +107,10 @@ class CoverStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.coverApi.deleteData(id);
+      await this.coverApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -121,11 +121,11 @@ class CoverStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.coverApi.batchDeleteData(params);
+      await this.coverApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

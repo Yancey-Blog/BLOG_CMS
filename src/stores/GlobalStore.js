@@ -1,6 +1,4 @@
-import {
-  action, observable, configure, computed,
-} from 'mobx';
+import { action, observable, configure } from 'mobx';
 import { message } from 'antd/lib/index';
 import { globalApi } from '../http/index';
 
@@ -24,10 +22,10 @@ class GlobalStore {
   getData = async () => {
     try {
       const response = await this.globalApi.getData();
-      this.curId = response.data._id;
+      this.curId = response.data._id; /* eslint-disable-line */
       this.fullSiteGrayStatus = response.data.full_site_gray;
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -36,9 +34,9 @@ class GlobalStore {
       full_site_gray: this.fullSiteGrayStatus,
     };
     try {
-      const response = await this.globalApi.insertFullSiteGrayData(params);
+      await this.globalApi.insertFullSiteGrayData(params);
       message.success('insert success');
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -51,7 +49,7 @@ class GlobalStore {
     try {
       const response = await this.globalApi.modifyFullSiteGrayData(this.curId, params);
       message.success(`turn ${response.data.full_site_gray ? 'on' : 'off'} gray`);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

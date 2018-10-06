@@ -21,7 +21,6 @@ class ProgramExperience extends Component {
 
   render() {
     const { programExperienceStore } = this.props;
-    const dateFormat = 'YYYY-MM-DD';
     const tagColorList = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple'];
     return (
       <Modal

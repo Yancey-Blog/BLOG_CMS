@@ -56,7 +56,7 @@ class CV extends Component {
                         }
                       />
                       <Popconfirm
-                        title="Are you sure to delete the work experience?"
+                        title="Are you sure delete the work experience?"
                         icon={<Icon type="warning" style={{ color: 'red' }} />}
                         onConfirm={() => workExperienceStore.deleteData(workExperienceStore.dataSource[key]._id,)} /* eslint-disable-line */
                       >
@@ -133,7 +133,7 @@ class CV extends Component {
                         }
                       />
                       <Popconfirm
-                        title="Are you sure to delete the program experience?"
+                        title="Are you sure delete the program experience?"
                         icon={<Icon type="warning" style={{ color: 'red' }} />}
                         onConfirm={() => programExperienceStore.deleteData(programExperienceStore.dataSource[key]._id,)} /* eslint-disable-line */
                       >

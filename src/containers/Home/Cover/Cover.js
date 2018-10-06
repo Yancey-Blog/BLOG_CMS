@@ -57,10 +57,10 @@ class Cover extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => coverStore.batchDelete()}
           >
@@ -165,7 +165,7 @@ class Cover extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this cover?"
+                    title="Are you sure delete this cover?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => coverStore.deleteData(record._id)} /* eslint-disable-line */
                   >

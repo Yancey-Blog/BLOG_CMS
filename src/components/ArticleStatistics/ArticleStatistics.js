@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import ReactTooltip from 'react-tooltip';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
+import './articleStatistic.css';
 
 @inject('articleStore')
 @observer
@@ -18,6 +19,7 @@ class ArticleStatistics extends Component {
   componentDidMount() {
     const { articleStore } = this.props;
     articleStore.getDataByDay();
+    articleStore.getDataByPV();
   }
 
   componentWillUnmount() {
@@ -28,20 +30,16 @@ class ArticleStatistics extends Component {
     const year = new Date().getFullYear();
     const startDay = `${year}-01-01`;
     const endDay = new Date();
-    const wrapperStyle = {
-      display: 'grid',
-      gridTemplateColumns: '70% 30%',
-      gridColumnGap: 24,
-      marginTop: 24,
-      padding: 24,
-      background: '#fff',
+    const rankNumberStyle = {
+      backgroundColor: 'rgb(49, 70, 89)',
+      color: 'rgb(255, 255, 255)',
     };
     return (
-      <section
-        className="article_statistics_wrapper"
-        style={wrapperStyle}
-      >
+      <section className="article_statistics_wrapper">
         <div>
+          <h4 className="heat_map_header">
+            Heat Map
+          </h4>
           <CalendarHeatmap
             startDate={new Date(startDay)}
             endDate={new Date(endDay)}
@@ -50,17 +48,43 @@ class ArticleStatistics extends Component {
               if (!value) {
                 return 'color-empty';
               }
-              return `color-gitlab-${value.count}`;
+              return `color-github-${value.count}`;
             }}
             tooltipDataAttrs={value => ({
-              'data-tip': value.date ? `${value.date} has count: ${value.count}` : 'no articles on this day',
+              'data-tip': value.date ? `${value.date} you post ${value.count} ${value.count > 1 ? 'articles' : 'article'}` : 'no articles on this day',
             })}
             showWeekdayLabels
           />
-          <ReactTooltip/>
+          <ReactTooltip />
         </div>
-        <div>
-          Top 10
+        <div className="rank_articles_wrapper">
+          <h4>
+            Top 7 Articles
+          </h4>
+          <ul>
+            {
+              Object.keys(articleStore.PVDataSource).map(key => (
+                <li key={key}>
+                  <span className="rank_number_wrapper">
+                    <span
+                      className="rank_number"
+                      style={parseInt(key, 10) < 3 ? rankNumberStyle : {}}
+                    >
+                      {parseInt(key, 10) + 1}
+                    </span>
+                    <span className="article_title">
+                      {articleStore.PVDataSource[key].title}
+                    </span>
+                  </span>
+                  <span className="pv_number">
+                    {articleStore.PVDataSource[key].pv_count}
+                    {' '}
+                    PV
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </section>
     );

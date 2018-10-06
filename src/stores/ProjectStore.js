@@ -50,7 +50,7 @@ class ProjectStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error(e.message);
+      message.error(e.message);
     }
   };
 
@@ -62,11 +62,11 @@ class ProjectStore {
       url: this.url,
     };
     try {
-      const response = await this.projectApi.insertData(params);
+      await this.projectApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -80,11 +80,11 @@ class ProjectStore {
       url: this.url,
     };
     try {
-      const response = await this.projectApi.modifyData(this.curId, params);
+      await this.projectApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -92,10 +92,10 @@ class ProjectStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.projectApi.deleteData(id);
+      await this.projectApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -106,11 +106,11 @@ class ProjectStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.projectApi.batchDeleteData(params);
+      await this.projectApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

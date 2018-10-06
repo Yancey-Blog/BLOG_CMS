@@ -7,7 +7,7 @@ import Login from './containers/Page/Login/Login';
 import stores from './stores/index';
 import './App.css';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};

@@ -28,8 +28,8 @@ class LoginStore {
 
   login = async () => {
     const params = {
-      id: this.email,
-      pwd: this.password,
+      email: this.email,
+      password: this.password,
       response: this.captcha,
     };
     this.loginStatus = true;
@@ -37,6 +37,7 @@ class LoginStore {
       const response = await this.loginApi.login(params);
       window.localStorage.token = response.data.token;
       window.localStorage.expires_date = response.data.expires_date;
+      message.success('Login Success!');
       history.push('/');
       this.email = '';
       this.password = '';
@@ -44,6 +45,7 @@ class LoginStore {
       this.loginStatus = false;
     } catch (e) {
       message.error(e.response.data.message);
+      this.loginStatus = false;
     }
   };
 

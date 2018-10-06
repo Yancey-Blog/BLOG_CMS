@@ -51,7 +51,7 @@ class AboutStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -63,11 +63,11 @@ class AboutStore {
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.aboutApi.insertData(params);
+      await this.aboutApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -81,11 +81,11 @@ class AboutStore {
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.aboutApi.modifyData(this.curId, params);
+      await this.aboutApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -93,10 +93,10 @@ class AboutStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.aboutApi.deleteData(id);
+      await this.aboutApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -107,11 +107,11 @@ class AboutStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.aboutApi.batchDeleteData(params);
+      await this.aboutApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

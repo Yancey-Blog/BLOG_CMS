@@ -1,0 +1,49 @@
+.article_statistics_wrapper {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  margin-top: 24px;
+  padding: 24px 24px 24px 6px;
+  background: #fff;
+  h4 {
+    margin-bottom: 25px;
+  }
+  .heat_map_header {
+    margin-left: 22px;
+  }
+  .rank_articles_wrapper{
+    margin-left: 100px;
+  }
+  ul {
+    padding: 0;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-top: 16px;
+    .rank_number_wrapper{
+      display: inline-flex;
+    }
+    .rank_number {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 16px;
+      height: 20px;
+      line-height: 20px;
+      width: 20px;
+      text-align: center;
+      margin-top: 1.5px;
+      border-radius: 20px;
+      background-color: rgb(245, 245, 245);
+    }
+    .article_title{
+      display: inline-block;
+      max-width: 260px;
+      min-width: 260px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

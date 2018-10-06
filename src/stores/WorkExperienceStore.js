@@ -1,5 +1,5 @@
 import {
-  action, observable, configure, runInAction, computed,
+  action, observable, configure, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
 import { workExperienceApi } from '../http/index';
@@ -53,7 +53,7 @@ class WorkExperienceStore {
       const response = await this.workExperienceApi.getData();
       this.dataSource = response.data;
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -66,11 +66,11 @@ class WorkExperienceStore {
       work_technology_stack: this.tags,
     };
     try {
-      const response = await this.workExperienceApi.insertData(params);
+      await this.workExperienceApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -85,11 +85,11 @@ class WorkExperienceStore {
       work_technology_stack: this.tags,
     };
     try {
-      const response = await this.workExperienceApi.modifyData(this.curId, params);
+      await this.workExperienceApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -97,10 +97,10 @@ class WorkExperienceStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.workExperienceApi.deleteData(id);
+      await this.workExperienceApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -144,7 +144,6 @@ class WorkExperienceStore {
   // tags
   @action handleClose = (removedTag) => {
     this.tags = this.tags.filter(tag => tag !== removedTag);
-    console.log(this.tags);
   };
 
   @action showInput = () => {
@@ -159,7 +158,6 @@ class WorkExperienceStore {
     if (this.inputValue && this.tags.indexOf(this.inputValue) === -1) {
       this.tags = [...this.tags, this.inputValue];
     }
-    console.log(this.tags);
     this.inputValue = '';
     this.inputVisible = false;
   };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
-  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch, message,
+  Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col, Switch,
 } from 'antd';
 import {
   formatJSONDate, beforeUpload, musicBeforeUpload, capitalized, checkWebp, webp, upload,
@@ -63,10 +63,10 @@ class Player extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => playerStore.batchDelete()}
           >
@@ -214,7 +214,7 @@ class Player extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete the music?"
+                    title="Are you sure delete the music?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => playerStore.deleteData(record._id)} /* eslint-disable-line */
                   >

@@ -50,10 +50,10 @@ class Motto extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => mottoStore.batchDelete()}
           >
@@ -104,7 +104,7 @@ class Motto extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this announcement?"
+                    title="Are you sure delete this motto?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => mottoStore.deleteData(record._id)} /* eslint-disable-line */
                   >

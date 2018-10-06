@@ -57,10 +57,10 @@ class Project extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => liveTourStore.batchDelete()}
           >
@@ -148,7 +148,7 @@ class Project extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this live tour information?"
+                    title="Are you sure delete this live tour information?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => liveTourStore.deleteData(record._id)} /* eslint-disable-line */
                   >

@@ -54,7 +54,7 @@ class FeaturedRecordStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -66,13 +66,12 @@ class FeaturedRecordStore {
       buy_url: this.buyUrl,
       release_date: this.releaseDate,
     };
-    console.log(params)
     try {
-      const response = await this.featuredRecordApi.insertData(params);
+      await this.featuredRecordApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -87,11 +86,11 @@ class FeaturedRecordStore {
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.featuredRecordApi.modifyData(this.curId, params);
+      await this.featuredRecordApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -99,10 +98,10 @@ class FeaturedRecordStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.featuredRecordApi.deleteData(id);
+      await this.featuredRecordApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -113,11 +112,11 @@ class FeaturedRecordStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.featuredRecordApi.batchDeleteData(params);
+      await this.featuredRecordApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

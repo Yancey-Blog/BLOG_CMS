@@ -123,7 +123,7 @@ class ServerStatusStore {
       });
     } catch (e) {
       this.serverUsageLoading = false;
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 

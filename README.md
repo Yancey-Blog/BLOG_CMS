@@ -31,7 +31,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Changing the HTML](#changing-the-html)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
   - [When to Use the `public` Folder](#when-to-use-the-public-folder)
-- [Using Global Variables](#using-global-variables)
+- [Using GlobalConfig Variables](#using-global-variables)
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
@@ -744,7 +744,7 @@ The `public` folder is useful as a workaround for a number of less common cases:
 
 Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
 
-## Using Global Variables
+## Using GlobalConfig Variables
 
 When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
 

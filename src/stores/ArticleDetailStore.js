@@ -43,7 +43,6 @@ class ArticleDetailStore {
     this.editorImage = '';
     this.editorImageName = '';
     this.editorInstance = {};
-    this.tags = [];
     this.inputVisible = false;
     this.inputValue = '';
     this.activity = '';
@@ -104,7 +103,7 @@ class ArticleDetailStore {
       const response = await this.articleApi.insertData(params);
       message.success('insert success');
       if (this.activity === 'toUpdate') {
-        history.push(`/article/update/${response.data._id}`);
+        history.push(`/article/update/${response.data._id}`); /* eslint-disable-line */
       } else {
         history.push('/article/list');
       }
@@ -124,7 +123,8 @@ class ArticleDetailStore {
         this.editorInstance.insertText(this.editorInstance.convertor.toMarkdown(response.data.content));
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('no this article!');
+      history.push('/exception');
     }
   };
 
@@ -138,7 +138,7 @@ class ArticleDetailStore {
       status,
     };
     try {
-      const response = await this.articleApi.modifyData(this.curId, params);
+      await this.articleApi.modifyData(this.curId, params);
       message.success('modify success');
       if (this.activity === 'toList') {
         history.push('/article/list');
@@ -193,9 +193,6 @@ class ArticleDetailStore {
   };
 
   @action onContentImageUploadChange = (info) => {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
     if (info.file.status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
       this.editorImageName = info.file.name;
@@ -208,7 +205,6 @@ class ArticleDetailStore {
   // tags
   @action handleClose = (removedTag) => {
     this.tags = this.tags.filter(tag => tag !== removedTag);
-    console.log(this.tags);
   };
 
   @action showInput = () => {
@@ -227,23 +223,21 @@ class ArticleDetailStore {
     this.inputVisible = false;
   };
 
-  saveInputRef = input => this.input = input;
-
-  /* eslint-disable-line */
+  saveInputRef = input => this.input = input; /* eslint-disable-line */
 
   @computed get isFilled() {
     return this.headerCover !== '' && this.title !== '' && this.summary !== '' && this.tags.length !== 0;
   }
 
   // save
-  @action handleSave = (activity, content, status) => {
+  @action handleSave = async (activity, content, status) => {
     if (content) {
       if (this.isFilled) {
         this.activity = activity;
         if (window.location.pathname.indexOf('update') !== -1) {
-          this.modifyData(content, status);
+          await this.modifyData(content, status);
         } else {
-          this.insertData(content, status);
+          await this.insertData(content, status);
         }
       } else {
         message.error('All items are required!');

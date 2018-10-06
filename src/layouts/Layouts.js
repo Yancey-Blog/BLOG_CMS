@@ -19,13 +19,14 @@ import ArticleDetail from '../containers/Article/ArticleDetail';
 import About from '../containers/About/About';
 import Setting from '../containers/Setting/Setting';
 import UserDrop from '../components/UserDrop/UserDrop';
+import Exception from '../containers/Exception/Exception';
 
 const {
   Header, Sider, Content, Footer,
 } = Layout;
 const SubMenu = Menu.SubMenu;
 
-class Layouts extends React.Component {
+class Layouts extends Component {
   state = {
     collapsed: false,
   };
@@ -36,7 +37,6 @@ class Layouts extends React.Component {
       collapsed: !collapsed,
     });
   };
-
 
   render() {
     const { collapsed } = this.state;
@@ -181,8 +181,16 @@ class Layouts extends React.Component {
             <div className="global_config">
               <span className="config_item">
                 <Tooltip title="Official Document">
-                  <a href="http://www.yanceyleo.com">
-                    <Icon type="question-circle" theme="outlined" />
+                  <a
+                    href="https://github.com/Yancey-Blog/BLOG_BE/blob/master/README.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon
+                      type="question-circle"
+                      theme="outlined"
+                      style={{ position: 'relative', top: 4 }}
+                    />
                   </a>
                 </Tooltip>
               </span>
@@ -208,6 +216,8 @@ class Layouts extends React.Component {
               <Route path="/article/update/:id" component={ArticleDetail} />
               <Route path="/about" component={About} />
               <Route path="/setting" component={Setting} />
+              <Route path="/exception" component={Exception} />
+              <Route component={Exception} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>

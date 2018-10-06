@@ -51,7 +51,7 @@ class YanceyMusicStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -63,11 +63,11 @@ class YanceyMusicStore {
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.yanceyMusicApi.insertData(params);
+      await this.yanceyMusicApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -81,11 +81,11 @@ class YanceyMusicStore {
       release_date: this.releaseDate,
     };
     try {
-      const response = await this.yanceyMusicApi.modifyData(this.curId, params);
+      await this.yanceyMusicApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -93,10 +93,10 @@ class YanceyMusicStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.yanceyMusicApi.deleteData(id);
+      await this.yanceyMusicApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -107,11 +107,11 @@ class YanceyMusicStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.yanceyMusicApi.batchDeleteData(params);
+      await this.yanceyMusicApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

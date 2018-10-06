@@ -75,7 +75,7 @@ class PlayerStore {
         }
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -89,11 +89,11 @@ class PlayerStore {
       show: true,
     };
     try {
-      const response = await this.playerApi.insertData(params);
+      await this.playerApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -109,11 +109,11 @@ class PlayerStore {
       show: this.curShow,
     };
     try {
-      const response = await this.playerApi.modifyData(this.curId, params);
+      await this.playerApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -129,14 +129,14 @@ class PlayerStore {
       show: checked,
     };
     try {
-      const response = await this.playerApi.modifyData(id, params);
+      await this.playerApi.modifyData(id, params);
       if (checked) {
         message.success('the cover will be shown');
       } else {
         message.success('the cover will be hidden');
       }
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -144,10 +144,10 @@ class PlayerStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.playerApi.deleteData(id);
+      await this.playerApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -158,11 +158,11 @@ class PlayerStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.playerApi.batchDeleteData(params);
+      await this.playerApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

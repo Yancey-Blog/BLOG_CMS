@@ -38,7 +38,7 @@ class MottoStore {
         this.dataSource = response.data;
       });
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -47,11 +47,11 @@ class MottoStore {
       content: this.content,
     };
     try {
-      const response = await this.mottoApi.insertData(params);
+      await this.mottoApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -62,11 +62,11 @@ class MottoStore {
       content: this.content,
     };
     try {
-      const response = await this.mottoApi.modifyData(this.curId, params);
+      await this.mottoApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -74,10 +74,10 @@ class MottoStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.mottoApi.deleteData(id);
+      await this.mottoApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -88,11 +88,11 @@ class MottoStore {
       selectedList: this.selectedRowKeys,
     };
     try {
-      const response = await this.mottoApi.batchDeleteData(params);
+      await this.mottoApi.batchDeleteData(params);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
       this.selectedRowKeys.splice(0, this.selectedRowKeys.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

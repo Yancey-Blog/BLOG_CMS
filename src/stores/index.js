@@ -15,6 +15,7 @@ import aboutStore from './AboutStore';
 import loginStore from './LoginStore';
 import userInfoStore from './UserInfoStore';
 import globalStore from './GlobalStore';
+import modifyPasswordStore from './ModifyPasswordStore';
 
 export default {
   mottoStore,
@@ -34,4 +35,5 @@ export default {
   loginStore,
   userInfoStore,
   globalStore,
+  modifyPasswordStore,
 };

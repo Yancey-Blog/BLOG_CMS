@@ -38,6 +38,9 @@ axios.interceptors.request.use(
         history.push('/login');
         cancelFlag = false;
         return false;
+      } else {
+        history.push('/login');
+        return false;
       }
     }
     return req;

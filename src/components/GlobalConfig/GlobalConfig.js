@@ -4,7 +4,7 @@ import { List, Switch, Icon } from 'antd';
 
 @inject('globalStore')
 @observer
-class Global extends Component {
+class GlobalConfig extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -28,7 +28,7 @@ class Global extends Component {
         className="global_wrapper"
       >
         <h2>
-            Global Config & Statistics
+            Global Config
         </h2>
         <List
           itemLayout="horizontal"
@@ -56,4 +56,4 @@ class Global extends Component {
 }
 
 
-export default Global;
+export default GlobalConfig;

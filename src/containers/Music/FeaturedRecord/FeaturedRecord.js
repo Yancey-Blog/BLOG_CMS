@@ -58,10 +58,10 @@ class FeaturedRecord extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => featuredRecordStore.batchDelete()}
           >
@@ -154,7 +154,7 @@ class FeaturedRecord extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this record?"
+                    title="Are you sure delete this record?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => featuredRecordStore.deleteData(record._id)} /* eslint-disable-line */
                   >

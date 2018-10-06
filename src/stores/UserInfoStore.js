@@ -41,7 +41,7 @@ class UserInfoStore {
       this.avatar = response.data.avatar;
       this.curId = response.data._id; /* eslint-disable-line */
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -54,10 +54,10 @@ class UserInfoStore {
       avatar: this.avatar,
     };
     try {
-      const response = await this.userInfoApi.insertData(params);
+      await this.userInfoApi.insertData(params);
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -72,10 +72,10 @@ class UserInfoStore {
       avatar: this.avatar,
     };
     try {
-      const response = await this.userInfoApi.modifyData(this.curId, params);
+      await this.userInfoApi.modifyData(this.curId, params);
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }

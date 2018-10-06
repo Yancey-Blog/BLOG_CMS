@@ -1,5 +1,5 @@
 import {
-  action, observable, configure, runInAction, computed,
+  action, observable, configure, computed,
 } from 'mobx';
 import { message } from 'antd/lib/index';
 import { programExperienceApi } from '../http/index';
@@ -49,7 +49,7 @@ class ProgramExperienceStore {
       const response = await this.programExperienceApi.getData();
       this.dataSource = response.data;
     } catch (e) {
-      // message.error('unknown error!');
+      message.error('unknown error!');
     }
   };
 
@@ -61,11 +61,11 @@ class ProgramExperienceStore {
       program_technology_stack: this.tags,
     };
     try {
-      const response = await this.programExperienceApi.insertData(params);
+      await this.programExperienceApi.insertData(params);
       this.showModal = false;
       message.success('insert success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -79,11 +79,11 @@ class ProgramExperienceStore {
       program_technology_stack: this.tags,
     };
     try {
-      const response = await this.programExperienceApi.modifyData(this.curId, params);
+      await this.programExperienceApi.modifyData(this.curId, params);
       this.showModal = false;
       message.success('modify success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -91,10 +91,10 @@ class ProgramExperienceStore {
 
   deleteData = async (id) => {
     try {
-      const response = await this.programExperienceApi.deleteData(id);
+      await this.programExperienceApi.deleteData(id);
       message.success('delete success');
       this.dataSource.splice(0, this.dataSource.length);
-      this.getData();
+      await this.getData();
     } catch (e) {
       message.error('unknown error!');
     }
@@ -133,7 +133,6 @@ class ProgramExperienceStore {
   // tags
   @action handleClose = (removedTag) => {
     this.tags = this.tags.filter(tag => tag !== removedTag);
-    console.log(this.tags);
   };
 
   @action showInput = () => {
@@ -148,7 +147,6 @@ class ProgramExperienceStore {
     if (this.inputValue && this.tags.indexOf(this.inputValue) === -1) {
       this.tags = [...this.tags, this.inputValue];
     }
-    console.log(this.tags);
     this.inputValue = '';
     this.inputVisible = false;
   };

@@ -50,10 +50,10 @@ class Announcement extends Component {
               type="plus"
               theme="outlined"
             />
-            Add a row
+            Add
           </Button>
           <Popconfirm
-            title={`Are you sure to delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
+            title={`Are you sure delete ${selectedRowKeysLength} ${selectedRowKeysLength > 1 ? 'items' : 'item'}?`}
             icon={<Icon type="warning" style={{ color: 'red' }} />}
             onConfirm={() => announcementStore.batchDelete()}
           >
@@ -104,7 +104,7 @@ class Announcement extends Component {
                     }
                   />
                   <Popconfirm
-                    title="Are you sure to delete this announcement?"
+                    title="Are you sure delete this announcement?"
                     icon={<Icon type="warning" style={{ color: 'red' }} />}
                     onConfirm={() => announcementStore.deleteData(record._id)} /* eslint-disable-line */
                   >
