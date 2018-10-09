@@ -39,10 +39,4 @@
   .server_status_wrapper .server_running_container canvas {
     margin-top: 24px; }
 
-.server_status_wrapper .ant-skeleton{
-  background: #fff;
-  height: 100%;
-  padding: 24px;
-}
-
-/*# sourceMappingURL=serverStatus.cssrStatus.css.map */
+/*# sourceMappingURL=serverStatus.css.map */

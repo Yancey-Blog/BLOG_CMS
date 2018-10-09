@@ -46,6 +46,7 @@ class ArticleStore {
         this.dataSource = response.data;
         this.totalAmount = parseInt(response.headers.amount, 10);
         this.spinning = false;
+        window.scrollTo(0, 0);
       });
     } catch (e) {
       message.error('unknown error');

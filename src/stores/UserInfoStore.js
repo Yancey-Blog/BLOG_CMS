@@ -56,7 +56,6 @@ class UserInfoStore {
     try {
       await this.userInfoApi.insertData(params);
       message.success('insert success');
-      this.dataSource.splice(0, this.dataSource.length);
       await this.getData();
     } catch (e) {
       message.error('unknown error!');
@@ -74,7 +73,6 @@ class UserInfoStore {
     try {
       await this.userInfoApi.modifyData(this.curId, params);
       message.success('modify success');
-      this.dataSource.splice(0, this.dataSource.length);
       await this.getData();
     } catch (e) {
       message.error('unknown error!');
@@ -82,7 +80,7 @@ class UserInfoStore {
   };
 
   @computed get isFilled() {
-    return this.userName !== '' && this.position !== '' && this.selfIntroduction !== '' && this.city !== '' && this.avatar !== '';
+    return this.userName && this.position && this.selfIntroduction && this.city && this.avatar;
   }
 
   @action onUserNameChange = (e) => {
