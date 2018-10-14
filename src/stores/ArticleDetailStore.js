@@ -116,11 +116,11 @@ class ArticleDetailStore {
     try {
       const response = await this.articleApi.getDataById(this.curId);
       runInAction(() => {
-        this.headerCover = response.data.header_cover;
-        this.title = response.data.title;
-        this.summary = response.data.summary;
-        this.tags = response.data.tags;
-        this.editorInstance.insertText(this.editorInstance.convertor.toMarkdown(response.data.content));
+        this.headerCover = response.data.curArticle.header_cover;
+        this.title = response.data.curArticle.title;
+        this.summary = response.data.curArticle.summary;
+        this.tags = response.data.curArticle.tags;
+        this.editorInstance.insertText(this.editorInstance.convertor.toMarkdown(response.data.curArticle.content));
       });
     } catch (e) {
       message.error('no this article!');

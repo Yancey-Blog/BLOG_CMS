@@ -157,7 +157,11 @@ class Article extends Component {
             <Column
               title="Like Count"
               dataIndex="like_count"
-              key="like_count"
+              render={(text, record) => (
+                <span>
+                  {record.like_count.length}
+                </span>
+              )}
             />
             <Column
               title="PV Count"

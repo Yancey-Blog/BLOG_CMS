@@ -3,7 +3,6 @@ import { observer, inject } from 'mobx-react';
 import {
   Table, Button, Modal, Input, Icon, Popconfirm, Upload, Row, Col,
 } from 'antd';
-
 import {
   formatJSONDate, beforeUpload, capitalized, checkWebp, webp, upload,
 } from '../../../util/tools';
