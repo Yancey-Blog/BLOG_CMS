@@ -4,9 +4,11 @@
 
 这是Blog2.0的后台管理系统，1.0版本直接用的是Django Admin，可塑性确实不太高（应该是我没玩透🐶）。
 
-因为工作中有用Vue独立编写后台的经验，所以这次自己用Recact手撸了一个后台，用了react + react-router-4 + mobx + Google reCAPTCHA + Ant Design，说实话比起前端JS和CSS各占50%，这个后台收获还是很大的。
+因为工作中有用Vue独立编写后台的经验，所以这次自己用React手撸了一个后台，用了react + react-router-4 + mobx + Google reCAPTCHA + Ant Design，说实话比起前端JS和CSS各占50%，这个后台收获还是很大的。
 
 后期会放出一个lite版本，也就是不能上传、不能修改密码，别的都能干。
+
+[前端文档戳这里](https://github.com/Yancey-Blog/BLOG_FE/blob/master/README.md)
 
 因为刚毕业不久，工作时间也不多，感觉做的项目还稍显稚嫩，因此决定开源出来接受大佬们的意见。
 
