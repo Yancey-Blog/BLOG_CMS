@@ -43,7 +43,7 @@
 
 ### Article Editor
 
-![Article Editor](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-195641@2x.jpg?x-oss-process=image/quality,Q_30)
+![Article Editor](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-195641@2x.jpg?x-oss-process=image/quality,Q_20)
 
 这是Blog的核核核核核心功能区了，用来编写文章的Header Cover, Title, Summary, Content, Tags，当然我设置的这些都是必填项，所以mobx检测到如果有的项为空，也是无法提交的。
 
