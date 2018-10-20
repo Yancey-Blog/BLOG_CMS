@@ -1,5 +1,5 @@
 import baseUrl from '../util/baseUrl';
 
-const uploadApi = `${baseUrl.production}uploads`;
+const uploadApi = `${baseUrl.development}uploads`;
 
 export default uploadApi;
