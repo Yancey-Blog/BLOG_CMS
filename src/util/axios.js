@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { message } from 'antd/lib/index';
+import baseUrl from './baseUrl';
 import history from '../history';
 
 // config timeout
@@ -13,7 +14,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
 // config base url
-axios.defaults.baseURL = 'https://api.yanceyleo.com/api';
+axios.defaults.baseURL = baseUrl.production;
 
 // config request interceptors
 let cancelFlag = true;
