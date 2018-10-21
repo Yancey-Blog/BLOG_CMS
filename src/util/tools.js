@@ -14,7 +14,7 @@ export const beforeUpload = (file) => {
 };
 
 export const musicBeforeUpload = (file) => {
-  const isMusicFormat = file.type === 'audio/mpeg' || file.type === 'audio/x-m4a';
+  const isMusicFormat = file.type === 'audio/mp3' || file.type === 'audio/x-m4a';
   if (!isMusicFormat) {
     message.error('You can only upload MP3 or M4A music!');
   }
