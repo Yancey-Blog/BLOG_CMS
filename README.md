@@ -1,22 +1,24 @@
-# [Blog2.0 CMS](https://cms.yanceyleo.com/)
-
 ## Introduction
 
-这是Blog2.0的后台管理系统，1.0版本直接用的是Django Admin，可塑性确实不太高（应该是我没玩透🐶）。
+这是Blog2.0的后台管理系统，1.0版本直接用的是Django Admin，可塑性确实不太高。
 
-因为工作中有用Vue独立编写后台的经验，所以这次自己用React手撸了一个后台，用了react + react-router-4 + mobx + Google reCAPTCHA + Ant Design，说实话比起前端JS和CSS各占50%，这个后台收获还是很大的。
+因为工作中有用Vue独立编写后台的经验，所以这次自己用React手撸了一个后台，用了react + react-router-4 + mobx + Google reCAPTCHA + Ant Design，说实话比起前端JS和CSS的代码量各占50%，这个后台收获还是很大的。
 
-后期会放出一个lite版本，也就是不能上传、不能修改密码，别的都能干。
-
-[前端文档戳这里](https://github.com/Yancey-Blog/BLOG_FE/blob/master/README.md)
+**后期会放出一个lite版本，供各位大佬们批评指正，也就是不能上传、不能修改密码，别的都能干。**
 
 因为刚毕业不久，工作时间也不多，感觉做的项目还稍显稚嫩，因此决定开源出来接受大佬们的意见。
+
+[GitHub](https://github.com/Yancey-Blog/BLOG_CMS)
+
+[前端线上地址](https://blog.yanceyleo.com/)
+
+[前端文档戳这里](https://juejin.im/post/5bc82579f265da0acd20ec5f)
 
 ## Detail
 
 ### Login
 
-![Login](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-193518@2x.jpg?x-oss-process=image/quality,Q_30)
+![Login](https://user-gold-cdn.xitu.io/2018/10/20/166921256c985480?w=640&h=400&f=gif&s=1909357)
 
 因为确实没有注册的必要，所以直接把用户名和加密后的密码存在了数据库，当然后期心情好不排除弄个注册。
 
@@ -26,7 +28,7 @@
 
 ### 增删改查
 
-![增删改查](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-194950@2x.jpg?x-oss-process=image/quality,Q_30)
+![增删改查](https://user-gold-cdn.xitu.io/2018/10/21/166962128cd16227?w=640&h=400&f=gif&s=1424453)
 
 因为大部分模块都是类似上面这张图的架构，所以挑一个来写，就以`player`模块为例：
 
@@ -39,13 +41,13 @@
 
 ### Article
 
-![Article](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-195622%402x.jpg?x-oss-process=image/quality,Q_30)
+![Article](https://user-gold-cdn.xitu.io/2018/10/18/16685d91609a1604?w=3840&h=2400&f=jpeg&s=193346)
 
 这是Blog的核心功能区，除了常规的增删改查批量删除，还增加了模糊查找和按时间段查找的功能。
 
 ### Article Editor
 
-![Article Editor](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-195641@2x.jpg?x-oss-process=image/quality,Q_20)
+![Article Editor](https://user-gold-cdn.xitu.io/2018/10/18/16685d916603471c?w=3840&h=2400&f=jpeg&s=227828)
 
 这是Blog的核核核核核心功能区了，用来编写文章的Header Cover, Title, Summary, Content, Tags，当然我设置的这些都是必填项，所以mobx检测到如果有的项为空，也是无法提交的。
 
@@ -55,20 +57,20 @@ Markdown编辑器用的toast ui的，说实话用起来真蛋疼，魔改了好�
 
 - 左边的按钮是`保存并留在当前页面`，实际上就是起到一个暂存的功能，而且我还加了一个功能，当点击这个按钮时会弹出一个popup，询问你是否立即发布，也就是说：
 
-        当点击保存并留在当前页面后在点击yes，文章将会被保存到数据库，而且会被发布，并且留在当前编辑页面
-        当点击保存并留在当前页面后在点击no，文章将会被保存到数据库，不会被发布，并且留在当前编辑页面
+        当点击`保存并留在当前页面`后在点击yes，文章将会被保存到数据库，而且会被发布，并且留在当前编辑页面
+        当点击`保存并留在当前页面`后在点击no，文章将会被保存到数据库，不会被发布，并且留在当前编辑页面
         
 - 右边的按钮是纯粹的`保存`,点击后文章将会保存，然后发布，最后跳转到Article List页面。
 
 ### CV
 
-![CV](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-200923@2x.jpg?x-oss-process=image/quality,Q_30)
+![CV](https://user-gold-cdn.xitu.io/2018/10/18/16685d916cc79f3b?w=3840&h=2400&f=jpeg&s=212396)
 
 这个模块其实完全可以写成表格的形式，但确实写表格写烦了，所以换个口味，实际这就跟很多招聘网站的效果差不多了，其实也是增删改查，当然没去设计批量删除，感觉没意义。
 
 ### Global Setting
 
-![Global Setting](https://yancey-assets.oss-cn-beijing.aliyuncs.com/Jietu20181017-201201@2x.jpg?x-oss-process=image/quality,Q_30)
+![Global Setting](https://user-gold-cdn.xitu.io/2018/10/18/16685d916dfeb0c9?w=3840&h=2400&f=jpeg&s=106681)
 
 这里分三个模块：
 
@@ -81,4 +83,3 @@ Markdown编辑器用的toast ui的，说实话用起来真蛋疼，魔改了好�
 因为最近忙着找工作，文章迁移、英文文档撰写都会在忙过这段时间之后再去实施，如果有好的工作机会可以联系我哈～
 
 以上、よろしく。
-
