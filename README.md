@@ -10,9 +10,9 @@
 
 [GitHub](https://github.com/Yancey-Blog/BLOG_CMS)
 
-[前端线上地址](https://blog.yanceyleo.com/)
+[前端线上地址](https://www.yanceyleo.com/)
 
-[前端文档戳这里](https://juejin.im/post/5bc82579f265da0acd20ec5f)
+[前端文档戳这里](https://github.com/Yancey-Blog/BLOG_FE)
 
 ## Detail
 
