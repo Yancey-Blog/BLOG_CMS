@@ -10,7 +10,7 @@
   .heat_map_header {
     margin-left: 22px;
   }
-  .rank_articles_wrapper{
+  .rank_articles_wrapper {
     margin-left: 100px;
   }
   ul {
@@ -21,7 +21,7 @@
     justify-content: space-between;
     list-style-type: none;
     margin-top: 16px;
-    .rank_number_wrapper{
+    .rank_number_wrapper {
       display: inline-flex;
     }
     .rank_number {
@@ -37,12 +37,12 @@
       border-radius: 20px;
       background-color: rgb(245, 245, 245);
     }
-    .article_title{
+    .article_title {
       display: inline-block;
       max-width: 200px;
       min-width: 200px;
       overflow: hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
   }

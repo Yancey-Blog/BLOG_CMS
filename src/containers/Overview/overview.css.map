@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,iBAAkB;EAChB,UAAU,EAAE,kBAAkB;EAC9B,OAAO,EAAE,YAAW",
+"mappings": "AAAA,iBAAkB;EAChB,UAAU,EAAE,kBAAkB;EAC9B,OAAO,EAAE,YAAY",
 "sources": ["overview.scss"],
 "names": [],
 "file": "overview.css"

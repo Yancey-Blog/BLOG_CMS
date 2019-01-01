@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
+import dayjs from 'dayjs';
 import ReactTooltip from 'react-tooltip';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -27,8 +28,7 @@ class ArticleStatistics extends Component {
 
   render() {
     const { articleStore } = this.props;
-    const year = new Date().getFullYear();
-    const startDay = `${year}-01-01`;
+    const startDay = dayjs(new Date()).subtract(1, 'years').format('YYYY-MM-DD');
     const endDay = new Date();
     const rankNumberStyle = {
       backgroundColor: 'rgb(49, 70, 89)',
@@ -41,8 +41,8 @@ class ArticleStatistics extends Component {
             Heat Map
           </h4>
           <CalendarHeatmap
-            startDate={new Date(startDay)}
-            endDate={new Date(endDay)}
+            startDate={startDay}
+            endDate={endDay}
             values={articleStore.dayDataSource}
             classForValue={(value) => {
               if (!value) {
