@@ -77,7 +77,7 @@
     text-shadow: none;
     letter-spacing: 2px;
     outline: none;
-    transition-property: transform, opacity, visibility;
+    transition-property: all;
     transition-duration: 0.25s, 0.15s, 0s;
     transition-timing-function: cubic-bezier(0.31, 0.32, 0.38, 2), linear, linear;
     transition-delay: 0s, 0s, 0.15s;
@@ -86,4 +86,3 @@
       box-shadow: 0 0 4px rgba(241, 39, 66, 0.85);
       transform: scale3d(1.05, 1.05, 1); }
 
-/*# sourceMappingURL=login.css.map */

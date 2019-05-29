@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import {
-  Radio, Tabs, Icon, Skeleton,
-} from 'antd';
+import { Radio, Tabs, Icon, Skeleton } from 'antd';
 import { Line } from 'react-chartjs-2';
 import './serverStatus.css';
 
@@ -16,22 +14,24 @@ class ServerStatus extends Component {
     this.state = {};
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     const { serverStatusStore } = this.props;
-    serverStatusStore.getServerData();
-    serverStatusStore.getRawUsageStatusData();
+    Promise.all([
+      serverStatusStore.getServerData(),
+      serverStatusStore.getRawUsageStatusData(),
+    ]);
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   render() {
     const { serverStatusStore } = this.props;
     const networkChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
+      labels: serverStatusStore.timestampData.slice(
+        -serverStatusStore.dataLength
+      ),
       datasets: [
         {
           label: 'Network In Bytes',
@@ -52,7 +52,9 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.networkInBytesData.slice(-serverStatusStore.dataLength),
+          data: serverStatusStore.networkInBytesData.slice(
+            -serverStatusStore.dataLength
+          )
         },
         {
           label: 'Network Out Bytes',
@@ -73,12 +75,16 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.networkOutBytesData.slice(-serverStatusStore.dataLength),
-        },
-      ],
+          data: serverStatusStore.networkOutBytesData.slice(
+            -serverStatusStore.dataLength
+          )
+        }
+      ]
     };
     const diskChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
+      labels: serverStatusStore.timestampData.slice(
+        -serverStatusStore.dataLength
+      ),
       datasets: [
         {
           label: 'Disk Read Bytes',
@@ -99,7 +105,9 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.diskReadBytesData.slice(-serverStatusStore.dataLength),
+          data: serverStatusStore.diskReadBytesData.slice(
+            -serverStatusStore.dataLength
+          )
         },
         {
           label: 'Disk Write Bytes',
@@ -120,12 +128,16 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.diskWriteBytesData.slice(-serverStatusStore.dataLength),
-        },
-      ],
+          data: serverStatusStore.diskWriteBytesData.slice(
+            -serverStatusStore.dataLength
+          )
+        }
+      ]
     };
     const cpuChartConfig = {
-      labels: serverStatusStore.timestampData.slice(-serverStatusStore.dataLength),
+      labels: serverStatusStore.timestampData.slice(
+        -serverStatusStore.dataLength
+      ),
       datasets: [
         {
           label: 'CPU Usage',
@@ -146,9 +158,11 @@ class ServerStatus extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: serverStatusStore.cpuUsageData.slice(-serverStatusStore.dataLength),
-        },
-      ],
+          data: serverStatusStore.cpuUsageData.slice(
+            -serverStatusStore.dataLength
+          )
+        }
+      ]
     };
     const operations = (
       <Radio.Group
@@ -172,14 +186,13 @@ class ServerStatus extends Component {
           >
             <div className="server_params">
               <span className="param_title">
-              Bandwidth Usage
+                Bandwidth Usage
                 <span>
                   <Icon type="info-circle" theme="outlined" />
                 </span>
               </span>
               <span className="usage_ratio">
-                {serverStatusStore.bandwidthUsage}
-                %
+                {serverStatusStore.bandwidthUsage}%
               </span>
               <div className="progress_wrapper">
                 <div
@@ -189,27 +202,27 @@ class ServerStatus extends Component {
               </div>
               <div className="dosage_total">
                 <span>
-                Dosage:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Dosage:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.bandwidthDosage}
-                  </span>
-                  {' '}
+                  </span>{' '}
                   GB
                 </span>
                 <span style={{ marginLeft: 16 }}>
-                Total:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Total:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.totalBandwidth}
-                  </span>
-                  {' '}
+                  </span>{' '}
                   GB
                 </span>
               </div>
@@ -222,14 +235,13 @@ class ServerStatus extends Component {
           >
             <div className="server_params">
               <span className="param_title">
-              Disk Usage
+                Disk Usage
                 <span>
                   <Icon type="info-circle" theme="outlined" />
                 </span>
               </span>
               <span className="usage_ratio">
-                {serverStatusStore.diskUsage}
-                %
+                {serverStatusStore.diskUsage}%
               </span>
               <div className="progress_wrapper">
                 <div
@@ -239,27 +251,27 @@ class ServerStatus extends Component {
               </div>
               <div className="dosage_total">
                 <span>
-                Dosage:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Dosage:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.diskDosage}
-                  </span>
-                  {' '}
-                GB
+                  </span>{' '}
+                  GB
                 </span>
                 <span style={{ marginLeft: 16 }}>
-                Total:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Total:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.totalDisk}
-                  </span>
-                  {' '}
+                  </span>{' '}
                   GB
                 </span>
               </div>
@@ -272,15 +284,12 @@ class ServerStatus extends Component {
           >
             <div className="server_params">
               <span className="param_title">
-              RAM Usage
+                RAM Usage
                 <span>
                   <Icon type="info-circle" theme="outlined" />
                 </span>
               </span>
-              <span className="usage_ratio">
-                {serverStatusStore.RAMUsage}
-                %
-              </span>
+              <span className="usage_ratio">{serverStatusStore.RAMUsage}%</span>
               <div className="progress_wrapper">
                 <div
                   className="current_progress"
@@ -289,27 +298,27 @@ class ServerStatus extends Component {
               </div>
               <div className="dosage_total">
                 <span>
-                Dosage:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Dosage:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.RAMDosage}
-                  </span>
-                  {' '}
-                MB
+                  </span>{' '}
+                  MB
                 </span>
                 <span style={{ marginLeft: 16 }}>
-                Total:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Total:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.totalRAM}
-                  </span>
-                  {' '}
+                  </span>{' '}
                   MB
                 </span>
               </div>
@@ -322,14 +331,13 @@ class ServerStatus extends Component {
           >
             <div className="server_params">
               <span className="param_title">
-              SWAP Usage
+                SWAP Usage
                 <span>
                   <Icon type="info-circle" theme="outlined" />
                 </span>
               </span>
               <span className="usage_ratio">
-                {serverStatusStore.SWAPUsage}
-                %
+                {serverStatusStore.SWAPUsage}%
               </span>
               <div className="progress_wrapper">
                 <div
@@ -339,27 +347,27 @@ class ServerStatus extends Component {
               </div>
               <div className="dosage_total">
                 <span>
-                Dosage:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Dosage:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.SWAPDosage}
-                  </span>
-                  {' '}
-                MB
+                  </span>{' '}
+                  MB
                 </span>
                 <span style={{ marginLeft: 16 }}>
-                Total:
-                  <span style={{
-                    marginLeft: 4,
-                    color: 'rgba(0,0,0,.85)',
-                  }}
+                  Total:
+                  <span
+                    style={{
+                      marginLeft: 4,
+                      color: 'rgba(0,0,0,.85)'
+                    }}
                   >
                     {serverStatusStore.totalSWAP}
-                  </span>
-                  {' '}
+                  </span>{' '}
                   MB
                 </span>
               </div>
@@ -374,19 +382,13 @@ class ServerStatus extends Component {
           >
             <Tabs tabBarExtraContent={operations}>
               <TabPane tab="Network" key="1">
-                <Line
-                  data={networkChartConfig}
-                />
+                <Line data={networkChartConfig} />
               </TabPane>
               <TabPane tab="Disk" key="2">
-                <Line
-                  data={diskChartConfig}
-                />
+                <Line data={diskChartConfig} />
               </TabPane>
               <TabPane tab="CPU" key="3">
-                <Line
-                  data={cpuChartConfig}
-                />
+                <Line data={cpuChartConfig} />
               </TabPane>
             </Tabs>
           </Skeleton>
@@ -395,6 +397,5 @@ class ServerStatus extends Component {
     );
   }
 }
-
 
 export default ServerStatus;

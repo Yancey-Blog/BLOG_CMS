@@ -35,7 +35,6 @@ axios.interceptors.request.use(
         }
         req.headers.Authorization = `Bearer ${token}`;
       } else if (cancelFlag) {
-        message.error('login first!');
         history.push('/login');
         cancelFlag = false;
         return false;

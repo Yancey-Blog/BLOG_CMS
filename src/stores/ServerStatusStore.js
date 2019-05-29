@@ -1,7 +1,6 @@
 import {
   action, observable, configure, runInAction, computed,
 } from 'mobx';
-import { message } from 'antd/lib/index';
 import { serverStatusApi } from '../http/index';
 import { formatJSONDate } from '../util/tools';
 
@@ -102,7 +101,6 @@ class ServerStatusStore {
       });
     } catch (e) {
       this.serverStatusLoading = false;
-      // message.error('unknown error!');
     }
   };
 
@@ -123,7 +121,6 @@ class ServerStatusStore {
       });
     } catch (e) {
       this.serverUsageLoading = false;
-      message.error('unknown error!');
     }
   };
 

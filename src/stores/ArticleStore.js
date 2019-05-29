@@ -1,11 +1,9 @@
-import {
-  action, observable, configure, runInAction,
-} from 'mobx';
+import { action, observable, configure, runInAction } from 'mobx';
 import { message } from 'antd/lib/index';
 import { articleApi } from '../http/index';
 
 configure({
-  strict: 'always',
+  strict: 'always'
 });
 
 class ArticleStore {
@@ -53,7 +51,7 @@ class ArticleStore {
     }
   };
 
-  getDataByTitle = async (title) => {
+  getDataByTitle = async title => {
     this.spinning = true;
     try {
       const response = await this.articleApi.getDataByTitle(title);
@@ -75,15 +73,15 @@ class ArticleStore {
         const arr = [];
         for (let i = 0, l = response.data.length; i < l; i += 1) {
           const obj = {
-            date: response.data[i]._id, /* eslint-disable-line */
-            count: response.data[i].count,
+            date: response.data[i]._id /* eslint-disable-line */,
+            count: response.data[i].count
           };
           arr.push(obj);
         }
         this.dayDataSource = arr;
       });
     } catch (e) {
-      message.error('unknown error!');
+      // todo
     }
   };
 
@@ -94,15 +92,15 @@ class ArticleStore {
         const arr = [];
         for (let i = 0, l = response.data.length; i < l; i += 1) {
           const obj = {
-            title: response.data[i].title, /* eslint-disable-line */
-            pv_count: response.data[i].pv_count,
+            title: response.data[i].title /* eslint-disable-line */,
+            pv_count: response.data[i].pv_count
           };
           arr.push(obj);
         }
         this.PVDataSource = arr;
       });
     } catch (e) {
-      message.error('unknown error!');
+      // todo
     }
   };
 
@@ -121,10 +119,9 @@ class ArticleStore {
     }
   };
 
-
   switchStatus = async (id, checked) => {
     const params = {
-      status: checked,
+      status: checked
     };
     try {
       await this.articleApi.switchStatus(id, params);
@@ -140,7 +137,7 @@ class ArticleStore {
     }
   };
 
-  deleteData = async (id) => {
+  deleteData = async id => {
     try {
       await this.articleApi.deleteData(id);
       message.success('delete success');
@@ -153,7 +150,7 @@ class ArticleStore {
 
   batchDelete = async () => {
     const params = {
-      selectedList: this.selectedRowKeys,
+      selectedList: this.selectedRowKeys
     };
     try {
       await this.articleApi.batchDeleteData(params);
@@ -166,18 +163,18 @@ class ArticleStore {
     }
   };
 
-  @action onSelectChange = (selectedRowKeys) => {
+  @action onSelectChange = selectedRowKeys => {
     this.selectedRowKeys = selectedRowKeys;
   };
 
-  @action onSwitchPage = (pageNumber) => {
+  @action onSwitchPage = pageNumber => {
     this.curPage = pageNumber;
     this.getData();
     // reset pageNumber, make sure the first request is the first page
     this.curPage = 1;
   };
 
-  @action onTitleSearchChange = (value) => {
+  @action onTitleSearchChange = value => {
     this.getDataByTitle(value);
   };
 

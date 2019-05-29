@@ -14,82 +14,76 @@ class ArticleStatistics extends Component {
     this.state = {};
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     const { articleStore } = this.props;
-    articleStore.getDataByDay();
-    articleStore.getDataByPV();
+    Promise.all([articleStore.getDataByDay(), articleStore.getDataByPV()]);
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   render() {
     const { articleStore } = this.props;
-    const startDay = dayjs(new Date()).subtract(1, 'years').format('YYYY-MM-DD');
+    const startDay = dayjs(new Date())
+      .subtract(1, 'years')
+      .format('YYYY-MM-DD');
     const endDay = new Date();
     const rankNumberStyle = {
       backgroundColor: 'rgb(49, 70, 89)',
-      color: 'rgb(255, 255, 255)',
+      color: 'rgb(255, 255, 255)'
     };
     return (
       <section className="article_statistics_wrapper">
         <div>
-          <h4 className="heat_map_header">
-            Heat Map
-          </h4>
+          <h4 className="heat_map_header">Heat Map</h4>
           <CalendarHeatmap
             startDate={startDay}
             endDate={endDay}
             values={articleStore.dayDataSource}
-            classForValue={(value) => {
+            classForValue={value => {
               if (!value) {
                 return 'color-empty';
               }
               return `color-github-${value.count}`;
             }}
             tooltipDataAttrs={value => ({
-              'data-tip': value.date ? `${value.date} you post ${value.count} ${value.count > 1 ? 'articles' : 'article'}` : 'no articles on this day',
+              'data-tip': value.date
+                ? `${value.date} you post ${value.count} ${
+                    value.count > 1 ? 'articles' : 'article'
+                  }`
+                : 'no articles on this day'
             })}
             showWeekdayLabels
           />
           <ReactTooltip />
         </div>
         <div className="rank_articles_wrapper">
-          <h4>
-            Top 7 Articles
-          </h4>
+          <h4>Top 7 Articles</h4>
           <ul>
-            {
-              Object.keys(articleStore.PVDataSource).map(key => (
-                <li key={key}>
-                  <span className="rank_number_wrapper">
-                    <span
-                      className="rank_number"
-                      style={parseInt(key, 10) < 3 ? rankNumberStyle : {}}
-                    >
-                      {parseInt(key, 10) + 1}
-                    </span>
-                    <span className="article_title">
-                      {articleStore.PVDataSource[key].title}
-                    </span>
+            {Object.keys(articleStore.PVDataSource).map(key => (
+              <li key={key}>
+                <span className="rank_number_wrapper">
+                  <span
+                    className="rank_number"
+                    style={parseInt(key, 10) < 3 ? rankNumberStyle : {}}
+                  >
+                    {parseInt(key, 10) + 1}
                   </span>
-                  <span className="pv_number">
-                    {articleStore.PVDataSource[key].pv_count}
-                    {' '}
-                    PV
+                  <span className="article_title">
+                    {articleStore.PVDataSource[key].title}
                   </span>
-                </li>
-              ))
-            }
+                </span>
+                <span className="pv_number">
+                  {articleStore.PVDataSource[key].pv_count} PV
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
     );
   }
 }
-
 
 export default ArticleStatistics;
