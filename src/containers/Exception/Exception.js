@@ -21,7 +21,7 @@ class Exception extends Component {
     const figureStyle = {
       width: 430,
       height: 360,
-      background: 'url("http://yancey-assets.oss-cn-beijing.aliyuncs.com/404.svg") no-repeat center top',
+      background: 'url("https://static.yancey.app/404.svg") no-repeat center top',
     };
     const headerStyle = {
       color: '#434e59',
